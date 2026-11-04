@@ -648,7 +648,7 @@ function shortcode_eventi_split_layout_custom($atts) {
                     $formatted_date = strtoupper(date_i18n('d M Y', strtotime($start_date)));
                     $formatted_time = date_i18n('H:i', strtotime($start_date));
                     $testo_pulito = wp_strip_all_tags(get_the_excerpt());
-                    $excerpt = mb_strimwidth($testo_pulito, 0, 80, '...');
+                    $excerpt = mb_strimwidth($testo_pulito, 0, 70, '...');
                     
                     $link = get_permalink();
                     $title = get_the_title();
