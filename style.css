@@ -1,0 +1,2654 @@
+/*
+Theme Name: Universal Sport Sovizzo
+Theme URI: https://universalsportsovizzo.it
+Author: Il Tuo Nome
+Description: Tema personalizzato per l'ASD Universal Sport Sovizzo
+Version: 1.0
+*/
+
+/* ==========================================================================
+   01. IMPOSTAZIONI GLOBALI, VARIABILI E ACCESSIBILITÀ
+   ========================================================================== */
+:root { --primary-blue: #183F74; --secondary-orange: #EB5A2D; --darker-orange: #C8461E; --accent-yellow: #FBB712; --bg-light: #FFFAF4; --text-dark: #183F74; --text-light: #FFFFFF; --font-main: 'Atkinson Hyperlegible', sans-serif; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { display: flex !important; flex-direction: column !important; min-height: 100vh !important; overflow-x: hidden; font-family: var(--font-main); background-color: var(--bg-light); color: var(--text-dark); font-size: 1.2rem; line-height: 1.6; }
+a { text-decoration: none; color: var(--primary-blue); transition: all 0.3s ease; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+/* Accessibilità e Classi di Utilità */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.skip-link { position: absolute; top: -40px; left: 0; background: var(--darker-orange); color: white; z-index: 9999; transition: top 0.2s ease; }
+.skip-link:focus { top: 0; }
+*:focus-visible { outline: 3px solid var(--secondary-orange); outline-offset: 3px; }
+body .nascondi-temporaneamente { display: none !important; }
+body .nascondi-temporaneamente + .slider-dots { display: none !important; }
+.resize-animation-stopper * { transition: none !important; animation: none !important; }
+.hide-on-error { display: none !important; }
+.show-block-on-error { display: block !important; }
+.show-inline-on-error { display: inline-block !important; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
+/* Elementi Comuni e Layout Strutturale */
+main, .tribe-events-pg-template, .tribe-events-view { flex-grow: 1 !important; width: 100% !important; }
+main.container.page-content { padding-top: 0 !important; min-height: auto !important; }
+#contenuto-principale { min-height: 50vh !important; }
+.text-center { text-align: center; }
+.section-title h2 { font-size: 2.5rem; color: var(--primary-blue); text-transform: uppercase; font-weight: 900; }
+.section-title p { color: var(--darker-orange); font-weight: 700; }
+.title-underline-spaced { margin-bottom: 40px !important; }
+
+/* Sfondo Laterale a Strisce */
+/* 
+@media (min-width: 1450px) {
+    body { background-image: url('/wp-content/uploads/2026/05/design.png'), url('/wp-content/uploads/2026/05/design.png'); background-position: left top, right top; background-repeat: repeat-y, repeat-y; background-size: 70px auto, 70px auto; background-attachment: scroll, scroll; }
+}
+*/
+
+/* ==========================================================================
+   02. HEADER, LOGO E NAVIGAZIONE PRINCIPALE
+   ========================================================================== */
+.top-header { background-color: var(--bg-light); padding: 8px 0; border-bottom: 1px solid rgba(24, 63, 116, 0.1); }
+.header-flex { display: flex; justify-content: space-between; align-items: center; }
+.logo-area { display: flex; align-items: center; gap: 15px; }
+.logo-area a { display: flex !important; align-items: center !important; }
+.main-logo { height: 85px; width: auto; }
+.logo-text-fallback { display: none; }
+.offcanvas-logo-fallback { display: none; color: #ffffff; font-weight: 700; font-size: 1rem; text-transform: uppercase; vertical-align: middle; margin-left: 4px; }
+.brand-name { margin: 0; font-size: 1.4rem; font-weight: 900; color: var(--primary-blue); line-height: 1; text-transform: uppercase; }
+.brand-name .yellow { color: var(--accent-yellow); text-shadow: 1px 1px 1px rgba(0,0,0,0.1); }
+.brand-name .orange { color: var(--secondary-orange); }
+.social-area a { color: var(--primary-blue); font-size: 1.3rem; margin-left: 15px; transition: color 0.3s; }
+.social-area a:hover, .social-area a:focus-visible { color: var(--secondary-orange); }
+h1 { line-height: 1.3;}
+
+/* Barra di Navigazione */
+.main-navbar { background-color: var(--primary-blue); position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.navbar-container { display: flex; align-items: center; justify-content: center; min-height: 55px; position: relative; }
+.offcanvas-menu { width: 100%; }
+.offcanvas-header { display: none; }
+.menu-toggle { display: none; background: transparent; color: #fff; border: none; font-size: 1.8rem; padding: 5px 10px; cursor: pointer; }
+
+/* Voci di Menu Desktop */
+.nav-links { list-style: none; display: flex; justify-content: center; flex-wrap: wrap; width: 100%; margin-bottom: 0 !important; }
+.nav-links li a { display: block; padding: 18px 20px; color: var(--text-light); font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.5px; }
+.nav-links li a:hover { background-color: transparent; color: #fff; box-shadow: inset 0 -4px 0 var(--secondary-orange); cursor: pointer; }
+.nav-links li a.active, .nav-links li a[aria-current="page"], .nav-links li.current-menu-ancestor > a { background-color: transparent; color: #fff; box-shadow: inset 0 -4px 0 var(--secondary-orange); cursor: default; }
+.nav-links li a:hover, .nav-links li a.active, .nav-links li a[aria-current="page"], .nav-links li.current-menu-ancestor > a { background-color: rgba(255, 255, 255, 0.05) !important; border-radius: 6px 6px 0 0; }
+/* .nav-links li a:hover { background-color: var(--secondary-orange); color: black; cursor: pointer; } */
+/* .nav-links li a.active, .nav-links li a[aria-current="page"] { background-color: var(--secondary-orange); color: black; cursor: default; } */
+
+/* Sub-menu e Dropdown Desktop */
+.nav-links .menu-item-has-children > a::after { content: "\25BE"; font-size: 1.2rem; margin-left: 6px; vertical-align: middle; display: inline-block; transition: transform 0.3s ease; line-height: 0.8; }
+.nav-links .menu-item-has-children:hover > a::after { transform: rotate(180deg); }
+.nav-links .sub-menu { list-style: none !important; padding-left: 0 !important; }
+.nav-links .sub-menu li { list-style-type: none !important; }
+
+@media (min-width: 900px) {
+    .nav-links li { position: relative; }
+    .nav-links .sub-menu { display: none; position: absolute; top: 100%; left: 0; background-color: #ffffff; min-width: 270px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); padding: 0; z-index: 9999; }
+    .nav-links li:hover > .sub-menu, .nav-links li:focus-within > .sub-menu { display: block; }
+    .nav-links .sub-menu li { width: 100%; border-bottom: 1px solid #f0f0f0; }
+    .nav-links .sub-menu li:last-child { border-bottom: none; }
+    .nav-links .sub-menu a { padding: 16px 25px; color: var(--primary-blue) !important; background-color: transparent !important; font-size: 0.85rem; text-transform: uppercase; font-weight: 900; transition: all 0.3s ease; }
+    .nav-links .sub-menu a:hover { padding-left: 32px; }
+    .nav-links .sub-menu li a.active, .nav-links .sub-menu li a[aria-current="page"] { padding-left: 32px !important; }
+}
+
+/* ==========================================================================
+   NAVIGAZIONE RESPONSIVE E HEADER MOBILE
+   ========================================================================== */
+
+/* 1. Nascondi il logo compatto di default (Desktop e Tablet) */
+.mobile-nav-logo { 
+    display: none; 
+}
+
+/* ==========================================================================
+   BLOCCO SCROLL SFONDO QUANDO IL MENU MOBILE È APERTO
+   ========================================================================== */
+body.no-scroll {
+    overflow: hidden !important;
+}
+
+/* 2. TABLET E MOBILE (Sotto i 900px): Scatta il menu Hamburger e Offcanvas */
+@media (max-width: 900px) {
+    
+    /* Il logo istituzionale rimane sopra, l'hamburger va a destra nella fascia blu */
+    .navbar-container { justify-content: flex-end !important; align-items: center; }
+    .menu-toggle { display: block; margin: 0 !important; }
+    
+    /* Offcanvas (Menu Laterale) */
+    .offcanvas-menu { position: fixed; top: 0; right: 0; width: 320px; max-width: 100%; height: 100vh; background-color: var(--primary-blue); display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.3s ease-in-out; box-shadow: -5px 0 20px rgba(0,0,0,0.5); z-index: 2000; max-height: 100vh; overflow: hidden; }
+    .offcanvas-menu.open { transform: translateX(0); }
+    .offcanvas-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 25px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+    .menu-close { background: transparent; border: none; color: #FFFAF4; font-size: 2rem; cursor: pointer; padding: 0; }
+    .offcanvas-logo { height: 45px; width: auto; }
+    
+    /* Links del menu */
+    .nav-links { flex-direction: column; justify-content: flex-start; padding: 20px 25px; overflow-y: auto; flex-grow: 1; scrollbar-width: thin; flex-wrap: nowrap !important; overflow-x: hidden !important; }
+    .nav-links li { margin: 0; text-align: left; width: 100%; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+    .nav-links li a { color: #FFFAF4; font-size: 1.1rem; padding: 16px 20px; margin: 4px 0; border-radius: 6px; }
+    .nav-links li a:hover, .nav-links li a.active, .nav-links li a[aria-current="page"], .nav-links li.current-menu-ancestor > a { background-color: rgba(255, 255, 255, 0.05) !important; color: #ffffff !important; box-shadow: inset 4px 0 0 var(--secondary-orange) !important; border-radius: 0 6px 6px 0 !important; }
+    /* Sottomenu */
+    .nav-links .sub-menu { display: none; background-color: rgba(0, 0, 0, 0.15); padding-left: 15px; border-left: 2px solid rgba(255, 255, 255, 0.15); margin: 5px 0 15px 0; border-radius: 0 0 6px 0; }
+    .nav-links .sub-menu a { font-size: 1rem; padding: 12px 20px; }
+    .nav-links .sub-menu li a { transition: all 0.3s ease !important; display: block !important; }
+    .nav-links .sub-menu li a:hover, .nav-links .sub-menu li a.active, .nav-links .sub-menu li a[aria-current="page"] { background-color: transparent !important; color: var(--accent-yellow) !important; transform: translateX(10px) !important; box-shadow: none !important; }
+}
+
+/* 3. SOLO SMARTPHONE (Sotto i 600px): Stile "App" Compatto */
+@media (max-width: 600px) {
+    
+    /* Nascondiamo la fascia bianca superiore */
+    .top-header { display: none !important; }
+    
+    /* Navbar blu: Logo a sinistra, Hamburger a destra */
+    .navbar-container { justify-content: space-between !important; }
+    
+    /* Mostriamo il logo compatto nella barra blu */
+    .mobile-nav-logo { display: block; height: 44px; } /* Altezza leggermente ridotta per smartphone */
+    .mobile-nav-logo img { height: 100%; width: auto; display: block; }
+}
+
+@media (max-width: 768px) {
+    .header-flex { flex-direction: row; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; }
+    .logo-area { flex-direction: row; gap: 10px; }
+}
+@media (max-width: 550px) {
+    .main-logo { height: 45px; }
+    .social-area { display: flex; gap: 12px; margin-left: auto; }
+    .brand-name { font-size: 1.1rem; text-align: left; }
+    .social-area a { margin-left: 0; font-size: 1.2rem; }
+}
+
+/* ==========================================================================
+   03. HOME PAGE E COMPONENTI GLOBALI
+   ========================================================================== */
+main.home { padding: 0px !important; }
+
+/* Hero e Banner Campioni */
+.champion-hero-image { width: 100%; background: var(--bg-light); background-color: var(--primary-blue); }
+.hero-team-photo { width: 100%; margin: auto; max-height: 550px; object-fit: cover; display: block; }
+.champion-banner { background-color: var(--primary-blue); padding: 30px 20px; margin-bottom: 20px; border-bottom: 5px solid var(--secondary-orange); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+.champion-banner .title-gold { font-size: 4rem; color: var(--accent-yellow); text-transform: uppercase; font-weight: 900; margin-bottom: 20px; text-shadow: none; line-height: 1.1; }
+.champion-banner .subtitle-epic { font-size: 1.5rem; color: var(--secondary-orange); font-weight: 700; margin: 0; text-shadow: none; }
+
+.champion-banner .paragraph-title {margin-bottom: 25px; font-weight: normal; font-size: 1.25rem; color: var(--text-light); font-weight: 400; line-height: 1.6;}
+.btn-yellow { border: solid 2px white; }
+.campioni {color: var(--accent-yellow); font-size: 1.5rem; font-weight: 700; }
+
+/* Rimuovi il bordo giallo laterale dai titoli centrati SOLO nella Home Page */
+main.home .section-title.text-center h2 { border-left: none !important; padding-left: 0 !important; }
+.sponsors.sponsors-prefooter .section-title.text-center h2 {
+    border-left: none !important;
+    padding-left: 0 !important;
+}
+@media (max-width: 768px) {
+    .hero-team-photo { max-height: 300px; }
+    .champion-banner { padding: 15px 20px; }
+    .champion-banner .title-gold { font-size: 2.6rem; }
+    .section-title h2 { font-size: 2.2rem; }
+    .champion-hero { text-align: center; padding: 0 20px; }
+    .champion-banner .subtitle-epic, .champion-banner .campioni { font-size: 1.3rem; }
+    .champion-banner .paragraph-title { font-size: 1.1rem; }
+    .champion-banner .container {padding: 0;}
+}
+
+.upcoming-events {margin-top: 20px; margin-bottom: 40px; }
+.latest-news { margin-bottom: 40px; }
+
+/* Sponsor */
+.sponsors { background-color: #fff; padding: 20px 20px; border-top: 5px solid var(--accent-yellow); border-bottom: 5px solid var(--accent-yellow); }
+
+/* Struttura e Spaziature Gerarchia Sponsor */
+.sponsors-hierarchy { 
+    margin-top: 25px; 
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+}
+
+/* Riga flessibile per affiancare Official Partner e Supporter */
+.sponsor-tiers-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px 60px;
+    width: 100%;
+}
+
+.sponsor-tier { 
+    width: 100%; 
+    display: flex;
+    flex-direction: column;
+    margin: auto 0;
+}
+
+/* Permette a Official e Supporter di stare sulla stessa riga finché c'è spazio */
+.sponsor-tiers-row .sponsor-tier {
+    flex: 0 1 auto;
+    width: auto;
+    min-width: 260px;
+    max-width: 100%;
+}
+
+/* Centra verticalmente i loghi nello spazio rimanente sotto al titolo */
+.sponsor-tier .dynamic-sponsor-grid,
+.dynamic-sponsor-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+/* Stile dei Titoli dei Livelli (Tier) */
+.tier-title { 
+    text-transform: uppercase !important; 
+    margin-top: 0 !important;
+    margin-bottom: 10px !important; 
+    letter-spacing: 1px !important; 
+}
+.tier-title-home-jersey { 
+    font-size: 1.35rem !important; 
+    color: var(--primary-blue) !important; 
+    font-weight: 900 !important; 
+}
+.tier-title-official { 
+    font-size: 1.05rem !important; 
+    color: #555 !important; 
+    font-weight: 800 !important; 
+}
+.tier-title-supporter { 
+    font-size: 0.9rem !important; 
+    color: #666 !important; 
+    font-weight: 700 !important; 
+}
+
+/* Gestione Dimensioni Sponsor (Classi dedicate per livello + retrocompatibilità) */
+.dynamic-sponsor-logo { display: flex; justify-content: center; align-items: center; }
+.dynamic-sponsor-logo img { height: auto; transition: all 0.3s ease; object-fit: contain; }
+
+.dynamic-sponsor-logo.size-home-jersey img,
+.dynamic-sponsor-logo.size-large img { max-width: 260px; max-height: 150px; }
+
+.dynamic-sponsor-logo.size-official img,
+.dynamic-sponsor-logo.size-medium img { max-width: 145px; max-height: 110px; }
+
+.dynamic-sponsor-logo.size-supporter img,
+.dynamic-sponsor-logo.size-small img { max-width: 120px; max-height: 65px; }
+
+.dynamic-sponsor-logo img:hover { transform: scale(1.1); }
+
+.btn-sponsor { display: inline-block; background-color: var(--primary-blue); color: #ffffff !important; padding: 15px 30px; border-radius: 5px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(235, 90, 45, 0.2); border: none; cursor: pointer; }
+.btn-sponsor:hover { background-color: var(--darker-orange) !important; color: #ffffff !important; transform: translateY(-3px); box-shadow: 0 6px 15px rgba(24, 63, 116, 0.3); }
+
+/* Ridimensionamento coerente con il resto del sito su schermi piccoli */
+@media (max-width: 768px) {
+    .tier-title-home-jersey { font-size: 1.2rem !important; }
+    .tier-title-official { font-size: 1rem !important; }
+    .tier-title-supporter { font-size: 0.85rem !important; }
+}
+
+@media (max-width: 410px) {
+    .tier-title-home-jersey { font-size: 1.1rem !important; }
+    .tier-title-official { font-size: 0.95rem !important; }
+    .tier-title-supporter { font-size: 0.8rem !important; }
+}
+
+/* Card News ed Eventi (Stile Unificato Bacheca e Home) */
+.news-home-grid { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 30px !important; margin: 20px auto !important; max-width: 1000px !important; }
+.news-home-card { background: #fff !important; overflow: hidden !important; box-shadow: 0 8px 20px rgba(0,0,0,0.06) !important; transition: transform 0.3s ease !important; border-bottom: 5px solid var(--primary-blue) !important; display: flex !important; flex-direction: row !important; align-items: stretch !important; position: relative !important; }
+.news-home-card:hover { transform: translateY(-5px) !important; }
+/* Rimosso il flexbox per forzare l'immagine a riempire il 100% dell'altezza della card e tagliarsi */
+.news-home-img { width: 50% !important; background-color: #f8f9fa !important; display: block !important; }
+.news-home-img img { width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important; object-position: center !important; }
+.news-home-content { width: 50% !important; padding: 20px !important; display: flex !important; flex-direction: column !important; justify-content: center !important; }
+.news-home-date { display: inline-block !important; background: var(--darker-orange) !important; color: #fff !important; font-size: 0.85rem !important; font-weight: 900 !important; padding: 6px 12px !important; border-left: 4px solid var(--accent-yellow) !important; align-self: flex-start !important; text-transform: uppercase !important; }
+.news-home-content h3 { color: var(--primary-blue) !important; font-size: 1.4rem !important; margin-bottom: 12px !important; font-weight: 900 !important; line-height: 1.2 !important; }
+.news-home-excerpt, html .home .news-home-excerpt { font-size: 1rem !important; color: #555 !important; margin-bottom: 10px !important; line-height: 1.5 !important; }
+.news-home-card .read-more { font-size: 0.85rem !important; font-weight: 700 !important; color: var(--darker-orange) !important; text-decoration: none !important; transition: opacity 0.3s ease, color 0.3s ease !important; margin-top: auto !important; display: inline-block !important; }
+.news-home-card .read-more::after { content: '\2192' !important; margin-left: 6px !important; transition: transform 0.3s ease !important; display: inline-block !important; }
+.news-home-card:hover .read-more { opacity: 1 !important; color: var(--primary-blue) !important; }
+.news-home-card:hover .read-more::after { transform: translateX(5px) !important; }
+.news-home-card .read-more::before { content: '' !important; position: absolute !important; top: 0 !important; right: 0 !important; bottom: 0 !important; left: 0 !important; z-index: 10 !important; }
+.news-home-card:hover .news-home-title-link { text-decoration: underline !important;     text-underline-offset: 4px !important; }
+/* Centra la card in Home Page se c'è solo un evento o una sola news */
+.news-home-grid .news-home-card:only-child { grid-column: 1 / -1 !important; max-width: 485px !important; margin: 0 auto !important; }
+
+/* Modificatori Specifici per le Card (Eventi vs News) */
+.news-home-img-placeholder { width: 100% !important; height: 100% !important; background-color: #e0e0e0 !important; display: flex !important; align-items: center !important; justify-content: center !important; color: #555 !important; }
+.news-home-title-link { color: inherit !important; text-decoration: none !important; }
+.news-home-empty { width: 100% !important; }
+.news-home-card.is-event-card { border-bottom-color: var(--secondary-orange) !important; }
+.news-home-date.is-event-date { border-left: 4px solid var(--accent-yellow); background-color: var(--primary-blue) !important; color: #ffffff !important; }
+.is-event-title-link { color: var(--primary-blue) !important; }
+.read-more.is-event-link { color: var(--primary-blue) !important; }
+.btn-all-events { display: inline-block; padding: 12px 35px; background-color: var(--primary-blue); color: #fff !important; border-radius: 6px; font-weight: 700; text-transform: uppercase; transition: all 0.3s; }
+.btn-all-events:hover { background-color: var(--darker-orange); transform: translateY(-3px); }
+.btn_small { padding: 12px 23px;  line-height: 1.4;}
+.news-home-card.is-event-card .read-more {color: var(--primary-blue) !important;}
+.news-home-card.is-event-card:hover .read-more {color: var(--darker-orange) !important; }
+
+/* HOME - solo card news verticali */
+.news-home-grid--latest-news .news-home-card--vertical { flex-direction: column !important; height: 100%; }
+.news-home-grid--latest-news .news-home-card--vertical .news-home-img { width: 100% !important; background-color: transparent !important; }
+.news-home-grid--latest-news .news-home-card--vertical .news-home-img img { width: 100% !important; aspect-ratio: 16 / 9 !important; height: auto !important; }
+.news-home-grid--latest-news .news-home-card--vertical .news-home-content { width: 100% !important; flex-grow: 1 !important; }
+.news-home-grid--latest-news .news-home-card--vertical .news-home-excerpt { flex-grow: 1; }
+
+/* Responsive Card News ed Eventi */
+@media (max-width: 992px) {
+    .news-home-grid { grid-template-columns: 1fr !important; max-width: 500px !important; }
+}
+@media (max-width: 500px) {
+    .news-home-card { flex-direction: column !important; }
+    .news-home-img { width: 100% !important; border-bottom: 1px solid #eee !important; display: flex !important; justify-content: center !important; align-items: center !important; }
+    .news-home-img img { height: 250px !important; margin: 0 auto !important; }
+    .news-home-content { width: 100% !important; padding: 20px !important; }
+    .news-home-content h3 { margin-top: 15px !important; }
+}
+
+/* ==========================================================================
+   04. PAGINE STATICHE, NEWS SINGOLA E MODULI
+   ========================================================================== */
+.page-header { padding: 40px 0px; text-align: center; }
+.page-title { font-size: 3rem; color: var(--primary-blue); text-transform: uppercase; font-weight: 900; margin-bottom: 15px; }
+.title-underline { width: 80px; height: 4px; background-color: var(--secondary-orange); margin: 0 auto; }
+.page-content { padding-bottom: 40px; max-width: 1100px; margin: 0 auto; }
+.page-content hr { border: 0 !important; height: 1px !important; background: rgba(24, 63, 116, 0.1) !important; margin: 40px 0 !important; }
+/*.page-content h2 { color: var(--primary-blue) !important; font-size: 2rem; margin-bottom: 15px; }*/
+.page-content p { margin-bottom: 30px !important; }
+.page-content .text-center p:first-of-type { font-size: 1.2rem; color: #555 !important; margin: 0 auto 40px !important; }
+main.page-content > .text-center { margin: 0 auto !important; }
+main.page-content > .text-center p { font-size: 1.1rem !important; color: #555 !important; margin: 0 auto 15px !important; line-height: 1.6 !important; }
+.entry-content p { margin-bottom: 25px; font-size: 1.2rem; color: #333; }
+/*.entry-content h2 { color: var(--primary-blue); font-size: 1.8rem; margin: 25px 0 15px; border-left: 5px solid var(--accent-yellow); padding-left: 15px; }
+/* Stile Globale H2 (Pagine Statiche, News Singola, SportsPress) con riga gialla inferiore */
+/* Stile Globale H2 (Pagine, News, SportsPress, Eventi) - Bordo a sinistra */
+.entry-content h2, .single-news-content h2, main.page-content h2.sp-table-caption, main.page-content h4.sp-table-caption, .tribe-events-single-event-description h2 { color: var(--primary-blue) !important; font-size: 1.8rem !important; font-weight: 900 !important; margin: 25px 0 15px !important; border-left: 5px solid var(--accent-yellow) !important; border-bottom: none !important; border-top: none !important; border-right: none !important; padding: 0 0 0 15px !important; position: relative !important; text-align: left !important; text-transform: none !important; box-shadow: none !important; background: transparent !important; display: flow-root !important; }
+.entry-content h2, .single-news-content h2, main.page-content h2.sp-table-caption, main.page-content h4.sp-table-caption { color: var(--primary-blue) !important; font-size: 1.8rem !important; font-weight: 900 !important; margin: 25px 0 15px !important; border-left: 5px solid var(--accent-yellow) !important; border-bottom: none !important; border-top: none !important; border-right: none !important; padding: 0 0 0 15px !important; position: relative !important; text-align: left !important; text-transform: none !important; box-shadow: none !important; background: transparent !important; display: flow-root !important; }
+/* Titoli Strutturali Centrati (Es. "I prossimi appuntamenti") */
+.section-title.text-center h2 { display: inline-block !important; border-left: 5px solid var(--accent-yellow) !important; padding: 0 0 0 15px !important; margin: 0 !important; }
+/* Titoli Gutenberg Centrati (Es. Pagine testuali) - Grazie al fit-content il bordo si attacca al testo! */
+.entry-content .text-center h2, .page-content .text-center h2 { width: fit-content !important; margin-left: auto !important; margin-right: auto !important; } 
+/* Accessibilità Link nel Testo */
+.entry-content p a, .page-content p a, .entry-content ul a, .page-content ul a,
+.entry-content ol a, .page-content ol a, .single-news-main p a, .tribe-events-single-event-description a { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; font-weight: 700; }
+.entry-content p a:hover, .page-content p a:hover,
+.entry-content ul a:hover, .page-content ul a:hover,
+.entry-content ol a:hover, .page-content ol a:hover, .tribe-events-single-event-description a:hover { color: var(--darker-orange); text-decoration-color: var(--darker-orange); }
+
+/* Formattazione Elenchi Puntati e Numerati */
+.entry-content p:has(+ ul), .page-content p:has(+ ul), .entry-content p:has(+ ol), .page-content p:has(+ ol), .tribe-events-single-event-description p:has(+ ul), .tribe-events-single-event-description p:has(+ ol) { margin-bottom: 8px !important; }
+.entry-content ul, .page-content ul, .tribe-events-single-event-description ul { list-style-type: disc !important; padding-left: 25px !important; margin-bottom: 30px !important; color: #333 !important; }
+.entry-content ol, .page-content ol, .tribe-events-single-event-description ol { list-style-type: decimal !important; padding-left: 25px !important; margin-bottom: 30px !important; color: #333 !important; }
+.entry-content ul li, .page-content ul li, .entry-content ol li, .page-content ol li, .tribe-events-single-event-description ul li, .tribe-events-single-event-description ol li { margin-bottom: 12px !important; line-height: 1.6 !important; padding-left: 5px !important; color: inherit !important; }
+.entry-content ul li::marker, .page-content ul li::marker, .entry-content ol li::marker, .page-content ol li::marker, .tribe-events-single-event-description ul li::marker, .tribe-events-single-event-description ol li::marker { color: var(--secondary-orange) !important; font-weight: bold !important; font-size: 1.1em !important; }
+
+/* ==========================================================================
+   Stili Liste Annidate (Sotto-elenchi di secondo livello)
+   ========================================================================== */
+.entry-content ul ul, .entry-content ol ul, .entry-content ul ol, .entry-content ol ol { margin-top: 0 !important; margin-bottom: 0 !important; }
+/* Quadrato per il secondo 
+.entry-content ul ul li, .page-content ul ul li { list-style-type: square !important; }
+*/
+.entry-content ul ul li::marker, .page-content ul ul li::marker { color: var(--primary-blue) !important; font-weight: bold !important; }
+
+/* Stili Citazioni (Blockquote) e Sottotitoli */
+blockquote {
+    border-left: 5px solid var(--primary-blue) /*#1a73e8*/; background-color: #f8f9fa; padding: 20px 25px; margin: 25px 0; font-style: italic; border-radius: 0 5px 5px 0; color: #333333;
+}
+blockquote p { margin-bottom: 0; }
+h3 { margin-top: 17px; margin-bottom: 7px; line-height: 1.3; }
+
+/* 1. Contenitore principale: permette l'incolonnamento solo quando necessario */
+.wp-block-columns.boccia-inclusiva-logo-video {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    align-items: center !important; 
+    justify-content: center !important; 
+    gap: 30px !important; 
+    flex-wrap: wrap !important; 
+}
+
+/* 2. Reset base colonne per togliere spazi invisibili */
+.wp-block-columns.boccia-inclusiva-logo-video .wp-block-column {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* 3. PRIMA COLONNA (Logo): proporzione 1/3, si restringe fino a 150px prima di andare a capo */
+.wp-block-columns.boccia-inclusiva-logo-video .wp-block-column:first-child {
+    flex: 1 1 30% !important; /* Base di partenza in percentuale per restringersi */
+    max-width: 300px !important; /* Limite massimo su schermi grandi */
+    min-width: 150px !important; /* Limite minimo: sotto questa misura va a capo */
+}
+
+/* 4. SECONDA COLONNA (Video): proporzione 2/3, si restringe fino a 300px prima di andare a capo */
+.wp-block-columns.boccia-inclusiva-logo-video .wp-block-column:last-child {
+    flex: 2 1 60% !important; /* Base di partenza (doppia del logo) per restringersi */
+    max-width: 600px !important; /* Limite massimo su schermi grandi */
+    min-width: 300px !important; /* Limite minimo: sotto questa misura va a capo */
+}
+
+/* 5. Pulizia elementi interni per rimuovere margini extra */
+.boccia-inclusiva-logo-video .logo-boccia,
+.boccia-inclusiva-logo-video .wp-block-embed-youtube {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+}
+
+@media (max-width: 500px) {
+    /* Forza l'incolonnamento verticale e tiene tutto centrato */
+    .wp-block-columns.boccia-inclusiva-logo-video {
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+
+    /* Regola comune per "sganciare" le colonne dai limiti di WordPress */
+    .wp-block-columns.boccia-inclusiva-logo-video .wp-block-column {
+        min-width: 0 !important;
+        flex-basis: auto !important; /* FONDAMENTALE: fa riapparire il video */
+        width: 100% !important; /* Diamo una larghezza fissa di base... */
+    }
+
+    /* ...ma blocchiamo la crescita del LOGO a tuo piacimento */
+    .wp-block-columns.boccia-inclusiva-logo-video .wp-block-column:first-child {
+        max-width: 50vw !important; /* Il LOGO non deve mai superare metà schermo */
+    }
+
+    /* Il VIDEO invece può espandersi per riempire lo schermo del cellulare */
+    .wp-block-columns.boccia-inclusiva-logo-video .wp-block-column:last-child {
+        max-width: 100% !important;
+    }
+}
+
+/* Stili Tabelle Pagine Testuali */
+.wp-block-table table { width: 100%; border-collapse: collapse; margin-bottom: 25px; font-size: 0.95em; border-radius: 5px; overflow: hidden; }
+.wp-block-table thead tr { background-color: var(--primary-blue); color: #ffffff; text-align: left; font-weight: bold; }
+.wp-block-table th, .wp-block-table td { padding: 12px 15px; border-bottom: 1px solid #dddddd; }
+.wp-block-table tbody tr:last-of-type { border-bottom: 2px solid var(--primary-blue); }
+
+/* Griglia Direttivo */
+.team-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 30px; margin-top: 40px; }
+.team-card { flex: 0 1 calc(25% - 25px); min-width: 240px; margin-bottom: 30px; background: #fff; border-radius: 8px; text-align: center; padding: 25px 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-bottom: 4px solid var(--secondary-orange); transition: transform 0.3s ease; }
+.team-card:hover { transform: translateY(-5px); }
+.team-card i { font-size: 3.2rem; color: var(--primary-blue); background-color: var(--bg-light); width: 100px; height: 100px; line-height: 100px; border-radius: 50%; border: 3px solid var(--accent-yellow); margin-bottom: 10px; }
+.team-card .team-photo { width: 120px; height: 120px; border-radius: 50%; border: 3px solid var(--accent-yellow); background-color: var(--bg-light); margin: 0 auto 10px auto; overflow: hidden; display: block; }
+.team-card .team-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.team-card h3 { color: var(--primary-blue); margin-bottom: 5px; font-size: 1.35rem; }
+.team-card .role { display: block; color: var(--darker-orange); font-weight: bold; font-size: 1rem; text-transform: uppercase; margin-bottom: 5px; line-height: 1.3 !important;}
+.entry-content .team-card p { font-size: 0.75rem !important; color: #555 !important; margin-top: 0 !important; margin-bottom: 0 !important; line-height: 1.3 !important; }
+.team-card > *:last-child { margin-bottom: 0 !important; }
+.entry-content h2.direttivo-h2 { font-size: 1.4rem !important; font-weight: 900 !important; margin: 0 0 5px 0 !important; border-left: none !important; padding-left: 0 !important; text-transform: none !important; text-align: center !important; width: 100% !important; }
+.team-card .role-small { display: block; font-size: 0.75rem; letter-spacing: -0.2px; }
+
+/* Interruzione Flessibile Direttivo 
+.team-break { flex-basis: 100%; height: 0; margin: 0; padding: 0; }*/
+/*@media (max-width: 1110px) { Non c'è più bisogno di spezzare lamgriglia in due righe perché siamo in 4 in alto*/
+    .team-break { display: none; }
+/*}*/
+
+/* Pagina Singolo Articolo (News) */
+.single-news-main { padding-top: 30px !important; }
+.single-news-article { width: 100% !important; display: block !important; }
+.single-news-header { margin-bottom: 30px !important; text-align: left !important; }
+.single-news-title { color: var(--primary-blue) !important; font-weight: 900 !important; font-size: 2.5rem !important; text-transform: none !important; margin: 0 !important; }
+
+/* IMMAGINE IN EVIDENZA (SINGOLA NEWS) */
+.single-news-featured-image {
+    width: 100%;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.single-news-featured-image img {
+    width: 100%;
+    height: auto;
+    max-height: 550px; /* Evita che foto troppo verticali spingano via il testo */
+    object-fit: cover; /* Taglia l'eccesso mantenendo intatte le proporzioni */
+    display: block;
+}
+
+/* Adattamento per i dispositivi mobili */
+@media (max-width: 768px) {
+    .single-news-featured-image img {
+        max-height: 350px;
+    }
+}
+
+/* ==========================================================================
+   META DATI (DATA ARTICOLO E DATA EVENTO SINGOLO)
+   ========================================================================== */
+
+.single-news-meta {
+    margin-top: 25px; /* Lascia respiro dalla riga arancione del titolo */
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+/* Applichiamo lo stesso identico stile sia alle News che agli Eventi */
+.single-news-date,
+.tribe-events-single .tribe-events-schedule {
+    display: inline-flex !important;
+    align-items: center !important;
+    font-size: 0.95rem !important;
+    font-weight: 900 !important;
+    text-transform: uppercase !important;
+    color: var(--primary-blue) !important;
+    background-color: rgba(24, 63, 116, 0.05) !important; /* Sfondo azzurro leggerissimo */
+    padding: 8px 16px !important;
+    border-radius: 4px !important;
+    border-left: 4px solid var(--secondary-orange) !important;
+}
+
+/* Diamo i margini all'evento per replicare il posizionamento del .single-news-meta */
+.tribe-events-single .tribe-events-schedule {
+    margin: 0px 0 25px 0 !important;
+}
+
+/* Assicuriamoci che il testo interno all'evento erediti questo stile bellissimo */
+.tribe-events-single .tribe-events-schedule div,
+.tribe-events-single .tribe-events-schedule span {
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    text-transform: inherit !important;
+    color: inherit !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Icona per la News (Tag HTML <i>) */
+.single-news-date i {
+    margin-right: 8px;
+    color: var(--secondary-orange);
+    font-size: 1.1rem;
+}
+
+/* Icona per l'Evento (Generata via CSS perché non c'è nell'HTML del plugin) */
+.tribe-events-single .tribe-events-schedule::before {
+    content: '\f073' !important; /* fa-calendar-days */
+    font-family: 'Font Awesome 6 Free' !important;
+    font-weight: 900 !important;
+    margin-right: 8px !important;
+    color: var(--secondary-orange) !important;
+    font-size: 1.1rem !important;
+}
+
+/* Su cellulare stringiamo un pochino i margini */
+@media (max-width: 768px) {
+    .single-news-meta {
+        margin-top: 20px;
+    }
+    .single-news-date {
+        font-size: 0.85rem;
+        padding: 6px 12px;
+    }
+}
+
+/* ==========================================================================
+   CATEGORIE ARTICOLO (Accanto alla data)
+   ========================================================================== */
+
+/* Aggiorniamo il contenitore per affiancare data e categorie in modo fluido */
+.single-news-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; /* Fondamentale: permette agli elementi di andare a capo su mobile */
+    gap: 12px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.single-news-categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Stile per la "pillola" della categoria */
+.single-news-cat-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    background-color: var(--bg-light);
+    color: var(--primary-blue) !important;
+    border: 1px solid rgba(24, 63, 116, 0.15);
+    border-radius: 30px; 
+    font-size: 0.75rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    transition: all 0.3s ease;
+}
+
+/* Effetto al passaggio del mouse */
+.single-news-cat-badge:hover {
+    background-color: var(--primary-blue);
+    color: #fff !important;
+    border-color: var(--primary-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(24, 63, 116, 0.15);
+}
+
+/* Ottimizzazione degli spazi per i cellulari */
+@media (max-width: 400px) {
+    .single-news-meta {
+        gap: 8px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+}
+
+/* ==========================================================================
+   GALLERIE "ANTEPRIMA" PER I SINGOLI ARTICOLI (News)
+   ========================================================================== */
+
+/* Layout base a 3 colonne, riga singola */
+.single-news-content .wp-block-gallery:not(.galleria-slider) {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 15px !important;
+    column-count: auto !important; /* Disattiva le colonne sfalsate stile Pinterest */
+}
+
+/* Ripulisce i margini e rende le foto uniformi in 4:3 */
+.single-news-content .wp-block-gallery:not(.galleria-slider) .wp-block-image {
+    width: 100% !important;
+    margin-bottom: 0 !important;
+    display: block !important;
+}
+
+.single-news-content .wp-block-gallery:not(.galleria-slider) .wp-block-image img {
+    width: 100% !important;
+    height: 100% !important;
+    aspect-ratio: 4/3 !important; 
+    object-fit: cover !important;
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE: "Taglio" delle immagini in eccesso per mantenere la riga singola
+   -------------------------------------------------------------------------- */
+
+/* Tablet (sotto i 900px): Passa a 2 colonne e nasconde dalla 3° foto in poi */
+@media (max-width: 900px) {
+    .single-news-content .wp-block-gallery:not(.galleria-slider) {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    .single-news-content .wp-block-gallery:not(.galleria-slider) .wp-block-image:nth-child(n+3) {
+        display: none !important;
+    }
+}
+
+/* Smartphone (sotto i 600px): Passa a 1 colonna e nasconde dalla 2° foto in poi */
+@media (max-width: 600px) {
+    .single-news-content .wp-block-gallery:not(.galleria-slider) {
+        grid-template-columns: 1fr !important;
+    }
+    .single-news-content .wp-block-gallery:not(.galleria-slider) .wp-block-image:nth-child(n+2) {
+        display: none !important;
+    }
+}
+
+/* Riga arancione squadrata sotto al titolo principale degli articoli (H1) e degli Eventi */
+.single-news-title, .tribe-events-single-event-title {text-transform: uppercase !important; position: relative !important; padding-bottom: 20px !important; }
+.single-news-title::after, .tribe-events-single-event-title::after { content: '' !important; position: absolute !important; bottom: 0 !important; left: 0 !important; width: 80px !important; height: 4px !important; background-color: var(--secondary-orange) !important; border-radius: 0 !important; }
+
+.single-news-image-centered { max-width: 45% !important; margin: 0 auto 30px auto !important; display: block !important; text-align: center !important; }
+.single-news-image-centered img { width: 100% !important; height: auto !important; border-radius: 12px !important; box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important; display: block !important; }
+.single-news-content { display: block !important; }
+.single-news-content p { color: #333333 !important; margin-bottom: 20px !important; }
+.single-news-content::after { content: "" !important; display: table !important; clear: both !important; }
+.single-news-back-wrapper { margin: 15px 0 25px 0 !important; }
+.single-news-back-link { margin-top: 0 !important; }
+.single-news-clear { clear: both !important; }
+@media (max-width: 768px) {
+    .single-news-title { font-size: 2rem !important; }
+    .single-news-image-centered { max-width: 100% !important; margin: 0 0 30px 0 !important; }
+}
+
+/* ==========================================================================
+   SEZIONE ARTICOLI CORRELATI (Fondo pagina singola news)
+   ========================================================================== */
+.single-news-related {
+    margin-top: 60px;
+    border-top: 1px solid rgba(24, 63, 116, 0.1);
+    padding-top: 40px;
+}
+
+.single-news-related h2 {
+    color: var(--primary-blue);
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin-bottom: 25px;
+    border-left: 5px solid var(--accent-yellow);
+    padding-left: 15px;
+    line-height: 1.2;
+}
+
+/* Ottimizzazione per gli schermi dei cellulari */
+@media (max-width: 400px) {
+    .single-news-related {
+        margin-top: 40px;
+        padding-top: 30px;
+    }
+    
+    .single-news-related h2 {
+        font-size: 1.3rem; /* Si allinea alla grandezza degli altri h2 su mobile */
+    }
+}
+
+/* Moduli di Contatto (Contact Form 7 / WPForms) */
+.contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; max-width: 1000px; margin: 0 auto 80px; }
+.contact-info { display: flex; flex-direction: column;}
+.contact-info p { margin-bottom: 30px; }
+.contact-list { list-style: none; padding: 0; margin: 0 0 30px 0; }
+ul.contact-list { padding-left: 0 !important; }
+ul.contact-list li { padding-left: 0 !important; display: grid; grid-template-columns: 40px 1fr; align-items: center; gap: 10px; margin-bottom: 25px; font-size: 1.1rem; }
+.contact-list i, .contact-list svg, .contact-list img { justify-self: center; color: var(--secondary-orange); font-size: 1.5rem; margin-right: 0; }
+.contact-list a { color: var(--text-dark); font-size: 1rem !important; }
+.contact-list a:hover { color: var(--secondary-orange); }
+.contact-list span { display: block !important; font-size: 0.9rem !important; color: black !important; }
+.contact-social a { display: inline-flex; align-items: center; justify-content: center; width: 45px; height: 45px; background-color: var(--primary-blue); color: white; border-radius: 50%; margin-right: 15px; font-size: 1.2rem; transition: transform 0.3s ease, background-color 0.3s ease; }
+.contact-social a:hover { background-color: var(--secondary-orange); transform: translateY(-3px); }
+.contact-right-panel { background: #fff; padding: 25px 35px 0px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); border-top: 5px solid var(--accent-yellow); }
+.contact-right-panel h3 { color: var(--primary-blue) !important; margin-bottom: 20px !important; }
+.contact-right-panel form p { margin-bottom: 5px !important; }
+.contact-right-panel label { font-weight: bold; color: var(--primary-blue); margin-bottom: 4px; display: block; font-size: 0.9rem; }
+.contact-right-panel form p:last-child, .contact-right-panel form p:last-of-type, .wpforms-submit-container { margin-bottom: 0 !important; padding-bottom: 0 !important; }
+.contact-right-panel input[type="text"], .contact-right-panel input[type="email"], .contact-right-panel input[type="tel"], .wpforms-field input, .wpcf7-form-control.wpcf7-text { width: 100%; padding: 10px 15px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 5px; font-family: var(--font-main); font-size: 1rem; background-color: #fafafa; color: var(--text-dark); transition: all 0.3s ease; box-sizing: border-box; }
+.contact-right-panel textarea, .wpforms-field textarea, .wpcf7-form-control.wpcf7-textarea { width: 100%; padding: 10px 15px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 5px; font-family: var(--font-main); font-size: 1rem; background-color: #fafafa; color: var(--text-dark); transition: all 0.3s ease; box-sizing: border-box; height: 100px; resize: vertical; }
+.contact-right-panel input:focus, .contact-right-panel textarea:focus, .wpforms-field input:focus, .wpforms-field textarea:focus, .wpcf7-form-control:focus { outline: none; border-color: var(--secondary-orange); box-shadow: 0 0 5px rgba(235, 90, 45, 0.2); background-color: #fff; }
+.contact-right-panel input[type="submit"], .contact-right-panel button[type="submit"], .wpcf7-submit, div.wpforms-container-full .wpforms-form button[type=submit] { background-color: var(--primary-blue) !important; color: #fff !important; border: none !important; padding: 12px 30px !important; font-size: 1.1rem !important; font-weight: bold !important; text-transform: uppercase !important; border-radius: 5px !important; cursor: pointer !important; width: 100% !important; transition: background-color 0.3s ease, transform 0.3s ease !important; margin-top: 5px; }
+.contact-right-panel input[type="submit"]:hover, .contact-right-panel button[type="submit"]:hover, .wpcf7-submit:hover, div.wpforms-container-full .wpforms-form button[type=submit]:hover { background-color: var(--darker-orange) !important; transform: translateY(-3px) !important; }
+.wpcf7 form .wpcf7-response-output { margin: 0 0 15px 0; }
+/* Stile per la spunta Privacy nei moduli */
+.form-privacy-acceptance { margin-bottom: 20px; font-size: 0.95rem; color: #555; line-height: 1.4; }
+.form-privacy-acceptance input[type="checkbox"] { margin-right: 10px; transform: scale(1.1); vertical-align: middle; }
+@media (max-width: 768px) { .contact-container { grid-template-columns: 1fr; gap: 40px; } }
+@media (max-width: 400px) { ul.contact-list li { gap: 5px;} }
+
+/* Pagina 404 */
+.error-404-container { padding: 100px 20px !important; min-height: 60vh !important; }
+.error-404-title { font-size: 6rem !important; color: var(--secondary-orange) !important; margin-bottom: 10px !important; line-height: 1 !important; }
+.error-404-subtitle { color: var(--primary-blue) !important; text-transform: uppercase !important; font-weight: 900 !important; margin-bottom: 20px !important; }
+.error-404-text { font-size: 1.2rem !important; color: #555 !important; margin-bottom: 40px !important; }
+.btn-back-home { display: inline-block !important; padding: 15px 30px !important; background-color: var(--primary-blue) !important; color: #fff !important; font-weight: bold !important; text-transform: uppercase !important; border-radius: 6px !important; transition: background 0.3s !important; }
+.btn-back-home:hover { background-color: var(--secondary-orange) !important; color: #fff !important; }
+
+/* Blocchi Gutenberg: Slider Immagini Personalizzato */
+.galleria-slider { display: flex !important; flex-wrap: nowrap !important; overflow-x: auto !important; scroll-snap-type: x mandatory !important; gap: 0 !important; margin-bottom: 15px !important; scrollbar-width: none !important; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+.galleria-slider::-webkit-scrollbar { display: none; }
+.galleria-slider .wp-block-image { flex: 0 0 100% !important; scroll-snap-align: center !important; margin: 0 !important; padding: 0 !important; }
+.galleria-slider .wp-block-image img { width: 100% !important; max-height: 550px !important; object-fit: cover !important; border-radius: 0 !important; }
+.slider-dots { display: flex; justify-content: center; gap: 12px; margin-bottom: 40px; }
+.slider-dots .dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--primary-blue); background-color: transparent; cursor: pointer; transition: all 0.3s ease; padding: 0; }
+.slider-dots .dot:hover, .slider-dots .dot:focus-visible { background-color: var(--primary-blue); outline: none; }
+.slider-dots .dot.active { background-color: var(--secondary-orange); border-color: var(--secondary-orange); transform: scale(1.2); }
+@media (max-width: 768px) { .galleria-slider .wp-block-image img { max-height: 350px !important; } }
+
+/* Limita la larghezza dello slider solo all'interno dei singoli articoli */
+.single-news-content .galleria-slider { max-width: 800px !important; max-height: 450px; margin-left: auto !important; margin-right: auto !important; }
+
+/* ==========================================================================
+   Blocchi Gutenberg: Loop Query Automatica (Design Editorial)
+   ========================================================================== 
+.wp-block-group { padding: 0px !important; }
+.wp-block-query { margin-top: 30px !important; }
+.wp-block-query .wp-block-post-template { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 40px !important; list-style: none !important; padding: 0 !important; margin: 0 !important; }
+.wp-block-post { position: relative !important; display: flex !important; flex-direction: column !important; background: transparent !important; padding: 0 !important; border: none !important; cursor: pointer !important; transition: transform 0.3s ease !important; }
+.wp-block-post:hover { transform: translateY(-5px) !important; }
+.wp-block-post-featured-image { margin: 0 0 15px 0 !important; overflow: hidden !important; aspect-ratio: 3/2 !important; width: 100% !important; border-radius: 8px !important; }
+.wp-block-post-featured-image img, .wp-block-post-featured-image a img { width: 100% !important; height: 100% !important; object-fit: cover !important; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1) !important; display: block !important; }
+.wp-block-post:hover .wp-block-post-featured-image img { transform: scale(1.08) !important; }
+.wp-block-post-date { color: var(--darker-orange) !important; font-weight: 900 !important; font-size: 0.8rem !important; text-transform: uppercase !important; margin: 0 0 5px 0 !important; }
+.wp-block-post-title { 
+    font-family: var(--font-main) !important; 
+    font-size: 1.4rem !important; 
+    font-weight: 900 !important; 
+    color: var(--primary-blue) !important; 
+    text-transform: uppercase !important; 
+    margin: 0 0 10px 0 !important; 
+    line-height: 1.2 !important; 
+    border-left: none !important;
+    padding-left: 0 !important; 
+}
+.wp-block-post-title a { color: inherit !important; text-decoration: none !important; }
+.wp-block-post:hover .wp-block-post-title a { 
+    text-decoration: none !important;
+    border-bottom: 3px solid var(--primary-blue) !important;
+}
+.wp-block-read-more { font-size: 0.85rem !important; font-weight: 700 !important; color: var(--primary-blue) !important; opacity: 0.8 !important; text-decoration: none !important; transition: all 0.3s ease !important; margin: 0 !important; display: inline-block !important; }
+.wp-block-read-more::after { content: '\2192' !important; margin-left: 6px !important; transition: transform 0.3s ease !important; display: inline-block !important; }
+.wp-block-post:hover .wp-block-read-more { opacity: 1 !important; color: var(--darker-orange) !important; }
+.wp-block-post:hover .wp-block-read-more::after { transform: translateX(5px) !important; }*/
+
+/* Blocchi Gutenberg: Loop Query Automatica (Design Editorial) */
+.wp-block-group { padding: 0px !important; }
+.wp-block-query { margin-top: 30px !important; }
+.wp-block-query .wp-block-post-template { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 40px !important; list-style: none !important; padding: 0 !important; margin: 0 !important; }
+.wp-block-post { position: relative !important; display: flex !important; flex-direction: column !important; cursor: pointer !important; background: transparent !important; box-shadow: none !important; padding: 0 !important; margin-bottom: 0 !important; border: none !important; gap: 0 !important; }
+.wp-block-post-featured-image { margin: 0 0 15px 0 !important; overflow: hidden !important; aspect-ratio: 3/2 !important; width: 100% !important; border: none !important; }
+.wp-block-post-featured-image img, .wp-block-post-featured-image a img { width: 100% !important; height: 100% !important; object-fit: cover !important; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1) !important; display: block !important; }
+.wp-block-post:hover .wp-block-post-featured-image img, .wp-block-post:hover .wp-block-post-featured-image a img { transform: scale(1.08) !important; }
+.wp-block-post-date { color: var(--darker-orange) !important; font-weight: 900 !important; font-size: 0.8rem !important; text-transform: uppercase !important; margin: 0 0 5px 0 !important; padding: 0 !important; border: none !important; background: transparent !important; display: block !important; }
+.wp-block-post-date a { color: var(--secondary-orange) !important; text-decoration: none !important; pointer-events: none !important; cursor: default !important; }
+.wp-block-post-title { font-family: var(--font-main) !important; font-size: 1.4rem !important; font-weight: 900 !important; color: var(--primary-blue) !important; text-transform: uppercase !important; margin: 0 0 10px 0 !important; line-height: 1.2 !important; padding: 0 !important; border: none !important; }
+.wp-block-post-title a { color: inherit !important; text-decoration: none !important; }
+.wp-block-post-title a::after { content: '' !important; position: absolute !important; top: 0 !important; right: 0 !important; bottom: 0 !important; left: 0 !important; z-index: 10 !important; }
+.wp-block-read-more { font-size: 0.85rem !important; font-weight: 700 !important; color: var(--primary-blue) !important; opacity: 0.8 !important; text-decoration: none !important; transition: opacity 0.3s ease, color 0.3s ease !important; margin: 0 !important; display: inline-block !important; border: none !important; background: transparent !important; padding: 0 !important; position: relative !important; z-index: 1 !important; }
+.wp-block-read-more::after { content: '\2192' !important; margin-left: 6px !important; transition: transform 0.3s ease !important; display: inline-block !important; }
+.wp-block-post:hover .wp-block-read-more { opacity: 1 !important; color: var(--darker-orange) !important; }
+.wp-block-post:hover .wp-block-read-more::after { transform: translateX(5px) !important; }
+.entry-content .wp-block-post h2, .wp-block-post-title { border-left: none !important; padding-left: 0 !important; margin: 5px 0 10px 0 !important; }
+.wp-block-post:hover .wp-block-post-title a { text-decoration: underline !important; text-underline-offset: 4px !important; }
+/* Responsive Grid */
+@media (max-width: 992px) { .wp-block-query .wp-block-post-template { grid-template-columns: repeat(2, 1fr) !important; gap: 30px !important; } }
+@media (max-width: 600px) { .wp-block-query .wp-block-post-template { grid-template-columns: 1fr !important; gap: 40px !important; } .wp-block-post-featured-image { aspect-ratio: 16/9 !important; } }
+
+/* Blocchi Gutenberg: Gallerie Native, Effetto Pinterest e Video */
+.back-link-gallery { display: flex !important; justify-content: center !important; align-items: center !important; color: var(--primary-blue) !important; font-weight: 900 !important; text-transform: uppercase !important; font-size: 0.85rem !important; margin: 0 auto 30px !important; transition: all 0.3s ease !important; text-decoration: none !important; width: 100% !important; }
+.back-link-gallery i { margin-right: 10px !important; transition: transform 0.3s ease !important; }
+.back-link-gallery:hover { color: var(--darker-orange) !important; }
+.back-link-gallery:hover i { transform: translateX(-5px) !important; }
+.wp-block-gallery .wp-block-image img { border-radius: 12px !important; box-shadow: 0 4px 10px rgba(0,0,0,0.08) !important; }
+/*body.page main.container.page-content:has(.wp-block-gallery:not(.galleria-slider)) { max-width: 1400px !important; transition: max-width 0.3s ease !important; }
+*/
+main.container.page-content:has(.wp-block-gallery:not(.galleria-slider)):not(:has(.single-news-content)) { max-width: 1400px !important; transition: max-width 0.3s ease !important; }
+.wp-block-gallery:not(.galleria-slider) { display: block !important; column-count: 4 !important; gap: 10px !important; }
+.wp-block-gallery:not(.galleria-slider) .wp-block-image { width: 100% !important; margin-bottom: 10px !important; display: inline-block !important; break-inside: avoid !important; }
+.wp-block-gallery:not(.galleria-slider):has(.wp-block-image:nth-last-child(3):first-child) { column-count: 3 !important; }
+.wp-block-gallery:not(.galleria-slider):has(.wp-block-image:nth-last-child(2):first-child) { column-count: 2 !important; max-width: 1000px !important; margin: 0 auto !important; }
+.wp-block-gallery:not(.galleria-slider):has(.wp-block-image:nth-last-child(1):first-child) { column-count: 1 !important; max-width: 800px !important; margin: 0 auto !important; }
+.wp-block-gallery:not(.galleria-slider) .wp-block-image img { transition: opacity 0.3s ease !important; cursor: pointer !important; }
+.wp-block-gallery:not(.galleria-slider) .wp-block-image img:hover { opacity: 0.85 !important; }
+.wp-block-gallery:not(.galleria-slider) figure.wp-block-image { display: inline-flex !important; height: auto !important; }
+@media (max-width: 1200px) { .wp-block-gallery:not(.galleria-slider) { column-count: 3 !important; } }
+@media (max-width: 900px) { .wp-block-gallery:not(.galleria-slider) { column-count: 2 !important; } }
+@media (max-width: 600px) { .wp-block-gallery:not(.galleria-slider) { column-count: 1 !important; } }
+.video-container-wrapper { max-width: 800px !important; margin: 50px auto !important; }
+.responsive-video { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; box-shadow: 0 15px 35px rgba(24, 63, 116, 0.15); background: #000; border-bottom: 6px solid var(--secondary-orange); }
+.responsive-video iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+/* Stile unificato per i blocchi video nativi di Gutenberg (YouTube, Vimeo, ecc.) */
+/* ==========================================================================
+   STILE UNIFICATO VIDEO NATIVI GUTENBERG (YOUTUBE, VIMEO)
+   ========================================================================== */
+
+/* 1. Il Contenitore Esterno */
+.wp-block-embed-youtube,
+.wp-block-embed-vimeo { 
+    border-radius: 12px; 
+    overflow: hidden; 
+    box-shadow: 0 15px 35px rgba(24, 63, 116, 0.15); 
+    border-bottom: 6px solid var(--secondary-orange); 
+    margin: 40px auto; 
+    max-width: 800px;
+    background-color: #000; /* Sfondo nero per evitare spazi bianchi durante il caricamento */
+}
+
+/* 2. Il Wrapper Interno (Forza la proporzione 16:9 perfetta) */
+.wp-block-embed-youtube .wp-block-embed__wrapper,
+.wp-block-embed-vimeo .wp-block-embed__wrapper {
+    position: relative !important;
+    width: 100% !important;
+    padding-bottom: 56.25% !important; /* Calcolo matematico per il 16:9 */
+    height: 0 !important;
+    overflow: hidden !important;
+}
+
+/* 3. L'iframe del video (Si allarga a riempire tutto il contenitore) */
+.wp-block-embed-youtube iframe,
+.wp-block-embed-vimeo iframe {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    border: none !important;
+}
+
+/* Global Responsive Micro-schermi Pagine Statiche */
+@media (max-width: 700px) {
+    h1.page-title { font-size: 2.7rem !important; }
+    .entry-content h2, .single-news-content h2, main.page-content h2.sp-table-caption, main.page-content h4.sp-table-caption { font-size: 1.6rem !important; }
+    h1 .subtitle-comp { font-size: 1.8rem; }
+}
+@media (max-width: 410px) {
+    h1.page-title, h1.sp-match-main-title { font-size: 1.8rem !important; }
+    .champion-banner .title-gold { font-size: 2rem !important; }
+    h2, .vicenza-widget-title span, .entry-content h2, .single-news-content h2, main.page-content h2.sp-table-caption, main.page-content h4.sp-table-caption { font-size: 1.3rem !important; line-height: 1.4 !important; }
+    h3 { font-size: 1.1rem !important; margin-top: 1.5em; margin-bottom: 0.5em; }
+    main .entry-content p, main .page-content .text-center p, main .page-content .text-center p:first-of-type { font-size: 1rem !important; }
+    p, .entry-content p, ul, ol { font-size: 1rem !important; }
+    .team-card { padding: 20px 10px !important; }
+    .team-card p { font-size: 0.8rem !important; }
+    .contact-list p, .contact-list a, .contact-list span { font-size: 0.9rem !important; }
+    h1 .subtitle-comp { font-size: 1.4rem; }
+}
+
+@media (max-width: 768px) {
+    /* Assicura che la ricerca e i pulsanti si impilino bene su cellulare */
+    .news-search-box { flex-direction: column; }
+    .news-search-box .btn-all-events, .news-search-box .news-reset-btn { width: 100%; text-align: center; justify-content: center; }
+}
+
+/* Gestione Tabelle su schermi medi e piccoli */
+@media (max-width: 1000px) { table { font-size: 0.85em; } th, td { padding: 10px 10px; } }
+/* Gestione Tabella sui cellulari (sotto i 700px) */
+@media (max-width: 700px) {
+    .wp-block-table { 
+        font-size: 0.8rem !important;
+        overflow-x: auto !important; 
+        display: block !important; 
+        -webkit-overflow-scrolling: touch !important; 
+        width: 100% !important;
+        margin-bottom: 25px !important;
+    }
+    .wp-block-table table { 
+        font-size: 0.85rem !important; 
+        min-width: 600px !important; /* IL SEGRETO: vieta alla tabella di schiacciarsi! */
+    }
+    th, td { padding: 12px 8px !important; }
+}
+/* ==========================================================================
+   ARCHIVIO NEWS (Topbar, Filtri, Griglia Larga e Paginazione)
+   ========================================================================== */
+/* Topbar Ricerca e Categorie */
+.news-archive-topbar { background: #fff; padding: 25px; border-radius: 0 !important; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 40px; border-top: 5px solid var(--primary-blue); }
+.news-search-box { display: flex; gap: 15px; margin-bottom: 25px; }
+.news-search-box input { flex-grow: 1; padding: 12px 20px; border: 1px solid #ddd; border-radius: 5px; font-family: var(--font-main); font-size: 1.1rem; }
+.news-search-box input:focus { outline: none; border-color: var(--secondary-orange); }
+.btn-cerca { font-size: 1rem; padding: 12px 20px;}
+
+/* Bottoni Categorie (Stile Tabs) */
+.news-category-filters { display: flex; flex-wrap: wrap; gap: 10px; }
+.news-cat-link { display: inline-block; padding: 8px 18px; background: #f0f0f0; color: var(--primary-blue); font-weight: 700; border-radius: 30px; font-size: 0.95rem; transition: all 0.3s ease; text-transform: uppercase; }
+.news-cat-link:hover { background: rgba(235, 90, 45, 0.2); color: var(--darker-orange); }
+.news-cat-link.active { background: var(--darker-orange) !important; color: #fff; box-shadow: 0 4px 10px rgba(200, 70, 30, 0.3); }
+
+/* Stile per il nuovo pulsante "Azzera" */
+.news-reset-btn { font-size: 1rem; display: inline-flex; align-items: center; justify-content: center; padding: 12px 20px; background-color: transparent; color: #555; font-weight: 700; text-transform: uppercase; border: 1px solid #ccc; border-radius: 6px; text-decoration: none; transition: all 0.3s ease; white-space: nowrap; }
+.news-reset-btn i { margin-right: 8px; }
+.news-reset-btn:hover { background-color: #f0f0f0; color: #333; border-color: #aaa; }
+
+/* Griglia Allargata (2 Colonne Grandi) - Si può cambiare a 3 colonne con grid-template-columns: repeat(3, 1fr) */
+.news-archive-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; width: 100%; margin-bottom: 50px; } 
+.news-archive-grid .news-home-card { flex-direction: column !important; height: 100%; } /* Sgancia il layout orizzontale della home */
+.news-archive-grid .news-home-img { display: block !important; width: 100% !important; background-color: transparent !important; }
+.news-archive-grid .news-home-img img { width: 100% !important; aspect-ratio: 16/9 !important; height: auto !important; object-fit: cover !important; display: block !important; margin: 0 !important; }
+.news-archive-grid .news-home-content { width: 100% !important; flex-grow: 1; }
+
+/* Paginazione Numerica */
+.news-pagination { display: flex; justify-content: center; align-items: center; gap: 10px; margin: 50px 0; flex-wrap: wrap; }
+.news-pagination .page-numbers { display: inline-flex; align-items: center; justify-content: center; min-width: 45px; height: 45px; padding: 0 15px; background: #fff; border: 1px solid #ddd; color: var(--primary-blue); font-weight: 900; border-radius: 5px; transition: all 0.3s ease; }
+.news-pagination .page-numbers:hover { background: #f0f0f0; color: var(--darker-orange); }
+.news-pagination .current { background: var(--primary-blue); color: #fff; border-color: var(--primary-blue); cursor: default; }
+
+/* Messaggio di errore se non ci sono articoli */
+.news-no-results { grid-column: 1 / -1; font-size: 1.2rem; margin: 40px 0; }
+
+/* Stile per i puntini di sospensione (...) se le pagine sono tante */
+.news-pagination .dots {
+    background: transparent !important;
+    border: none !important;
+    pointer-events: none; /* Disabilita hover e click */
+    min-width: auto;
+    padding: 0 5px;
+}
+
+/* Responsive Mobile */
+@media (max-width: 768px) {
+    .news-archive-grid { grid-template-columns: 1fr; gap: 30px; }
+    .news-search-box { flex-direction: column; }
+    .news-search-box .btn-all-events { width: 100%; }
+}
+
+/* ==========================================================================
+   TENDINA FILTRI MOBILE E FIX RESPONSIVE
+   ========================================================================== */
+/* Di base (su desktop) il bottone toggle è nascosto */
+.mobile-filter-toggle {
+    display: none;
+}
+
+/* FIX: Forza sempre la visualizzazione flessibile su desktop ignorando i residui di jQuery */
+@media (min-width: 769px) {
+    .news-category-filters {
+        display: flex !important;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Mostra il bottone su mobile */
+    .mobile-filter-toggle {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 12px 20px;
+        background: #fff;
+        border: 1px solid #ddd;
+        color: var(--primary-blue);
+        font-size: 1rem;
+        font-weight: 700;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+    }
+
+    .mobile-filter-toggle i.fa-filter {
+        margin-right: 10px;
+        color: var(--secondary-orange);
+    }
+
+    /* Contenitore pillole su mobile */
+    .news-category-filters {
+        display: none; /* Nascosto di base, verrà mostrato da jQuery */
+        background: #f9f9f9;
+        padding: 15px 15px 5px 15px; /* Aggiustiamo il padding inferiore */
+        border-radius: 5px;
+        border: 1px solid #eee;
+        /* Rimosso flex-wrap e gap perché jQuery imposterà display: block */
+    }
+
+    /* FIX GAP: Usiamo i margini al posto del gap per distanziare le pillole */
+    .news-category-filters .news-cat-link {
+        margin-right: 8px;
+        margin-bottom: 10px;
+        display: inline-block;
+    }
+}
+
+/* FIX: Rimpiccioliamo bottoni e pillole su smartphone compatti */
+@media (max-width: 450px) {
+    .news-cat-link {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+    
+    .mobile-filter-toggle {
+        font-size: 0.9rem;
+        padding: 10px 15px;
+    }
+}
+
+/* ==========================================================================
+   05. THE EVENTS CALENDAR (Archivi, Ultimi Eventi e Singolo Evento)
+   ========================================================================== */
+
+/* --- 1. VARIABILI, RESET E CONTENITORE --- */
+:root, .tribe-common, .tribe-events, .tribe-events-single { --tec-font-family-sans-serif: 'Atkinson Hyperlegible', sans-serif !important; --tec-color-text-primary: #333 !important; --tec-color-link-primary: #1a4273 !important; }
+.tribe-common * { font-family: 'Atkinson Hyperlegible', sans-serif !important; }
+.tribe-common--breakpoint-medium.tribe-events .tribe-events-header__top-bar { margin: 0px !important; }
+.tribe-common--breakpoint-medium.tribe-common .tribe-common-l-container { padding-bottom: 40px !important; padding-top: 40px !important; }
+
+/* --- 2. BARRA DI RICERCA E PULSANTI --- */
+.tribe-common .tribe-common-c-btn-icon { background: transparent !important; border: none !important; }
+.tribe-common .tribe-common-c-svgicon { fill: var(--primary-blue) !important; }
+.tribe-common .tribe-events-c-search__button { background-color: var(--primary-blue) !important; color: #fff !important; border-radius: 6px !important; transition: all 0.3s ease !important; cursor: pointer; }
+.tribe-common .tribe-events-c-search__button:hover { background-color: var(--darker-orange) !important; transform: translateY(-3px) !important; }
+
+/* --- 3. ARCHIVIO: LISTA EVENTI E VISTA GIORNALIERA (Desktop) --- */
+.tribe-common .tribe-events-calendar-list { margin: 40px auto !important; display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 40px !important; align-items: stretch !important; }
+.tribe-common .tribe-events-calendar-list__month-separator { grid-column: 1 / -1 !important; border-bottom: 1px solid #ddd !important; margin-bottom: 20px !important; }
+.tribe-common .tribe-events-calendar-list__event-date-tag { display: none !important; }
+
+/* Separatore Orario (Solo Vista Giornaliera) - Occupa intera riga */
+.tribe-events-calendar-day__time-separator { grid-column: 1 / -1 !important; width: 100%; margin: 20px auto 15px auto !important; border-bottom: 2px solid rgba(24, 63, 116, 0.1); padding-bottom: 5px; }
+.tribe-events-calendar-day__time-separator-heading,
+.tribe-events-calendar-list__month-separator-text { color: var(--primary-blue) !important; font-size: 1.4rem !important; font-weight: 900 !important; margin: 0 !important; }
+
+/* Contenitore Griglia per la Vista Giornaliera */
+.tribe-events-calendar-day { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 40px !important; margin-top: 30px; align-items: stretch !important; }
+
+/* Card Condivisa (Lista e Giorno) - Rimossa larghezza massima per adattarsi alla griglia */
+.tribe-common .tribe-events-calendar-list__event-row,
+.tribe-common .tribe-events-calendar-day__event { width: 100% !important; margin: 0 !important; background: #fff !important; box-shadow: 0 10px 25px rgba(0,0,0,0.06) !important; border-bottom: 6px solid var(--secondary-orange) !important; padding: 0 !important; overflow: hidden !important; display: flex !important; transition: transform 0.3s ease !important; position: relative !important; border-radius: 8px !important; }
+
+.tribe-common .tribe-events-calendar-list__event-row:hover,
+.tribe-common .tribe-events-calendar-day__event:hover { transform: translateY(-5px) !important; }
+
+.tribe-common .tribe-events-calendar-list__event-wrapper, .tribe-events .tribe-events-calendar-list__event-wrapper,
+.tribe-common .tribe-events-calendar-day__event-content { width: 100% !important; max-width: 100% !important; flex-basis: 100% !important; margin: 0 !important; padding: 0 !important; display: flex !important; flex-direction: row !important; align-items: stretch !important; }
+
+.tribe-common .tribe-events-calendar-list__event, .tribe-events .tribe-events-calendar-list__event { width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; display: flex !important; flex-direction: row !important; align-items: stretch !important; }
+
+.tribe-common .tribe-events-calendar-list__event-title a::after,
+.tribe-common .tribe-events-calendar-day__event-title a::after { content: '' !important; position: absolute !important; top: 0 !important; right: 0 !important; bottom: 0 !important; left: 0 !important; z-index: 10 !important; }
+
+/* Dimensionamento Immagini */
+.tribe-common .tribe-events-calendar-list__event-featured-image-wrapper,
+.tribe-common .tribe-events-calendar-day__event-featured-image-wrapper { 
+    display: flex !important; /* Trasformato in flexbox per controllare l'immagine */
+    flex-direction: column !important;
+    width: 45% !important; 
+    max-width: 45% !important; 
+    flex: 0 0 45% !important; 
+    padding: 0 !important; 
+    background-color: #f8f9fa !important; 
+    border-radius: 0 !important; 
+    border-right: 1px solid #eee !important; 
+    margin: 0 !important; 
+}
+
+.tribe-common .tribe-events-calendar-list__event-featured-image,
+.tribe-common .tribe-events-calendar-day__event-featured-image { 
+    display: block !important; 
+    width: 100% !important; 
+    height: 100% !important; 
+    min-height: 0 !important; /* FONDAMENTALE: Impedisce all'immagine di forzare l'altezza */
+    flex-grow: 1 !important; /* Fa riempire tutto lo spazio disponibile */
+    object-fit: cover !important; 
+    object-position: center top !important; 
+    margin: 0 !important; 
+    background: transparent !important; 
+}
+
+/* Contenuto Testuale */
+.tribe-common .tribe-events-calendar-list__event-details, .tribe-events .tribe-events-calendar-list__event-details,
+.tribe-common .tribe-events-calendar-day__event-details { 
+    display: flex !important; 
+    width: 55% !important; 
+    max-width: 55% !important; 
+    flex: 0 0 55% !important; 
+    padding: 25px !important; 
+    flex-direction: column !important; 
+    justify-content: center !important; 
+    min-height: 220px !important; /* SPOSTATO QUI: Garantisce un'altezza minima decorosa per tutta la card */
+}
+
+.tribe-common .tribe-events-calendar-list__event-datetime-wrapper,
+.tribe-common .tribe-events-calendar-day__event-datetime-wrapper { background-color: var(--primary-blue) !important; color: #fff !important; display: inline-block !important; align-self: flex-start !important; padding: 6px 12px !important; border-radius: 0 !important; border-left: 4px solid var(--accent-yellow) !important; font-size: 0.85rem !important; font-weight: 900 !important; text-transform: uppercase !important; margin-bottom: 12px !important; }
+
+.tribe-common .tribe-events-calendar-list__event-datetime-wrapper *,
+.tribe-common .tribe-events-calendar-day__event-datetime-wrapper * { color: #ffffff !important; }
+
+.tribe-common .tribe-events-calendar-list__event-title,
+.tribe-common .tribe-events-calendar-day__event-title { font-size: 1.5rem !important; font-weight: 900 !important; line-height: 1.2 !important; margin-bottom: 0 !important; }
+
+.tribe-common .tribe-events-calendar-list__event-title a,
+.tribe-common .tribe-events-calendar-day__event-title a { color: var(--primary-blue) !important; }
+
+.tribe-common .tribe-events-calendar-list__event-description,
+.tribe-common .tribe-events-calendar-day__event-description { font-size: 0.95rem !important; color: #555 !important; line-height: 1.4 !important; margin-bottom: 0 !important; display: -webkit-box !important; -webkit-line-clamp: 3 !important; line-clamp: 3 !important; -webkit-box-orient: vertical !important; overflow: hidden !important; visibility: visible !important; height: auto !important; }
+
+/* Centra la card SE è l'unica in quella fascia oraria, bloccandola alla sua larghezza ideale */
+.tribe-events-calendar-day__time-separator + .tribe-events-calendar-day__event:has(+ .tribe-events-calendar-day__time-separator),
+.tribe-events-calendar-day__time-separator + .tribe-events-calendar-day__event:last-child,
+.tribe-events-calendar-list__month-separator + .tribe-events-calendar-list__event-row:has(+ .tribe-events-calendar-list__month-separator),
+.tribe-events-calendar-list__month-separator + .tribe-events-calendar-list__event-row:last-child {
+    grid-column: 1 / -1 !important; 
+    justify-self: center !important; 
+    max-width: 600px !important; /* SOSTITUITO IL CALC CON IL VALORE FISSO */
+    width: 100% !important;
+}
+
+/* Annulla il limite di 3 righe imposto dal plugin sotto i 768px */
+.tribe-common .tribe-events-calendar-day__event-description,
+.tribe-common .tribe-events-calendar-day__event-description p {
+    display: block !important;
+    -webkit-line-clamp: unset !important;
+    line-clamp: unset !important;
+    overflow: visible !important;
+    height: auto !important;
+}
+
+/* Riattiva il limite di 3 righe per il riassunto sugli schermi più piccoli */
+@media (max-width: 550px) { /* <--- Scegli tu a quale larghezza far scattare il taglio */
+    .tribe-common .tribe-events-calendar-day__event-description,
+    .tribe-common .tribe-events-calendar-day__event-description p {
+        display: -webkit-box !important;
+        -webkit-line-clamp: 4 !important;
+        line-clamp: 4 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+    }
+}
+
+/* Responsive Mobile (Unica colonna) */
+@media (max-width: 768px) {
+    .tribe-events-calendar-day { grid-template-columns: 1fr !important; }
+}
+
+.tribe-events .tribe-events-c-subscribe-dropdown__button {
+    border-color: var(--primary-blue) !important;
+    color: var(--primary-blue) !important;
+}
+
+.tribe-events .tribe-events-c-subscribe-dropdown__button:hover {
+    background-color: var(--primary-blue) !important;
+    color: #fff !important;
+}
+
+/* --- 4. ARCHIVIO: ULTIMI EVENTI PASSATI (Nessun Sfondo, Trasparente) --- */
+.tribe-events-calendar-latest-past { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 40px !important; margin-top: 40px !important; width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; }
+.tribe-events-calendar-latest-past__heading { grid-column: 1 / -1 !important; margin-bottom: 10px !important; font-size: 2rem !important; color: var(--primary-blue) !important; font-weight: 900 !important; }
+.tribe-events-calendar-latest-past > div:nth-child(n+6) { display: none !important; }
+
+/* Contenitore Row: Rimuoviamo sfondi e bordi */
+.tribe-events-calendar-latest-past__event-row { display: flex !important; flex-direction: row !important; align-items: stretch !important; background: transparent !important; box-shadow: none !important; border: none !important; width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; box-sizing: border-box !important; transition: transform 0.3s ease !important; }
+.tribe-events-calendar-latest-past__event-row:hover { transform: translateY(-5px) !important; }
+
+/* Data a sinistra (Completamente trasparente, no bordi, no sfondo) */
+.tribe-events-calendar-latest-past__event-date-tag {border-right: solid 3px var(--primary-blue) !important; min-width: 0px !important; flex: 0 0 65px !important; width: 65px !important; max-width: 65px !important; padding: 5px 0px !important; margin: 0 !important; background-color: transparent !important; border-radius: 0 !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: flex-start !important; }
+
+/* Wrapper dell'Articolo (Spazio rimanente) */
+.tribe-events-calendar-latest-past__event-wrapper { display: block !important; flex: 1 1 0% !important; width: calc(100% - 85px) !important; max-width: 100% !important; padding: 0 !important; margin: 0 0 0 10px !important; box-sizing: border-box !important; }
+.tribe-events-calendar-latest-past__event { display: flex !important; flex-direction: row !important; align-items: flex-start !important; width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; background: transparent !important; gap: 15px !important; }
+
+/* Nascondi Data/Ora Interna */
+.tribe-events-calendar-latest-past__event-datetime-wrapper { display: none !important; }
+
+/* Immagine Desktop (45% in object-fit contain per preservare la locandina verticale) */
+.tribe-events-calendar-latest-past__event-featured-image-wrapper { display: block !important; width: 45% !important; max-width: 45% !important; flex: 0 0 45% !important; margin: 0 !important; padding: 0 !important; }
+.tribe-events-calendar-latest-past__event-featured-image { display: block !important; width: 100% !important; height: 100% !important; max-height: 280px !important; object-fit: contain !important; object-position: left center !important; border-radius: 0 !important; background: transparent !important; }
+
+/* Testo Desktop (55%) */
+.tribe-events-calendar-latest-past__event-details { display: block !important; width: calc(55% - 15px) !important; max-width: 100% !important; flex: 0 0 calc(55% - 15px) !important; padding: 0 !important; margin: 0 !important; }
+.tribe-events-calendar-latest-past__event-title { margin: 0 0 8px 0 !important; line-height: 1.3 !important; font-size: 1.35rem !important; font-weight: 900 !important; }
+.tribe-events-calendar-latest-past__event-title a { color: var(--primary-blue) !important; }
+
+/* Resetta la classe "invisibile" nativa del plugin e fa riapparire il contenitore (Selettore Blindato) */
+html body div.tribe-events-calendar-latest-past__event-description.tribe-common-a11y-hidden, div.tribe-events-calendar-latest-past__event-description.tribe-common-a11y-hidden { visibility: visible !important; position: static !important; width: auto !important; height: auto !important; clip: auto !important; clip-path: none !important; white-space: normal !important; margin: 0 !important; padding: 0 !important; display: -webkit-box !important; -webkit-line-clamp: 2 !important; line-clamp: 2 !important; -webkit-box-orient: vertical !important; overflow: hidden !important; text-overflow: ellipsis !important; font-size: 0.95rem !important; line-height: 1.4 !important; color: #555 !important; }
+html body div.tribe-events-calendar-latest-past__event-description.tribe-common-a11y-hidden p, div.tribe-events-calendar-latest-past__event-description.tribe-common-a11y-hidden p { display: -webkit-box !important; -webkit-line-clamp: 2 !important; line-clamp: 2 !important; -webkit-box-orient: vertical !important; overflow: hidden !important; text-overflow: ellipsis !important; margin: 0 !important; font-size: inherit !important; line-height: inherit !important; color: inherit !important; }
+
+/* --- 5. EVENTO SINGOLO: CONTENUTO E IMMAGINE --- */
+.tribe-events-single, .tribe-events-single-main, .tribe-events-single-event-description { display: block !important; width: 100% !important; clear: none !important; }
+.tribe-events-single .type-tribe_events { display: block !important; }
+.tribe-events-single-event-title { color: var(--primary-blue) !important; font-weight: 900 !important; font-size: 2.5rem !important; margin-bottom: 30px !important; line-height: 1.2 !important; position: relative !important; padding-bottom: 20px !important; }
+.tribe-events-single-event-title::after { content: '' !important; position: absolute !important; bottom: 0 !important; left: 0 !important; width: 80px !important; height: 4px !important; background-color: var(--secondary-orange) !important; border-radius: 0 !important; }
+.tribe-events-event-image, .tribe-events-single .tribe-events-event-image { float: left !important; width: 45% !important; margin: 0 40px 20px 0 !important; display: block !important; clear: none !important; }
+.tribe-events-event-image img { width: 100% !important; height: auto !important; border-radius: 12px !important; box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important; }
+.tribe-events-single-event-description::after, .tribe-events-single .type-tribe_events::after { content: ""; display: table !important; clear: both !important; }
+.tribe-events-single-event-description p { font-size: 1.2rem !important; line-height: 1.6 !important; color: #333 !important; margin-bottom: 25px !important; }
+.tribe-events-single-event-description h3 { margin-top: 25px !important; margin-bottom: 15px !important; line-height: 1.3 !important; color: var(--primary-blue) !important; font-weight: 900 !important; font-size: 1.4rem !important; }
+
+/* --- 6. EVENTO SINGOLO: META DATI E MAPPA --- */
+.tribe-events-single-section.tribe-events-event-meta { display: flex !important; flex-wrap: wrap !important; gap: 40px !important; background: #fff !important; padding: 35px !important; margin-top: 40px !important; margin-bottom: 30px !important; box-shadow: 0 10px 30px rgba(0,0,0,0.06) !important; border-bottom: 5px solid var(--secondary-orange) !important; float: none !important; width: 100% !important; }
+.tribe-events-single-section.tribe-events-event-meta::before { display: none !important; border: none !important; }
+.tribe-events-meta-group { flex: 1 1 300px !important; margin: 0 !important; padding: 0 !important; width: 100% !important; float: none !important; }
+.tribe-events-single-section-title { color: var(--primary-blue) !important; font-size: 1.4rem !important; font-weight: 900 !important; text-transform: uppercase !important; border-left: 5px solid var(--accent-yellow) !important; padding-left: 15px !important; margin-top: 0 !important; margin-bottom: 25px !important; background: transparent !important; }
+.tribe-events-meta-list { padding: 0 !important; margin: 0 !important; list-style: none !important; }
+.tribe-events-meta-list li { margin-bottom: 15px !important; font-size: 1.05rem !important; color: #555 !important; line-height: 1.5 !important; }
+.tribe-events-meta-label { display: block !important; color: var(--primary-blue) !important; font-weight: 900 !important; text-transform: uppercase !important; font-size: 0.9rem !important; margin-bottom: 3px !important; }
+.tribe-events-meta-value { display: block !important; }
+.tribe-events-venue-map { flex: 1 1 400px !important; margin: 0 !important; width: 100% !important; float: none !important; border-radius: 8px !important; overflow: hidden !important; border: 1px solid #eee !important; }
+.tribe-events-venue-map > div, .tribe-events-venue-map iframe, .cmplz-placeholder-parent { width: 100% !important; display: block !important; border-radius: 8px !important; }
+
+/* --- 7. EVENTO SINGOLO: AVVISO EVENTO PASSATO --- */
+.tribe-events-single .tribe-events-notices, .tribe-events-notices { background-color: #ffffff !important; border: none !important; border-left: 6px solid var(--secondary-orange) !important; border-radius: 8px !important; padding: 20px 25px !important; margin: 30px 0 !important; box-shadow: 0 4px 15px rgba(0,0,0,0.06) !important; text-shadow: none !important; }
+.tribe-events-notices::before, .tribe-events-notices::after { display: none !important; background-image: none !important; }
+.tribe-events-notices > ul, .tribe-events-notices > ul > li { list-style: none !important; margin: 0 !important; padding: 0 !important; background: none !important; }
+.tribe-events-notices > ul > li { font-size: 1.25rem !important; font-weight: 700 !important; color: var(--primary-blue) !important; display: flex !important; align-items: center !important; }
+.tribe-events-notices > ul > li::before { content: '\f017'; font-family: "Font Awesome 6 Free"; font-weight: 400; font-size: 1.6rem; color: var(--secondary-orange); margin-right: 15px; }
+
+/* --- 8. EVENTO SINGOLO: TASTO "TUTTI GLI EVENTI" --- */
+.tribe-events-back { margin: 0 0 25px 0 !important; padding: 0 !important; }
+.tribe-events-back a { font-size: 0 !important; display: inline-flex !important; align-items: center !important; text-decoration: none !important; transition: all 0.3s ease !important; }
+.tribe-events-back a::before { content: '\f060' !important; font-family: "Font Awesome 6 Free" !important; font-weight: 900 !important; font-size: 0.85rem !important; color: var(--primary-blue) !important; margin-right: 10px !important; transition: transform 0.3s ease !important; }
+.tribe-events-back a::after { content: 'TUTTI GLI EVENTI' !important; font-size: 0.85rem !important; font-weight: 900 !important; color: var(--primary-blue) !important; transition: color 0.3s ease !important; font-family: var(--font-main) !important; }
+.tribe-events-back a:hover::before, .tribe-events-back a:hover::after { color: var(--secondary-orange) !important; }
+.tribe-events-back a:hover::before { transform: translateX(-5px) !important; }
+
+
+/* --- 9. MEDIA QUERIES (RESPONSIVE) --- */
+
+/* Tablet & Laptop (Sotto i 1250px) - IMPILAMENTO PER EVENTI FUTURI E PASSATI */
+@media (max-width: 1250px) {
+
+    /* Eventi Futuri*/
+    .tribe-common .tribe-events-calendar-list__event, .tribe-events .tribe-events-calendar-list__event { display: block !important; width: 100% !important; }
+    
+    .tribe-common .tribe-events-calendar-list__event-featured-image-wrapper { display: block !important; width: 100% !important; max-width: 100% !important; border-right: none !important; border-bottom: 1px solid #eee !important; margin: 0 !important; }
+    
+    .tribe-common .tribe-events-calendar-list__event-featured-image { display: block !important; width: 100% !important; height: 300px !important; min-height: auto !important; object-fit: contain !important; object-position: center !important; }
+    
+    .tribe-common .tribe-events-calendar-list__event-details, .tribe-events .tribe-events-calendar-list__event-details { display: block !important; width: 100% !important; max-width: 100% !important; padding: 25px !important; }
+    
+    /*Vista Giornaliera */
+    .tribe-common .tribe-events-calendar-list__event, .tribe-events .tribe-events-calendar-list__event{ display: block !important; width: 100% !important; }
+    
+    .tribe-common .tribe-events-calendar-list__event-featured-image-wrapper{ display: block !important; width: 100% !important; max-width: 100% !important; border-right: none !important; border-bottom: 1px solid #eee !important; margin: 0 !important; }
+    
+    .tribe-common .tribe-events-calendar-list__event-featured-image{ display: block !important; width: 100% !important; height: 300px !important; min-height: auto !important; object-fit: contain !important; object-position: center !important; }
+    
+    .tribe-common .tribe-events-calendar-list__event-details, .tribe-events .tribe-events-calendar-list__event-details{ display: block !important; width: 100% !important; max-width: 100% !important; padding: 25px !important; }
+
+    /* Ultimi Eventi Passati (La data resta a sx, l'articolo si impila. Object-fit Contain per non tagliare le locandine 9:16) */
+    .tribe-events-calendar-latest-past__event { display: block !important; width: 100% !important; max-width: 100% !important; }
+    .tribe-events-calendar-latest-past__event-featured-image-wrapper { display: block !important; width: 100% !important; max-width: 100% !important; margin: 0 0 15px 0 !important; padding: 0 !important; }
+    .tribe-events-calendar-latest-past__event-featured-image { display: block !important; width: 100% !important; height: 300px !important; object-fit: contain !important; object-position: center !important; border-radius: 0 !important; background: transparent !important; }
+    .tribe-events-calendar-latest-past__event-details { display: block !important; width: 100% !important; max-width: 100% !important; padding: 0 !important; }
+}
+
+/* Tablet Verticale & Mobile Orizzontale (Sotto i 768px) */
+@media (max-width: 768px) {
+    /* Liste a 1 singola colonna per tutti */
+    .tribe-common .tribe-events-calendar-list, .tribe-events-calendar-latest-past { grid-template-columns: 1fr !important; max-width: 550px !important; margin-left: auto !important; margin-right: auto !important; }
+    .tribe-events-calendar-latest-past { gap: 40px !important; }
+    .tribe-events-calendar-latest-past__heading { font-size: 1.6rem !important; margin-bottom: 15px !important; }
+    .tribe-common .tribe-events-calendar-list__event-row { max-width: 500px !important; margin-left: auto !important; margin-right: auto !important; }
+    
+    /* Eventi Futuri (Correzioni testo) */
+    .tribe-common .tribe-events-calendar-list__event-description p { font-size: 1rem !important; color: #555 !important; line-height: 1.5 !important; margin: 0 !important; }
+    
+    /* Evento Singolo - Elementi impilati */
+    .tribe-events-event-image, .tribe-events-single .tribe-events-event-image { float: none !important; width: 100% !important; margin: 0 0 30px 0 !important; }
+    .tribe-events-single-section.tribe-events-event-meta { padding: 25px 20px !important; gap: 30px !important; }
+    .tribe-events-venue-map { flex: 1 1 100% !important; height: 300px !important; }
+    .tribe-events-venue-map iframe { height: 300px !important; }
+}
+
+/* ==========================================================================
+   FIX LOCANDINA VERTICALE (Vista Giornaliera / Singolo Evento)
+   ========================================================================== */
+@media (max-width: 480px) {
+    
+    /* Forza la card a diventare verticale (immagine sopra, testo sotto) */
+    .tribe-common .tribe-events-calendar-day__event-content { 
+        display: flex !important; 
+        flex-direction: column !important; 
+        width: 100% !important; 
+    }
+    
+    /* Contenitore dell'immagine */
+    .tribe-common .tribe-events-calendar-day__event-featured-image-wrapper { 
+        display: block !important; 
+        width: 100% !important; 
+        max-width: 100% !important; 
+        flex: none !important;
+        border-right: none !important; 
+        border-bottom: 1px solid #eee !important; 
+        margin: 0 !important; 
+    }
+    
+    /* L'immagine si adatta perfettamente con un'altezza pulita e controllata */
+    .tribe-common .tribe-events-calendar-day__event-featured-image { 
+        display: block !important; 
+        width: 100% !important; 
+        height: 260px !important; /* Altezza fissa e ordinata, identica alle card standard */
+        min-height: unset !important; 
+        object-fit: contain !important; /* Taglia l'eccesso pulito senza deformare */
+        object-position: center top !important; 
+    }
+    
+    /* Contenuto testuale sotto */
+    .tribe-common .tribe-events-calendar-day__event-details { 
+        display: flex !important; 
+        flex-direction: column !important;
+        width: 100% !important; 
+        max-width: 100% !important; 
+        flex: none !important;
+        padding: 20px !important; 
+        min-height: unset !important;
+    }
+}
+
+/* Smartphone (Sotto i 500px) */
+@media (max-width: 500px) {
+    /* Avviso Evento Passato compatto */
+    .tribe-events-single .tribe-events-notices, .tribe-events-notices { padding: 12px 15px !important; margin: 20px 0 !important; }
+    .tribe-events-notices > ul > li { font-size: 0.95rem !important; }
+    .tribe-events-notices > ul > li::before { font-size: 1.2rem !important; margin-right: 10px !important; }
+}
+
+/* Smartphone Piccoli (Sotto i 400px) */
+@media (max-width: 400px) {
+    /* Lista Eventi Futuri - Troncatura extra */
+    .tribe-common .tribe-events-calendar-list__event-description { display: -webkit-box !important; -webkit-line-clamp: 3 !important; line-clamp: 3 !important; -webkit-box-orient: vertical !important; overflow: hidden !important; }
+    html body .tribe-events-calendar-latest-past__heading, .tribe-events-calendar-latest-past__heading { font-size: 1.3rem !important; }
+    
+    /* Singolo Evento - Modifica testi blindata */
+    html body h1.tribe-events-single-event-title, h1.tribe-events-single-event-title, h1.single-news-title { font-size: 1.5rem !important; line-height: 1.4 !important;}
+    html body div.tribe-events-single-event-description h2, div.tribe-events-single-event-description h2 { font-size: 1.2rem !important; margin-top: 15px !important; margin-bottom: 10px !important; }
+    html body h2.tribe-events-single-section-title, h2.tribe-events-single-section-title { font-size: 1.3rem !important; margin-bottom: 15px !important; }
+    html body div.tribe-events-single-event-description p, div.tribe-events-single-event-description p { font-size: 0.95rem !important; }
+    html body div.tribe-events-single-event-description ul li, div.tribe-events-single-event-description ul li, html body div.tribe-events-single-event-description ol li, div.tribe-events-single-event-description ol li { font-size: 0.95rem !important; }
+}
+
+
+/* ==========================================================================
+   FIX: CALENDARIO A TENDINA (DATEPICKER) ANCORATO AL BOTTONE E SCORREVOLE
+   ========================================================================== */
+@media (max-width: 768px) {
+    /* 1. Usiamo il genitore esatto del bottone come "ancora" */
+    .tribe-events-c-top-bar__datepicker {
+        position: relative !important;
+    }
+
+    /* 2. Il contenitore si attacca sotto al bottone, senza allargarsi a tutto schermo */
+    .tribe-events-c-top-bar__datepicker-container {
+        position: absolute !important;
+        top: 100% !important; /* Si appoggia esattamente sotto il bottone */
+        left: 0 !important; /* Allineato a sinistra del bottone */
+        transform: none !important; /* Annulla il centraggio forzato precedente */
+        width: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        z-index: 9999 !important; /* Sta sopra agli altri eventi */
+    }
+
+    /* 3. Il calendario vero e proprio: grandezza compatta, blocca il JS e SCORRE */
+    .tribe-events-c-top-bar__datepicker-container .datepicker {
+        position: relative !important; /* FONDAMENTALE: blocca il JS e permette lo scorrimento */
+        top: 10px !important; /* Lascia un piccolo spazietto dal bottone */
+        left: 0 !important; /* Blocca il calcolo sballato del JS */
+        margin: 0 !important;
+        width: 363px !important; /* La grandezza originale e compatta del calendario */
+        max-width: 90vw !important; /* Sicurezza: non supera mai lo schermo sui telefoni piccolissimi */
+        box-sizing: border-box !important;
+        background-color: #fff !important;
+        border-radius: 8px !important;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+        padding: 0 12px 12px 12px !important;
+    }
+
+    /* 4. Mantiene in ordine la griglia dei numeri per non sformarla */
+    .tribe-events-c-top-bar__datepicker-container .datepicker table {
+        width: 100% !important;
+        margin: 0 !important;
+        table-layout: fixed !important;
+    }
+
+    /* 5. Aggiustiamo i font internamente per farli respirare */
+    .tribe-events-c-top-bar__datepicker-container .datepicker td,
+    .tribe-events-c-top-bar__datepicker-container .datepicker th {
+        padding: 6px 2px !important;
+        font-size: 0.95rem !important;
+        text-align: center !important;
+    }
+}
+
+/* ==========================================================================
+   06. SPORTSPRESS (Navigazione, Partite, Classifiche, Marcatori)
+   ========================================================================== */
+/* Navigazione Sportiva a Schede (Tabs) */
+.subtitle-comp { display: inline-block; line-height: 1.4; color: var(--secondary-orange); font-size: 2rem; }
+.sport-sub-nav { border-bottom: 2px solid #eee; margin-bottom: 10px; text-align: center; }
+.sport-sub-nav ul { padding-left: 0 !important; list-style: none; padding: 0; display: inline-flex; gap: 5px; list-style-type: none !important; margin: 0 !important; }
+.sport-sub-nav a, .sport-sub-nav .active-sport-link { display: block; padding: 15px 15px; font-weight: 900; text-transform: uppercase; font-size: 0.9rem; transition: all 0.3s ease; }
+.sport-sub-nav a { color: var(--primary-blue); text-decoration: none !important;}
+.sport-sub-nav a:hover { color: var(--darker-orange); }
+.sport-sub-nav .active-sport-link { color: var(--darker-orange); border-bottom: 3px solid var(--secondary-orange); cursor: default; }
+.sport-sub-nav ul li { list-style-type: none !important; padding: 0 !important; margin: 0 !important; }
+@media (max-width: 700px) {
+    .sport-sub-nav { overflow-x: auto; -webkit-overflow-scrolling: touch; border-bottom: 1px solid #eee; margin-bottom: 25px; text-align: center; }
+    .sport-sub-nav ul { display: flex; flex-wrap: nowrap; justify-content: center; margin: 0 auto; width: max-content; gap: 0; min-width: 100%; }
+    .sport-sub-nav a, .sport-sub-nav .active-sport-link { padding: 12px 18px; font-size: 0.8rem; white-space: nowrap; }
+}
+@media (max-width: 420px) { .sport-sub-nav a, .sport-sub-nav .active-sport-link { padding: 12px 18px; font-size: 0.65rem; } }
+
+/* Tabelle Base e Clean Look */
+.sp-template { border: none !important; margin-bottom: 50px !important; background: transparent !important; }
+.sp-data-table { width: 100% !important; border-collapse: collapse !important; background: transparent !important; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); font-family: var(--font-main); min-width: 700px; }
+.sp-data-table thead th { background: transparent !important; color: var(--primary-blue) !important; text-transform: uppercase; padding: 20px 5px 15px !important; font-size: 0.95rem !important; font-weight: 700 !important; border-bottom: none !important; text-align: center !important; }
+.sp-data-table td { padding: 18px 5px !important; border: none !important; font-weight: 400 !important; color: var(--primary-blue) !important; text-align: center !important; font-size: 1.1rem !important; }
+.sp-data-table a { pointer-events: none !important; cursor: default !important; color: inherit !important; text-decoration: none !important; }
+.sp-highlight td { background-color: rgba(251, 183, 18, 0.1) !important; border-left: 5px solid var(--accent-yellow) !important; }
+.sp-table-wrapper { overflow-x: auto; width: 100%; -webkit-overflow-scrolling: touch; }
+.sp-table-caption { display: none !important; }
+
+/* Widget Classifica SportsPress */
+.sp-data-table thead, .sp-data-table tbody { display: block; width: 100%; }
+.sp-data-table tr { display: grid; grid-template-columns: 40px 1fr 40px 40px 40px 40px max-content max-content max-content max-content; align-items: center; border-bottom: 1px solid #f0f0f0; transition: background 0.3s ease; }
+.sp-data-table thead tr { border-bottom: 2px solid #e0e0e0 !important; }
+.sp-data-table tbody tr:nth-child(odd) { background-color: #fff !important; }
+.sp-data-table tbody tr:hover { background-color: #fafafa !important; }
+.sp-data-table .data-rank { font-weight: 700 !important; font-size: 1.15rem !important; }
+.sp-data-table .data-name { text-align: left !important; font-weight: 700 !important; display: flex !important; align-items: center; font-size: 1.2rem !important; max-width: fit-content; }
+.sp-data-table .data-name img { margin-right: 15px; max-width: 35px; height: auto; display: block; }
+.sp-data-table .data-f { margin-left: 20px !important; width: 50px !important; }
+.sp-data-table .data-a { width: 50px !important; }
+.sp-data-table .data-gd { width: 50px !important; }
+.sp-data-table .data-pts { margin-left: 25px !important; width: 60px !important; font-weight: 700 !important; font-size: 1.2rem !important; }
+.sp-data-table .data-position_change, .sp-data-table .data-movement { display: none !important; }
+.sp-data-table tbody tr:has(img[src*="USS_Pitt"]) td { color: blue !important; }
+/* .sp-data-table tbody tr:has(img[src*="USS_Pitt"]) { background-color: rgba(240, 92, 53, 0.05) !important; position: relative; } */
+/* .sp-data-table tbody tr:has(img[src*="USS_Pitt"])::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background-color: var(--secondary-orange); z-index: 2; } */
+
+@media (max-width: 756px) {
+    .sp-data-table { min-width: 600px !important; }
+    .sp-data-table tr { grid-template-columns: 40px 1fr 60px 40px 40px 40px 40px max-content max-content max-content !important; }
+    .sp-data-table .data-rank { order: 1; }
+    .sp-data-table .data-name { order: 2; font-size: 1.1rem !important; }
+    .sp-data-table .data-pts { order: 3; margin-left: 0 !important; }
+    .sp-data-table .data-p { order: 4; margin-left: 15px !important; }
+    .sp-data-table .data-w { order: 5; }
+    .sp-data-table .data-d { order: 6; }
+    .sp-data-table .data-l { order: 7; }
+    .sp-data-table .data-f { order: 8; margin-left: 15px !important; }
+    .sp-data-table .data-a { order: 9; }
+    .sp-data-table .data-gd { order: 10; }
+}
+@media (max-width: 400px) {
+    .sp-data-table { min-width: 400px !important; }
+    .sp-data-table tr { grid-template-columns: 30px 1fr 40px 30px 30px 30px 30px max-content max-content max-content !important; }
+    .sp-data-table .data-rank { font-weight: 700 !important; font-size: 0.95rem !important; }
+    .sp-data-table .data-name { font-size: 0.95rem !important; }
+}
+
+/* Partite Stile Manchester City */
+.vicenza-matches-widget { display: flex; flex-direction: column; max-width: 950px; padding: 25px 20px; }
+.vicenza-match-section { width: 100%; }
+.vicenza-widget-title { display: flex; align-items: flex-end; font-size: 1.8rem; color: var(--primary-blue); text-transform: uppercase; font-weight: 900; }
+.vicenza-widget-title span { border-bottom: 4px solid var(--secondary-orange); padding-bottom: 10px; white-space: nowrap; }
+.vicenza-widget-title::after { content: ''; flex-grow: 1; height: 0.8px; background-color: rgba(24, 63, 116, 0.15); }
+.vicenza-match-section .mancity-fixtures { margin-bottom: 0; }
+.home-match-spacing { margin-top: 30px !important; }
+.mancity-fixtures { max-width: 950px; margin: 0 auto; font-family: var(--font-main); }
+/* Stile per il messaggio di "Nessuna partita" nello shortcode personalizzato */
+.mancity-fixtures > p.text-center { font-size: 1.2rem !important; color: #777 !important; text-align: center !important; margin: 20px auto !important; padding: 0 !important; font-weight: 700 !important; display: block !important; }
+
+/* Aggiunge l'iconina a forma di calendario prima del testo */
+.mancity-fixtures > p.text-center::before {
+    content: '\f133'; /* Codice dell'icona calendario di FontAwesome */
+    font-family: "Font Awesome 6 Free"; font-weight: 400; display: block; font-size: 2.5rem; color: var(--accent-yellow); 
+}
+
+/* Nasconde il bottone del calendario se la pagina è vuota (non ci sono tabelle o righe di partite) */
+main:not(:has(.mancity-row)):not(:has(.sp-data-table)) .sp-custom-calendar-wrap { display: none !important; }
+
+h2.mancity-month { font-size: 2.2rem; color: var(--primary-blue); text-transform: uppercase; font-weight: 900; border-bottom: 3px solid #f0f0f0; border-left: none; padding: 20px 0 8px 0; margin: 0px; }
+.mancity {padding: 10px 0 20px; border-bottom: 1px solid #f0f0f0; transition: background 0.3s; }
+.mancity:hover { background: #fafafa; }
+.mancity-row { display: flex; align-items: center; justify-content: space-between; background: transparent; }
+.mc-date { flex: 0 0 110px; font-size: 0.95rem; color: var(--primary-blue); line-height: 1.3; }
+.mc-date strong { font-weight: 900; font-size: 1.1rem; }
+.mc-badge { flex: 0 0 60px; text-align: center; }
+.mc-badge span { display: inline-block; width: 32px; height: 32px; line-height: 32px; border-radius: 50%; font-weight: 900; font-size: 0.85rem; border: 1px solid rgba(0,0,0,0.1); }
+.badge-win { background-color: #00D084; color: var(--primary-blue); }
+.badge-loss { background-color: #cf2e2e; color: var(--bg-light); }
+.badge-draw { background-color: #fff; color: #555 !important; }
+.mc-match { flex: 1; display: flex; align-items: center; justify-content: center; gap: 15px; }
+.mc-team { display: flex; align-items: center; gap: 12px; font-weight: 900; color: var(--primary-blue); font-size: 1.2rem; width: 40%; }
+.mc-home { justify-content: flex-end; text-align: right; }
+.mc-away { justify-content: flex-start; text-align: left; }
+.mc-team img { width: 50px; height: 50px; object-fit: contain;}
+.mc-links { flex: 0 0 130px; text-align: right; margin-right: 7px; }
+.mc-links a { font-weight: 900; font-size: 0.85rem; color: var(--primary-blue); text-transform: uppercase; letter-spacing: 0.5px; display: inline-flex !important; align-items: center !important; transition: color 0.3s ease !important; }
+.mc-links a:hover { color: var(--secondary-orange); }
+.mc-links a i { margin-left: 6px !important; transition: transform 0.3s ease !important; }
+.mc-links a:hover i { transform: translateX(5px) !important; }
+.mc-score { background: #f4f7fa; border: 1px solid rgba(24, 63, 116, 0.1); color: var(--primary-blue); font-weight: 900; font-size: 1.4rem; padding: 5px 15px; border-radius: 30px; display: flex; gap: 10px; align-items: center; justify-content: center; min-width: 100px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
+.mc-score span { color: var(--secondary-orange); }
+.mc-score.time { background: transparent; color: #666; font-size: 1.4rem; border: 1px solid #eee; }
+
+.mc-excerpt { font-size: 0.9rem; text-align: center; line-height: 0.9rem; font-weight: 900; }
+
+@media (min-width: 650px) {
+  .mancity-row { display: grid; grid-template-columns: 110px 60px minmax(0, 1fr) 170px; align-items: center; gap: 0; justify-content: unset; }
+  .mc-date { grid-column: 1; }
+  .mc-badge { grid-column: 2; }
+  .mc-match { grid-column: 3; min-width: 0; }
+  .mc-links { grid-column: 4; width: 170px; text-align: right; justify-self: end; } 
+}
+
+@media (max-width: 900px) {
+    .sr-only-mobile { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; border: 0 !important; }
+    .mc-team img { width: 60px; height: 60px; }
+}
+
+@media (max-width: 650px) {
+    .vicenza-widget-title span { font-size: 1.5rem; }
+    .mc-score { font-size: 1.2rem; padding: 5px 15px; margin: 0 auto; }
+    .mc-score.time { font-size: 1.2rem; }
+    .mc-date > *:last-child { display: none; }
+    .mancity { display: grid; row-gap: 5px; grid-template-columns: 110px minmax(0, 1fr) 110px; grid-template-rows: auto auto; align-items: center; position: relative; }
+    .mancity-row { display: contents; }
+    .mc-date { grid-column: 1; grid-row: 1; }
+    .mc-excerpt { grid-column: 2; grid-row: 1; text-align: center; justify-self: center; font-size: 0.95rem; font-weight: 700; min-width: 0; }
+    .mc-links { grid-column: 3; grid-row: 1; width: 170px; text-align: right; justify-self: end; }
+    .mc-badge { grid-column: 1; grid-row: 2; justify-self: start; align-self: center; margin: 0; z-index: 2; }
+    .mc-match { grid-column: 1 / -1; grid-row: 2; display: grid !important; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; z-index: 1; }
+    .mc-team { width: 100%; font-size: 0.85rem; gap: 6px; }
+    .mc-team.mc-home { justify-content: flex-end; text-align: right; }
+    .mc-team.mc-away { justify-content: flex-start; text-align: left; }
+}
+
+@media (max-width: 410px) {
+    h2.mancity-month { font-size: 1.5rem !important; }
+    .mc-score { font-size: 1.1rem; padding: 4px 10px; }
+    .mc-score.time { font-size: 1.1rem; }
+    .mc-date { font-size: 0.85rem; }
+    .mc-match { gap: 5px; }
+    .mc-links a { font-size: 0.75rem; }
+    .mc-date strong { font-size: 0.95rem;}
+    .mc-score span { font-size: 1.3rem; }
+    .mancity-fixtures > p.no-matches { font-size: 1rem !important; }
+}
+
+
+@media (max-width: 355px) {
+    .mc-team img { width: 50px; height: 50px; }
+    .mc-badge span {width: 28px; height: 28px; line-height: 28px; font-size: 0.75rem;}
+}
+
+/* Pulsante Calendario Partite */
+.sp-custom-calendar-wrap { display: flex !important; justify-content: flex-end !important; margin: 20px 0 40px !important; padding: 0 !important; width: 100% !important; box-sizing: border-box !important; }
+.sp-custom-calendar-btn { display: inline-flex !important; align-items: center !important; justify-content: center !important; padding: 11px 20px !important; border: 1px solid var(--primary-blue) !important; color: var(--primary-blue) !important; background-color: #ffffff !important; font-weight: 700 !important; font-size: 14px !important; font-family: inherit !important; text-decoration: none !important; border-radius: 4px !important; transition: all 0.2s ease !important; cursor: pointer !important; }
+.sp-custom-calendar-btn svg { margin-left: 8px !important; }
+.sp-custom-calendar-btn:hover { background-color: var(--primary-blue) !important; color: #ffffff !important; }
+@media (max-width: 768px) { .sp-custom-calendar-wrap { justify-content: center !important; } .sp-custom-calendar-btn { width: 100% !important; } }
+
+/* Classifica Marcatori e Medaglie */
+.sp-template-player-list .sp-data-table thead tr, .sp-template-player-list .sp-data-table tbody tr { grid-template-columns: 80px max-content 1fr 80px 80px !important; }
+.sp-template-player-list .sp-data-table th.data-position, .sp-template-player-list .sp-data-table td.data-position { text-align: left !important; }
+.sp-template-player-list .sp-data-table th.data-name, .sp-template-player-list .sp-data-table td.data-name { white-space: nowrap !important; }
+.sp-template-player-list .sp-data-table thead th.data-rank { display: flex !important; align-items: center !important; justify-content: center !important; text-align: center !important; }
+.sp-template-player-list .sp-player-list thead th.data-rank { text-align: center !important; justify-self: center !important; }
+.sp-template-player-list .sp-player-list thead th { font-size: 1.2rem !important; }
+.sp-template-player-list .sp-data-table td:nth-last-child(2) { font-size: 1.8rem !important; font-weight: 900 !important; color: var(--primary-blue) !important; }
+.sp-template-player-list .sp-data-table td.data-name { font-size: 1.3rem !important; }
+.sp-data-table tbody td.data-rank { display: flex !important; align-items: center !important; justify-content: center !important; margin: auto !important; font-weight: 900 !important; color: var(--primary-blue) !important; width: 36px !important; height: 36px !important; font-size: 1.2rem !important; border-radius: 50% !important; }
+.sp-data-table tbody td.data-rank.rank-1 { background: linear-gradient(135deg, #FBB712, #D4AF37) !important; color: #fff !important; box-shadow: 0 4px 10px rgba(251, 183, 18, 0.4) !important; }
+.sp-data-table tbody td.data-rank.rank-2 { background: linear-gradient(135deg, #E0E0E0, #9E9E9E) !important; color: #fff !important; box-shadow: 0 4px 10px rgba(158, 158, 158, 0.4) !important; }
+.sp-data-table tbody td.data-rank.rank-3 { background: linear-gradient(135deg, #CD7F32, #A0522D) !important; color: #fff !important; box-shadow: 0 4px 10px rgba(205, 127, 50, 0.4) !important; }
+@media (max-width: 768px) {
+    .sp-template-player-list .sp-data-table { min-width: 0 !important; max-width: 700px !important; }
+    .sp-template-player-list .sp-data-table thead tr, .sp-template-player-list .sp-data-table tbody tr { grid-template-columns: 80px max-content 1fr 80px 80px !important; }
+    .sp-template-player-list .sp-data-table .data-rank, .sp-template-player-list .sp-data-table .data-name, .sp-template-player-list .sp-data-table .data-goals, .sp-template-player-list .sp-data-table .data-pts, .sp-template-player-list .sp-data-table .data-p, .sp-template-player-list .sp-data-table .data-w, .sp-template-player-list .sp-data-table .data-d, .sp-template-player-list .sp-data-table .data-l, .sp-template-player-list .sp-data-table .data-f, .sp-template-player-list .sp-data-table .data-a, .sp-template-player-list .sp-data-table .data-gd { order: initial !important; margin-left: 0 !important; width: auto !important; }
+    .sp-template-player-list .sp-data-table td:nth-last-child(2) { font-size: 1.8rem !important; }
+    .sp-template-player-list .sp-data-table td.data-name { font-size: 1.3rem !important; }
+    .sp-template-player-list .sp-data-table tbody td.data-rank { margin: auto !important; width: 36px !important; height: 36px !important; font-size: 1.2rem !important; }
+}
+@media (max-width: 580px) {
+    .sp-template-player-list .sp-data-table { max-width: 100% !important; }
+    .sp-template-player-list .sp-data-table thead tr, .sp-template-player-list .sp-data-table tbody tr { grid-template-columns: 52px max-content 1fr 52px 52px !important; }
+    .sp-template-player-list .sp-player-list thead th { font-size: 0.95rem !important; padding: 12px 2px 10px !important; }
+    .sp-template-player-list .sp-data-table th, .sp-template-player-list .sp-data-table td { padding: 12px 2px !important; font-size: 0.95rem !important; }
+    .sp-template-player-list .sp-data-table td.data-name { font-size: 1rem !important; line-height: 1.2 !important; }
+    .sp-template-player-list .sp-data-table td:nth-last-child(2) { font-size: 1.25rem !important; }
+    .sp-template-player-list .sp-data-table tbody td.data-rank { width: 28px !important; height: 28px !important; font-size: 0.95rem !important; }
+}
+@media (max-width: 420px) {
+    .sp-template-player-list .sp-data-table tbody tr { display: grid !important; grid-template-columns: 52px 1fr 42px 42px !important; grid-template-areas: "rank name goals pg" "rank role goals pg" !important; align-items: center !important; }
+    .sp-template-player-list .sp-data-table thead tr { grid-template-columns: 52px max-content 1fr 42px 42px !important; }
+    .sp-template-player-list .sp-data-table tbody td.data-rank { grid-area: rank !important; }
+    .sp-template-player-list .sp-data-table tbody td.data-name { grid-area: name !important; }
+    .sp-template-player-list .sp-data-table tbody td.data-position { grid-area: role !important; margin-top: -6px !important; font-size: 0.9rem !important; opacity: 0.9; }
+    .sp-template-player-list .sp-data-table tbody td.data-goals { grid-area: goals !important; }
+    .sp-template-player-list .sp-data-table tbody td.data-appearances { grid-area: pg !important; }
+    .sp-template-player-list .sp-data-table tbody td.data-name, .sp-template-player-list .sp-data-table tbody td.data-position { text-align: left !important; }
+    .sp-template-player-list .sp-data-table tbody td.data-name { padding-bottom: 0 !important; }
+    .sp-template-player-list .sp-data-table tbody td.data-position { padding-top: 0 !important; margin-top: -6px !important; }
+    .sp-table-wrapper .sp-template-player-list .sp-data-table { min-width: 400px; }
+}
+
+/* Pagina Singola Partita (Report & Premium Style) */
+div.sp-section-content-excerpt { display: none !important; }
+main.page-content:has(.sp-section-content) .page-header { padding: 40px 0 0 0 !important; }
+h1.sp-match-main-title { text-align: center !important; color: var(--primary-blue) !important; font-size: 2.8rem !important; font-weight: 900 !important; text-transform: uppercase !important; margin: 30px auto 10px !important; width: 100% !important; }
+.back-link-match { display: inline-flex !important; align-items: center !important; color: var(--primary-blue) !important; font-weight: 900 !important; text-transform: uppercase !important; font-size: 0.85rem !important; margin-top: 25px !important; transition: all 0.3s ease !important; text-decoration: none !important; }
+.back-link-match i { margin-right: 10px !important; transition: transform 0.3s ease !important; }
+.back-link-match:hover { color: var(--darker-orange) !important; }
+.back-link-match:hover i { transform: translateX(-5px) !important; }
+main.page-content:has(.sp-section-content) { display: flex !important; flex-direction: column !important; gap: 0 !important; padding-bottom: 80px !important; }
+.sp-section-content-logos { order: 1 !important; margin: 0 !important; width: 100% !important; }
+.sp-section-content-performance { order: 2 !important; margin-bottom: 40px !important; }
+.sp-section-content-results { order: 3 !important; margin-bottom: 20px !important; }
+.sp-section-content-details { order: 4 !important; margin-bottom: 20px !important; }
+.sp-section-content-venue { order: 5 !important; margin-bottom: 20px !important; }
+.sp-section-content { order: 10; }
+main.page-content .sp-template { margin-bottom: 0 !important; }
+main.page-content .sp-event-logos-2 { margin: 40px auto 40px !important; }
+.sp-event-logos-2 { display: flex !important; align-items: center !important; justify-content: center !important; gap: 15px !important; margin: 40px auto 60px !important; max-width: 1100px !important; }
+.sp-team-logo { display: flex !important; align-items: center !important; gap: 20px !important; flex: 1 !important; }
+.sp-event-logos-2 .sp-team-logo:first-of-type { justify-content: flex-end !important; text-align: right !important; }
+.sp-event-logos-2 .sp-team-logo:last-of-type { justify-content: flex-start !important; text-align: left !important; }
+.sp-event-logos-2 .sp-team-logo img { width: 110px !important; height: 110px !important; object-fit: contain !important; margin: 0 !important; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.08)) !important; }
+.sp-event-logos-2 .sp-team-name { font-size: 1.8rem !important; color: var(--primary-blue) !important; font-weight: 900 !important; text-transform: uppercase !important; white-space: normal !important; line-height: 1.2 !important; letter-spacing: -0.5px !important; }
+.sp-dynamic-center { white-space: nowrap !important; padding: 10px 40px !important; border-radius: 60px !important; margin: 0 15px !important; letter-spacing: 1px !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; }
+.sp-dynamic-center.is-score { font-size: 2.8rem !important; color: var(--primary-blue) !important; font-weight: 900 !important; background: #fff !important; border: 2px solid var(--primary-blue) !important; box-shadow: 0 8px 20px rgba(0,0,0,0.05) !important; }
+.sp-dynamic-center.is-time { font-size: 2rem !important; color: #777 !important; font-weight: 700 !important; border: 2px dashed #ddd !important; background: #fafafa !important; }
+.sp-template-event-performance h2.sp-table-caption, .sp-template-event-performance h4.sp-table-caption { display: none !important; }
+.sp-section-content-results .sp-table-wrapper, .sp-section-content-details .sp-table-wrapper { overflow-x: auto !important; width: 100% !important; -webkit-overflow-scrolling: touch !important; }
+.sp-section-content-venue .sp-template-event-venue { width: 100% !important; padding-bottom: 15px !important; }
+.sp-section-content-venue .sp-data-table { min-width: 0 !important; table-layout: fixed !important; }
+.sp-section-content-venue .sp-data-table thead th, .sp-section-content-venue .sp-data-table td { white-space: normal !important; word-wrap: break-word !important; }
+.sp-section-content-results .sp-data-table, .sp-section-content-details .sp-data-table { min-width: 500px !important; }
+.sp-section-content-results .sp-data-table, .sp-section-content-details .sp-data-table, .sp-section-content-venue .sp-data-table { background: transparent !important; border-radius: 12px !important; overflow: hidden !important; border: none !important; border-collapse: separate !important; border-spacing: 0 !important; width: 100% !important; margin: 0 !important; box-shadow: none !important; }
+.sp-section-content-results .sp-data-table thead th, .sp-section-content-details .sp-data-table thead th, .sp-section-content-venue .sp-data-table thead th { background-color: #fff !important; color: var(--primary-blue) !important; font-weight: 900 !important; text-transform: none !important; border: none !important; padding: 20px 15px !important; font-size: 1rem !important; text-align: center !important; }
+.sp-section-content-results .sp-data-table td, .sp-section-content-details .sp-data-table td, .sp-section-content-venue .sp-data-table td { border: none !important; padding: 18px 15px !important; color: var(--primary-blue) !important; font-weight: 700 !important; text-align: center !important; transition: background 0.2s ease, box-shadow 0.2s ease !important; }
+.sp-section-content-results .sp-data-table tbody tr, .sp-section-content-details .sp-data-table tbody tr, .sp-section-content-venue .sp-data-table tbody tr { background-color: transparent !important; }
+.sp-section-content-results .sp-data-table tbody tr.odd td, .sp-section-content-details .sp-data-table tbody tr.odd td, .sp-section-content-venue .sp-data-table tbody tr.odd td { background-color: transparent !important; }
+.sp-section-content-results .sp-data-table tbody tr.even td, .sp-section-content-details .sp-data-table tbody tr.even td, .sp-section-content-venue .sp-data-table tbody tr.even td { background-color: #fff !important; }
+.sp-section-content-results .data-name { text-align: left !important; }
+.sp-section-content-results .sp-data-table tbody tr:hover td, .sp-section-content-details .sp-data-table tbody tr:hover td, .sp-section-content-venue .sp-data-table tbody tr:hover td { background-color: #fafafa !important; }
+.sp-event-details tr, .sp-event-results tr, .sp-event-venue tr { display: table-row !important; border-bottom: 1px solid #f0f0f0 !important; }
+.sp-event-details thead, .sp-event-details tbody, .sp-event-results thead, .sp-event-results tbody, .sp-event-venue thead, .sp-event-venue tbody { display: table-row-group !important; width: auto !important; }
+.sp-event-details th, .sp-event-details td, .sp-event-results th, .sp-event-results td, .sp-event-venue th, .sp-event-venue td { display: table-cell !important; text-align: center !important; }
+.sp-event-details tbody td:first-child, .sp-event-results tbody td:first-child, .sp-event-venue tbody td:first-child { text-align: left !important; }
+.sp-template-event-performance-icons tr:first-child td { font-weight: 900 !important; border-top: none !important; }
+.sp-data-table th.data-name, .sp-data-table td.data-name { max-width: none !important; width: auto !important; }
+.sp-event-performance-tables { display: flex !important; gap: 40px !important; justify-content: center !important; max-width: 1000px !important; margin: 0 auto !important; width: 100% !important; align-items: flex-start !important; }
+.sp-template-event-performance { width: 100% !important; margin: 0 0 40px 0 !important; background: transparent !important; box-shadow: none !important; border: none !important; padding: 0 !important; overflow: visible !important; }
+.sp-template-event-performance .sp-table-wrapper { overflow: visible !important; width: 100% !important; }
+.sp-template-event-performance table { display: table !important; min-width: 0px !important; width: 100% !important; margin: 0 0 25px 0 !important; background: #ffffff !important; border-radius: 12px !important; box-shadow: 0 10px 30px rgba(0,0,0,0.05) !important; border-bottom: 4px solid var(--secondary-orange) !important; border-collapse: separate !important; border-spacing: 0 !important; overflow: hidden !important; table-layout: auto !important; }
+.sp-template-event-performance thead { display: none !important; }
+.sp-template-event-performance tbody { display: table-row-group !important; }
+.sp-template-event-performance tbody tr { display: table-row !important; border-bottom: 1px solid #f0f4f8 !important; background: transparent !important; }
+.sp-template-event-performance tbody tr:last-child { border-bottom: none !important; }
+.sp-template-event-performance tbody tr.odd td { background-color: #f7f9fc !important; }
+.sp-template-event-performance tbody tr td { transition: background-color 0.3s ease; }
+.sp-template-event-performance tbody tr:hover td { background-color: #edf2f8 !important; }
+.sp-template-event-performance tbody tr:hover td:first-child { box-shadow: inset 4px 0 0 var(--secondary-orange) !important; }
+.sp-template-event-performance td { display: table-cell !important; padding: 0.6rem 10px !important; border: none !important; vertical-align: middle !important; color: var(--primary-blue) !important; }
+.sp-template-event-performance td.data-number { white-space: nowrap !important; font-weight: 700 !important; opacity: 0.75 !important; text-align: left !important; padding-left: 20px !important; width: 45px !important; }
+.sp-template-event-performance td.data-name { white-space: nowrap !important; font-weight: 900 !important; text-align: left !important; }
+.sp-template-event-performance td.sp-performance-icons {font-family: var(--font-icons) !important; text-align: right !important; white-space: nowrap !important; padding-right: 20px !important;}
+.sp-icon-multiplier {font-weight: 550 !important;}
+.sp-template-event-performance td:not(.data-number):not(.data-name):not(.sp-performance-icons) { display: none !important; }
+.sp-template-event-performance .sp-event-performance .sp-player-position { display: none !important; }
+.sp-icon-multiplier { line-height: 1.5; font-size: 1.2rem; font-family: var(--font-family); color: var(--primary-blue) !important;  width: auto !important; height: auto !important;}
+.sp-icon-soccerball { line-height: 1.5; font-size: 1.2rem; color: var(--primary-blue) !important; width: auto !important; height: auto !important;}
+/* ==========================================================================
+   STILE SEZIONE STAFF TECNICO (PARTITE)
+   ========================================================================== */
+.sp-template-event-staff { background: #ffffff !important; border-radius: 12px !important; padding: 15px 20px !important; display: block !important; }
+.sp-template-event-staff::before { content: 'Staff Tecnico' !important; display: block !important; font-family: var(--font-main) !important; font-size: 1.3rem !important; color: var(--primary-blue) !important; font-weight: 900 !important; text-transform: uppercase !important; margin-bottom: 10px !important; line-height: 1.2 !important; }
+/* Traduzione Staff Tecnico in Inglese */
+html[lang="en-GB"] .sp-template-event-staff::before {
+    content: "Technical Staff " !important;
+}
+.sp-template-event-staff .sp-event-staff { margin: 0 !important; line-height: 2.2 !important; color: #555 !important; font-weight: 700 !important; text-transform: uppercase !important; font-size: 0.85rem !important; letter-spacing: 0.5px !important; }
+.sp-event-staff .sp-no-link-name { color: var(--primary-blue) !important; font-size: 1.1rem !important; font-weight: 900 !important; text-transform: none !important; letter-spacing: normal !important; margin-left: 8px !important; }
+/* Stili Nomi senza Link (Classifiche, Marcatori, Partite) */
+.sp-event-staff .sp-no-link-name, .sp-event-performance td.data-name .sp-no-link-name, .sp-template-player-list td.data-name .sp-no-link-name, .sp-template-player-list td.data-team .sp-no-link-name, .sp-template-league-table td.data-name .sp-no-link-name { color: var(--primary-blue) !important; font-weight: 900 !important; }
+.sp-event-performance td.data-name .sp-no-link-name { color: var(--primary-blue) !important; font-weight: 900 !important; }/* ==========================================================================
+   INVERSIONE ORDINE: STAFF SOPRA, GIOCATORI SOTTO
+   ========================================================================== */
+.sp-template-event-performance .sp-table-wrapper { display: flex !important; flex-direction: column !important; max-width: 480px; margin: auto;}
+.sp-template-event-performance .sp-table-wrapper > table { order: 2 !important; }
+.sp-template-event-performance .sp-table-wrapper > .sp-template-event-staff { order: 1 !important; margin-top: 0 !important; margin-bottom: 15px !important; border-bottom: 5px solid var(--secondary-orange) !important; }
+/* ========================================= */
+/* FIX FORMAZIONI SPORTSPRESS CON IL BORDO   */
+/* ========================================= */
+/* Su PC: Nasconde i titoli delle squadre sopra le formazioni (2 colonne) */
+@media (min-width: 769px) {
+    main.page-content .sp-template-event-performance h2.sp-table-caption { display: none !important; }
+}
+
+@media (max-width: 1000px) {
+    .sp-event-performance-tables { gap: 25px !important; }
+    .sp-event-logos-2 .sp-team-name { font-size: 1.6rem !important;}
+    .sp-dynamic-center.is-score { font-size: 2.5rem !important; padding: 8px 30px !important; margin: 10px 0 !important; } 
+    .sp-dynamic-center.is-time { font-size: 2rem !important; padding: 8px 25px !important; margin: 10px 0 !important; }
+    .sp-event-logos-2 .sp-team-logo img { width: 100px !important; height: 100px !important; }  
+}
+
+@media (max-width: 768px) {
+    main.page-content .sp-template-event-performance h2.sp-table-caption { display: block !important; width: fit-content !important; margin: 15px auto 15px auto !important; text-align: left !important; }
+    .sp-template-event-logos .sp-team-name { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; white-space: nowrap !important; border: 0 !important; }
+    h1.sp-match-main-title { font-size: 2.2rem !important; margin: 20px auto 5px !important; }
+    .sp-template-event-performance h2.sp-table-caption, .sp-template-event-performance h4.sp-table-caption { display: block !important; text-align: center !important; font-size: 1.6rem !important; color: var(--primary-blue) !important; margin: 0 0 15px 0 !important; text-transform: uppercase !important; font-weight: 900 !important; border: none !important; }
+    .sp-section-content-results .sp-data-table thead th, .sp-section-content-details .sp-data-table thead th, .sp-section-content-venue .sp-data-table thead th { padding: 12px 10px !important; font-size: 0.85rem !important; }
+    .sp-section-content-results .sp-data-table td, .sp-section-content-details .sp-data-table td, .sp-section-content-venue .sp-data-table td { padding: 12px 10px !important; font-size: 0.9rem !important; }
+    .sp-event-logos-2 { display: flex !important; flex-direction: row !important; align-items: center !important; justify-content: center !important; gap: 15px !important; margin: 20px auto 30px !important; width: 100% !important; }
+    .sp-event-logos-2 .sp-team-logo, .sp-event-logos-2 .sp-team-logo:first-of-type, .sp-event-logos-2 .sp-team-logo:last-of-type { width: auto !important; flex: 0 1 auto !important; justify-content: center !important; flex-direction: column !important; text-align: center !important; }
+    .sp-event-logos-2 .sp-team-logo img { width: 100px !important; height: 100px !important; margin: 0 !important; }
+    .sp-dynamic-center.is-score { font-size: 2.2rem !important; padding: 8px 35px !important; margin: 10px 0 !important; }
+    .sp-dynamic-center.is-time { font-size: 1.6rem !important; padding: 8px 25px !important; margin: 10px 0 !important; }
+    .sp-template-event-performance .sp-table-wrapper { overflow-x: auto !important; overflow-y: hidden !important; -webkit-overflow-scrolling: touch !important; }
+    .sp-event-performance-tables { flex-direction: column !important; gap: 20px !important; }
+    .sp-template-event-performance td, .sp-template-event-performance td.data-name, .sp-template-event-performance td.data-number, .sp-template-event-performance td.sp-performance-icons, .sp-event-staff .sp-no-link-name  { font-size: 1.1rem !important; }
+    main.page-content .sp-template-event-performance h2.sp-table-caption { display: block !important; width: fit-content !important; margin: 15px auto !important; text-align: left !important; }
+    main.page-content .sp-template-event-performance h2.sp-table-caption::after { left: 0 !important; transform: none !important; }
+}
+
+@media (max-width: 530px) { 
+    .sp-event-logos-2 { gap: 10px !important; } 
+    .sp-event-logos-2 .sp-team-logo img { width: 85px !important; height: 85px !important; } 
+    .sp-dynamic-center.is-score { font-size: 1.5rem !important; padding: 6px 18px !important; margin: 5px 0 !important; } 
+    .sp-dynamic-center.is-time { font-size: 1.2rem !important; padding: 6px 14px !important; margin: 5px 0 !important; } 
+}
+
+@media (max-width: 370px) { 
+    .sp-event-logos-2 { gap: 10px !important; } 
+    .sp-event-logos-2 .sp-team-logo img { width: 55px !important; height: 55px !important; } 
+}
+
+@media (max-width: 390px) {
+    .sp-event-performance-tables { flex-direction: column !important; gap: 20px !important; }
+    .sp-template-event-performance td, .sp-template-event-performance td.data-name, .sp-template-event-performance td.data-number, .sp-template-event-performance td.sp-performance-icons, .sp-event-staff .sp-no-link-name { font-size: 0.9rem !important; }
+    .sp-icon-multiplier, .sp-icon-soccerball { font-size: 0.9rem;}
+}
+@media (max-width: 400px) {
+    #sp_openstreetmaps_container { height: 250px !important; }
+}
+
+/* ==========================================================================
+   07. FOOTER E ANIMAZIONI EXTRA
+   ========================================================================== */
+.main-footer { background-color: var(--primary-blue); color: var(--text-light); padding: 40px 0 20px; }
+.footer-content { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; margin-bottom: 30px; }
+.footer-col { flex: 1; min-width: 268px; }
+.footer-col p { color: #e0e0e0; font-size: 0.95rem; line-height: 1.7; }
+.footer-col ul { list-style: none; }
+.footer-col a { color: #e0e0e0; font-size: 0.95rem; display: inline-block; transition: all 0.3s ease; }
+.footer-col a:hover, .footer-col a:focus-visible { color: var(--accent-yellow); transform: translateX(5px); }
+.footer-col .footer-title { color: var(--accent-yellow) !important; font-size: 1.2rem !important; margin-bottom: 25px !important; text-transform: uppercase !important; position: relative !important; padding-bottom: 10px !important; font-weight: 900 !important; }
+.footer-col .footer-title::after { content: '' !important; position: absolute !important; left: 0 !important; bottom: 0 !important; width: 50px !important; height: 3px !important; background-color: var(--secondary-orange) !important; }
+.footer-social { display: flex; gap: 15px; margin-top: 20px; }
+.footer-social a { display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-light); font-size: 1.2rem; transition: all 0.3s ease; }
+.footer-social a:hover, .footer-social a:focus-visible { background-color: var(--secondary-orange); border-color: var(--secondary-orange); color: var(--text-light); transform: translateY(-3px); }
+.footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1) !important; padding: 20px 20px 0px 20px; font-size: 0.9rem; color: #aaa; }
+.legal-string { font-size: 0.85rem !important; line-height: 1.8 !important; color: rgba(255, 255, 255, 0.7) !important; margin-bottom: 8px !important; text-transform: uppercase !important; }
+.legal-string strong { color: #ffffff !important; font-weight: 900 !important; letter-spacing: 0.5px !important; }
+.copyright-string { font-size: 0.8rem !important; margin-bottom: 0 !important; }
+.legal-item { white-space: nowrap; display: inline-block; }
+.legal-item:not(:last-child)::after { content: " | "; padding: 0 8px; color: rgba(255, 255, 255, 0.5); }
+.footer-col ul li { line-height: 1.7 !important; }
+.footer-col ul li a { display: block !important; width: fit-content; }
+
+/* Stile per il separatore */
+.footer-divider {
+    margin: 0 10px;
+}
+
+/* Link ad alta leggibilità senza opacità */
+.developer-link {
+    color: #ffffff; /* Bianco puro per massimo contrasto */
+    text-decoration: underline;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    opacity: 0.8;
+}
+
+/* Hover effect: richiama il colore arancione dei titoli del footer */
+.developer-link:hover {
+    color: #ff9800; /* Cambia con l'esatto codice esadecimale del tuo arancione se diverso */
+    text-decoration: none;
+}
+
+/* Solo su schermi Desktop: proporzioni personalizzate */
+@media (min-width: 700px) {
+    .footer-content > .footer-col:nth-child(1) { flex: 2; max-width: 45%; }
+    .footer-content > .footer-col:nth-child(2) { flex: 1; max-width: 25%; }
+    .footer-content > .footer-col:nth-child(3) { flex: 1.5; max-width: 30%; }
+}
+
+@media (max-width: 700px) {
+    .footer-content { flex-direction: column; text-align: center; gap: 50px; }
+    .footer-col .footer-title::after { left: 50% !important; transform: translateX(-50%) !important; }
+    .footer-col ul li a { margin: 0 auto !important; }
+    .footer-col a:hover { transform: none; }
+    .footer-social { justify-content: center; }
+    .legal-string { display: flex !important; flex-direction: column !important; gap: 6px !important; align-items: center !important; }
+    .legal-item { white-space: normal !important; text-align: center !important; line-height: 1.4 !important; }
+    .legal-item::after { content: none !important; }
+    
+    /* Regole per impilare copyright e crediti su mobile */
+    .copy-block { 
+        display: block; 
+        margin-bottom: 5px; 
+    }
+    .footer-divider { 
+        display: none; 
+    }
+}
+
+/* Animazioni allo Scroll (Fade in up) 
+.fade-in-up { opacity: 0 !important; transform: translateY(40px) !important; transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1) !important; }
+.fade-in-up.is-visible { opacity: 1 !important; transform: translateY(0) !important; }
+@media (prefers-reduced-motion: reduce) { .fade-in-up { opacity: 1 !important; transform: none !important; transition: none !important; } }*/
+
+
+/* ==========================================================================
+   FIX COMPLIANZ: Correzione bug "The title" nel banner inglese
+   ========================================================================== */
+/* 1. Rimpicciolisce a zero il testo originale rotto (solo nella versione inglese) */
+html[lang="en-GB"] a.cmplz-link.cookie-statement,
+html[lang="en-GB"] a.cmplz-link.privacy-statement {
+    font-size: 0 !important;
+}
+
+/* 2. Inietta la dicitura corretta per la Cookie Policy */
+html[lang="en-GB"] a.cmplz-link.cookie-statement::after {
+    content: "Cookie Policy" !important;
+    font-size: var(--cmplz_link_font_size) !important;
+}
+
+/* 3. Inietta la dicitura corretta per la Privacy Policy */
+html[lang="en-GB"] a.cmplz-link.privacy-statement::after {
+    content: "Privacy Policy" !important;
+    font-size: var(--cmplz_link_font_size) !important;
+}
+
+.cmplz-btn { border: 1px solid var(--primary-blue) !important; }
+
+/* ==========================================================================
+   FIX STILE COMPLIANZ (Cookie Policy)
+   ========================================================================== */
+#cmplz-document, .cmplz-document.cmplz-document { max-width: 1100px !important; margin: 0 auto 50px auto !important; font-family: var(--font-main) !important; font-size: 1.15rem !important; color: #333 !important; line-height: 1.7 !important; }
+#cmplz-document p, .cmplz-document.cmplz-document p { font-size: 1.15rem !important; margin-bottom: 20px !important; }
+#cmplz-document h2, .cmplz-document.cmplz-document h2 { color: var(--primary-blue) !important; font-weight: 900 !important; margin: 35px 0 15px 0 !important; text-transform: none !important; font-size: 1.8rem !important; border-left: 5px solid var(--accent-yellow) !important; padding-left: 15px !important; display: block !important; }
+#cmplz-document h3, .cmplz-document.cmplz-document h3 { color: var(--primary-blue) !important; font-weight: 900 !important; margin: 35px 0 15px 0 !important; text-transform: none !important; font-size: 1.4rem !important; }
+#cmplz-document a, .cmplz-document.cmplz-document a { color: var(--primary-blue) !important; text-decoration: underline !important; text-decoration-thickness: 2px !important; text-underline-offset: 3px !important; font-weight: 700 !important; }
+#cmplz-document a:hover, .cmplz-document.cmplz-document a:hover { color: var(--darker-orange) !important; text-decoration-color: var(--darker-orange) !important; }
+
+/* Liste Complianz */
+#cmplz-document p:has(+ ul), .cmplz-document.cmplz-document p:has(+ ul), #cmplz-document p:has(+ ol), .cmplz-document.cmplz-document p:has(+ ol) { margin-bottom: 8px !important; }
+#cmplz-document ul, .cmplz-document.cmplz-document ul, #cmplz-document ol, .cmplz-document.cmplz-document ol { list-style-type: disc !important; padding-left: 25px !important; margin-bottom: 30px !important; color: #333 !important; }
+#cmplz-document ul li, .cmplz-document.cmplz-document ul li, #cmplz-document ol li, .cmplz-document.cmplz-document ol li { margin-bottom: 12px !important; line-height: 1.6 !important; padding-left: 5px !important; font-size: 1.15rem !important; color: inherit !important; }
+#cmplz-document ul li::marker, .cmplz-document.cmplz-document ul li::marker, #cmplz-document ol li::marker, .cmplz-document.cmplz-document ol li::marker { color: var(--secondary-orange) !important; font-weight: bold !important; font-size: 1.1em !important; }
+
+/* Responsive Complianz */
+@media (max-width: 700px) { #cmplz-document h2, .cmplz-document.cmplz-document h2 { font-size: 1.6rem !important; } }
+@media (max-width: 400px) { #cmplz-document h2, .cmplz-document.cmplz-document h2 { font-size: 1.3rem !important; } #cmplz-document p, .cmplz-document.cmplz-document p, #cmplz-document ul li, .cmplz-document.cmplz-document ul li { font-size: 1rem !important; } }
+
+/* ==========================================================================
+   STILI SELETTORE LINGUA (TRANSLATEPRESS)
+   ========================================================================== */
+/* Sposta il bottone a sinistra per non coprire i cookie (Forzato) */
+.trp-language-switcher { right: 190px !important; }
+@media (max-width: 768px) {
+  .trp-language-switcher { right: 10% !important; }
+}
+.trp-language-item {padding: 2px 10px !important;}
+.trp-flag-image {width: 20px !important;}
+
+
+
+/* ==========================================================================
+   SELETTORE COMPETIZIONI
+   ========================================================================== */
+
+/* Box Selettore Competizioni */
+.competition-selector {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 15px auto 40px;
+    background: #fff;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border-left: 5px solid var(--accent-yellow);
+    width: fit-content;
+}
+.competition-selector .comp-label {
+    font-weight: 900;
+    color: var(--primary-blue);
+    text-transform: uppercase;
+    font-size: 0.95rem;
+    margin-right: 5px;
+}
+.competition-selector .comp-label i {
+    color: var(--secondary-orange);
+    margin-right: 5px;
+}
+.comp-pill {
+    background: var(--bg-light);
+    color: var(--primary-blue) !important;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(24, 63, 116, 0.1);
+}
+.comp-pill:hover {
+    background: rgba(235, 90, 45, 0.1);
+    color: var(--darker-orange) !important;
+    border-color: rgba(235, 90, 45, 0.3);
+}
+.comp-pill.active {
+    background: var(--primary-blue);
+    color: #fff !important;
+    box-shadow: 0 4px 10px rgba(24, 63, 116, 0.2);
+    border-color: var(--primary-blue);
+    cursor: default;
+}
+
+/* Adattamento Mobile */
+@media (max-width: 600px) {
+    .competition-selector { flex-direction: column; align-items: stretch; border-left: none; border-top: 5px solid var(--accent-yellow); padding: 15px; width: 100%; }
+    .competition-selector .comp-label { text-align: center; margin-bottom: 5px; margin-right: 0; }
+    .comp-pill { text-align: center; }
+}
+
+/* Stile per i Badge di Stato Competizione */
+.h1-sportspress { margin-bottom: 0 !important; }
+.badge-wrapper { margin-bottom: 30px; }
+.status-badge {
+    display: inline-block;
+    font-size: 0.9rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+}
+.badge-corso { background-color: #28a745; color: #fff; }
+.badge-finita { background-color: #6c757d; color: #fff; }
+.badge-attesa { background-color: var(--accent-yellow); color: var(--primary-blue); }
+
+@media (max-width: 400px) {
+    .status-badge { font-size: 0.8rem; padding: 5px 12px; }
+}
+
+/*-------------------------*/
+
+/* ==========================================================================
+   LAYOUT SPLIT HOME PAGE (Lista Eventi + Calendario Custom)
+   ========================================================================== */
+
+/* CONTENITORE PRINCIPALE GRIGLIA */
+.eventi-split-container {
+    display: grid;
+    grid-template-columns: 1fr 380px; /* Calendario leggermente più largo per respirare */
+    gap: 40px;
+    align-items: stretch; /* Obbliga le due colonne ad avere la stessa altezza */
+    margin-top: 45px; /* AGGIUNTO: distanzia la griglia dal sottotitolo in alto */
+    margin-bottom: 25px;
+}
+
+/* COLONNA SINISTRA (Le 2 card si distanziano per riempire lo spazio verticale) */
+.eventi-lista-compatta {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Spinge la prima card su e la seconda giù */
+    gap: 30px; 
+}
+
+/* COLONNA DESTRA (Calendario) */
+.eventi-calendario-widget {
+    background: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+    border-top: 5px solid var(--primary-blue);
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra il calendario in verticale se la colonna sinistra è più alta */
+}
+
+/* -------------------------------------------
+   MINI-CARD EVENTO (STILE ORIGINALE RECUPERATO)
+   ------------------------------------------- */
+.evento-compatto-card {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    background: #fff;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    border-bottom: 5px solid var(--secondary-orange); /* Il bordo arancione che volevi */
+    transition: transform 0.3s ease;
+    height: 100%; /* Si adatta alla colonna */
+}
+
+.evento-compatto-card:hover {
+    transform: translateY(-5px);
+}
+
+/* FIX: Se c'è un solo evento in programma */
+.evento-compatto-card:only-child {
+    height: auto !important; /* Toglie lo stiramento e lascia l'altezza naturale */
+}
+
+.eventi-lista-compatta:has(.evento-compatto-card:only-child) {
+    justify-content: center !important; /* Centra la singola card verticalmente */
+}
+
+/* -------------------------------------------
+   MINI-CARD EVENTO (LARGHEZZA FISSA E LOCANDINA INTERA)
+   ------------------------------------------- */
+.evento-compatto-img {
+    width: 155px; /* PORTATO DA 130 A 190 PIXEL per locandine molto più larghe */
+    flex-shrink: 0;
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: #f8f9fa;
+    border-right: 1px solid #eee;
+}
+
+.evento-compatto-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    justify-content: center;
+}
+
+/* Il riquadro Blu e Giallo! */
+.evento-compatto-data {
+    align-self: flex-start;
+    background-color: var(--primary-blue);
+    color: #fff;
+    border-left: 4px solid var(--accent-yellow);
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.evento-compatto-titolo {
+    margin: 0 0 10px 0;
+    font-size: 1.4rem;
+    line-height: 1.2;
+}
+
+.evento-compatto-titolo a {
+    color: var(--primary-blue);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.evento-compatto-titolo a:hover {
+    color: var(--secondary-orange);
+}
+
+.evento-compatto-excerpt {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.evento-compatto-info .read-more {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--primary-blue);
+    margin-top: auto; /* Lo spinge in fondo */
+}
+
+.evento-compatto-info .read-more:hover {
+    color: var(--secondary-orange);
+}
+
+/* -------------------------------------------
+   STILI MINI CALENDARIO CON FRECCE
+   ------------------------------------------- */
+.custom-cal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+    color: var(--primary-blue);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    padding: 0 10px;
+}
+
+.cal-nav-btn {
+    background: transparent;
+    border: none;
+    color: var(--secondary-orange);
+    cursor: pointer;
+    padding: 5px 10px;
+    font-size: 1.1rem;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.cal-nav-btn:hover {
+    transform: scale(1.2);
+    color: var(--primary-blue);
+}
+
+/* LA MAGIA È QUI: table-layout fixed forza le 7 colonne ad essere identiche */
+.custom-mini-calendar {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    table-layout: fixed; 
+}
+
+.custom-mini-calendar th {
+    padding: 8px 0;
+    color: #444; 
+    font-weight: 700; 
+    font-size: 0.9rem;
+}
+
+/* Rendiamo le celle relative per centrare i cerchi e diamo un'altezza fissa */
+.custom-mini-calendar td {
+    padding: 0; 
+    height: 40px; 
+    font-size: 0.95rem;
+    color: #444;
+    vertical-align: middle; 
+    position: relative; 
+    z-index: 1;
+}
+
+/* Pallino cliccabile centrato in verticale e orizzontale */
+.custom-mini-calendar td.has-event a {
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background-color: var(--darker-orange);
+    color: #fff;
+    border-radius: 50%;
+    text-decoration: none;
+    font-weight: 900;
+    transition: all 0.3s ease;
+    margin: 0 auto;
+}
+
+.custom-mini-calendar td.has-event a:hover {
+    background-color: var(--primary-blue);
+    transform: scale(1.1);
+}
+
+/* Giorno Corrente (Oggi) */
+.custom-mini-calendar td.today {
+    font-weight: 900;
+    color: var(--primary-blue);
+}
+
+/* L'anello blu disegnato in sottofondo per non scombinare la tabella */
+.custom-mini-calendar td.today:not(.has-event)::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 32px;
+    height: 32px;
+    border: 2px solid var(--primary-blue);
+    border-radius: 50%;
+    z-index: -1; 
+}
+
+/* Legenda centrata con flexbox */
+.custom-cal-legend {
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.legend-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+.event-dot { background-color: var(--darker-orange); }
+.today-dot { background-color: var(--primary-blue); }
+
+/* Stile per il link del mese nel calendario */
+.cal-month-link {
+    color: var(--primary-blue);
+    text-decoration: none !important;
+    transition: color 0.3s ease;
+}
+
+.cal-month-link:hover {
+    color: var(--darker-orange);
+}
+
+/* -------------------------------------------
+   RESPONSIVE
+   ------------------------------------------- */
+@media (max-width: 992px) {
+    /* Passa a colonna singola su Tablet */
+    .eventi-split-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        max-width: 800px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+}
+
+@media (max-width: 600px) {
+    .evento-compatto-img {
+        width: 125px; /* Scalato proporzionalmente per i tablet piccoli */
+    }
+    .evento-compatto-info {
+        padding: 15px;
+    }
+    .evento-compatto-titolo {
+        font-size: 1.15rem;
+    }
+    .evento-compatto-excerpt {
+        display: none; /* Nasconde l'estratto su mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .evento-compatto-card {
+        flex-direction: row;
+        min-height: 120px; /* L'altezza si riduce, quindi stringiamo anche la foto... */
+    }
+    .evento-compatto-img {
+        width: 95px; /* ...a 95px per mantenere l'effetto verticale (locandina) */
+    }
+    .evento-compatto-info {
+        padding: 12px;
+    }
+    .evento-compatto-data {
+        font-size: 0.65rem;
+        padding: 4px 8px;
+        margin-bottom: 8px;
+        border-left-width: 3px;
+    }
+    .evento-compatto-titolo {
+        font-size: 1rem;
+        margin-bottom: 5px;
+    }
+    .evento-compatto-info .read-more {
+        font-size: 0.75rem;
+    }
+}
+
+/* ==========================================================================
+   TASTO TORNA SU
+   ========================================================================== */
+.back-to-top-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary-blue);
+    color: #ffffff;
+    border: none;
+    border-radius: 50%; /* Rotondo, coerente con le icone social */
+    font-size: 1.2rem;
+    box-shadow: 0 4px 15px rgba(24, 63, 116, 0.3);
+    cursor: pointer;
+    z-index: 9999;
+    
+    /* Nascosto di base con transizione fluida */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    
+    /* Centra l'icona */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Classe aggiunta dal JS quando si scorre verso il basso */
+.back-to-top-btn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    border: 2px solid white;
+}
+
+/* Effetto Hover stile "Universal Sport" */
+.back-to-top-btn:hover, 
+.back-to-top-btn:focus-visible {
+    background-color: var(--secondary-orange);
+    color: #ffffff;
+    transform: translateY(-5px); /* Si solleva verso l'alto */
+    box-shadow: 0 8px 20px rgba(235, 90, 45, 0.4);
+    outline: none;
+}
+
+/* Responsive per schermi piccoli */
+@media (max-width: 768px) {
+    .back-to-top-btn {
+        bottom: 30px;
+        right: 20px;
+        width: 42px;
+        height: 42px;
+        font-size: 1.1rem;
+    }
+}
+
+/* ==========================================================================
+   CLASSE PERSONALIZZATA: IMMAGINI 16:9 CENTRATE (ARTICOLI)
+   ========================================================================== */
+.img-16-9-center {
+    max-width: 750px !important; /* Impedisce all'immagine di allargarsi troppo su schermi grandi */
+    margin: 0px auto 1rem auto !important; /* Centra il blocco e dà un bel respiro sopra e sotto */
+    display: block !important;
+}
+
+.img-16-9-center img {
+    width: 100% !important;
+    height: auto !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important; /* Ombra morbida per dare profondità */
+    display: block !important;
+    margin: 0 auto !important;
+}
+
+.img-article-rounded img {
+    border-radius: 1rem !important;
+}
+
+.logo-articolo img {
+    max-width: 400px !important;
+    box-shadow: 0 0 0 rgba(0,0,0,0) !important; /* Nessuna ombra per i loghi */
+    margin: 0px auto 1rem auto !important;
+    display: block !important;
+}
+
+/* ==========================================================================
+   FIX AVANZATO: GRUPPI AFFIANCATI (TESTO + IMMAGINE) NEGLI ARTICOLI
+   ========================================================================== */
+
+/* 1. DESKTOP (> 900px): Affiancamento classico a zig-zag */
+.single-news-content .wp-block-group.is-nowrap {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 40px !important;
+    margin: 45px 0 !important;
+}
+
+.single-news-content .wp-block-group.is-nowrap > .wp-block-group {
+    flex: 1 1 55% !important;
+}
+
+/* Toglie il margine superiore all'H2 quando è affiancato per centrarlo meglio con la foto */
+.single-news-content .wp-block-group.is-nowrap h2 {
+    margin-top: 0 !important;
+}
+
+.single-news-content .wp-block-group.is-nowrap p:last-child {
+    margin-bottom: 0 !important;
+}
+
+.single-news-content .wp-block-group.is-nowrap > figure.wp-block-image {
+    flex: 0 0 42% !important;
+    margin: 0 !important;
+}
+
+.single-news-content .wp-block-group.is-nowrap > figure.wp-block-image img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: cover !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08) !important;
+    display: block !important;
+}
+
+/* 2. TABLET (Tra 769px e 900px): L'H2 "esce" e va sopra a tutto, Testo e Foto restano affiancati sotto */
+@media (max-width: 900px) and (min-width: 769px) {
+    .single-news-content .wp-block-group.is-nowrap {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important; /* Due colonne uguali sotto al titolo */
+        gap: 15px 30px !important;
+        align-items: start !important;
+    }
+
+    /* LA MAGIA: "Scioglie" il contenitore verticale liberando H2 e P nella griglia principale */
+    .single-news-content .wp-block-group.is-nowrap > .wp-block-group {
+        display: contents !important;
+    }
+
+    /* Il titolo H2 prende tutta la larghezza in alto (da colonna 1 a fine griglia) */
+    .single-news-content .wp-block-group.is-nowrap h2 {
+        grid-column: 1 / -1 !important;
+        grid-row: 1 !important;
+        margin-bottom: 5px !important;
+    }
+
+    /* Di base (1° gruppo): Testo a sinistra (col 1), Foto a destra (col 2) */
+    .single-news-content .wp-block-group.is-nowrap p {
+        grid-column: 1 !important;
+        grid-row: 2 !important;
+        margin: 0 !important;
+    }
+    .single-news-content .wp-block-group.is-nowrap > figure.wp-block-image {
+        grid-column: 2 !important;
+        grid-row: 2 !important;
+        width: 100% !important;
+    }
+
+    /* Se nel blocco la foto viene PRIMA del testo (2° gruppo), invertiamo le colonne per mantenere lo zig-zag! */
+    .single-news-content .wp-block-group.is-nowrap > figure.wp-block-image:first-child {
+        grid-column: 1 !important;
+    }
+    .single-news-content .wp-block-group.is-nowrap > figure.wp-block-image:first-child ~ .wp-block-group p {
+        grid-column: 2 !important;
+    }
+}
+
+/* 3. MOBILE (<= 768px): Tutto in colonna con ordine rigoroso (H2 -> Testo -> Foto) per non avere doppie foto vicine */
+@media (max-width: 768px) {
+    .single-news-content .wp-block-group.is-nowrap {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 15px !important;
+        margin: 35px 0 !important;
+    }
+
+    /* Sciogliamo anche qui il sottogruppo così possiamo riordinare i pezzi con "order" */
+    .single-news-content .wp-block-group.is-nowrap > .wp-block-group {
+        display: contents !important;
+    }
+
+    /* Ordine forzato uguale per tutti i blocchi: 1° Titolo, 2° Paragrafo, 3° Immagine */
+    .single-news-content .wp-block-group.is-nowrap h2 {
+        order: 1 !important;
+        margin-bottom: 0 !important;
+    }
+
+    .single-news-content .wp-block-group.is-nowrap p {
+        order: 2 !important;
+        margin-bottom: 5px !important;
+    }
+
+    .single-news-content .wp-block-group.is-nowrap > figure.wp-block-image {
+        order: 3 !important;
+        width: 100% !important;
+    }
+}
+
+/* Su cellulare l'immagine riprende il 100% dello spazio disponibile per massimizzare la visibilità
+@media (max-width: 768px) {
+    .img-16-9-center {
+        max-width: 100% !important;
+        margin: 25px auto !important;
+    }
+} */
+
+/* ==========================================================================
+   BOX DOPPIO LOGO 16:9 (SPECIFICO SOLO PER L'ARTICOLO "UN ANNO DI ASD")
+   ========================================================================== */
+
+/* 1. Contenitore principale: agisce SOLO in questo articolo e SOLO sul gruppo con .logo-articolo */
+#post-1572 .single-news-content .wp-block-group.is-nowrap:has(.logo-articolo) {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    gap: 35px !important;
+    max-width: 900px !important;
+    margin: 35px auto 45px auto !important;
+}
+
+/* 2. Le due colonne dividono lo spazio esattamente a metà */
+#post-1572 .single-news-content .wp-block-group.is-nowrap:has(.logo-articolo) > figure.wp-block-image {
+    flex: 1 1 50% !important;
+    max-width: 430px !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+}
+
+/* 3. Forza entrambe le immagini a 16:9 e alla stessa identica altezza */
+#post-1572 .single-news-content .wp-block-group.is-nowrap:has(.logo-articolo) > figure.wp-block-image img {
+    width: 100% !important;
+    max-width: 100% !important;
+    aspect-ratio: 16 / 9 !important;
+    height: auto !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08) !important;
+    margin: 0 !important;
+    display: block !important;
+}
+
+/* 4. Il logo dell'associazione viene centrato su una card bianca 16:9 */
+#post-1572 .single-news-content .wp-block-group.is-nowrap:has(.logo-articolo) > figure.logo-articolo img {
+    object-fit: contain !important;
+    background-color: #ffffff !important;
+    padding: 25px 35px !important;
+    border: 1px solid rgba(24, 63, 116, 0.08) !important;
+}
+
+/* 5. Il banner del logo squadra copre tutto il rettangolo 16:9 */
+#post-1572 .single-news-content .wp-block-group.is-nowrap:has(.logo-articolo) > figure:not(.logo-articolo) img {
+    object-fit: cover !important;
+}
+
+/* 6. Didascalie centrate ed eleganti */
+#post-1572 .single-news-content .wp-block-group.is-nowrap:has(.logo-articolo) figcaption.wp-element-caption {
+    text-align: center !important;
+    font-size: 0.95rem !important;
+    font-weight: 700 !important;
+    color: var(--primary-blue) !important;
+    margin-top: 14px !important;
+    margin-bottom: 0 !important;
+    padding: 5px 16px !important;
+    background-color: rgba(24, 63, 116, 0.05) !important;
+    border-radius: 20px !important;
+    display: inline-block !important;
+    line-height: 1.3 !important;
+}
+
+/* 7. Protezione Tablet (769px - 900px) per non interferire con gli altri gruppi dell'articolo */
+@media (max-width: 900px) and (min-width: 601px) {
+    #post-1572 .single-news-content .wp-block-group.is-nowrap:has(.logo-articolo) {
+        display: flex !important;
+        gap: 25px !important;
+    }
+}
+
+/* 8. Mobile (<= 768px): Impilati al centro */
+@media (max-width: 600px) {
+    #post-1572 .single-news-content .wp-block-group.is-nowrap:has(.logo-articolo) {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 30px !important;
+        margin: 25px auto 35px auto !important;
+    }
+
+    #post-1572 .single-news-content .wp-block-group.is-nowrap:has(.logo-articolo) > figure.wp-block-image {
+        width: 100% !important;
+        max-width: 250px !important;
+    }
+    
+    #post-1572 .single-news-content .wp-block-group.is-nowrap:has(.logo-articolo) > figure.logo-articolo img {
+        padding: 20px 30px !important;
+    }
+}

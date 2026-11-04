@@ -1,0 +1,51 @@
+/* ==========================================================================
+   STILE PER LA STAMPA (Universal Sport Sovizzo)
+   ========================================================================== */
+
+/* 1. Nascondiamo gli elementi inutili e non cliccabili su carta */
+.main-navbar, .top-header, .main-footer, .btn-all-events, .sp-custom-calendar-wrap, 
+iframe, .responsive-video, .video-container-wrapper, .trp-language-switcher,
+.news-search-box, .news-category-filters, .slider-dots {
+    display: none !important;
+}
+
+/* 2. Resettiamo i colori (sfondo bianco, testo nero) per la leggibilità e il toner */
+body, main, .page-content, .container {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+/* 3. Colori dei titoli rigidi in nero e rimozione ombre */
+h1, h2, h3, .entry-content h2, .page-title, p, a, td, th, blockquote {
+    color: #000000 !important;
+    box-shadow: none !important;
+}
+
+/* Togliamo la decorazione dei link */
+a { text-decoration: none !important; }
+
+/* 4. Sistemiamo i bordi per tabelle e citazioni su carta */
+blockquote {
+    border-left: 5px solid #000000 !important;
+    background-color: #ffffff !important;
+    border: 1px solid #dddddd !important;
+}
+
+table {
+    border: 1px solid #000000 !important;
+}
+
+th, td {
+    border: 1px solid #dddddd !important;
+}
+
+/* 5. Evitiamo tagli brutti a metà foglio */
+table, blockquote, figure, tr {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+}
+
+h1, h2, h3 {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+}   
