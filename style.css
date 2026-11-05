@@ -1682,24 +1682,18 @@ h2.mancity-month { font-size: 2.2rem; color: var(--primary-blue); text-transform
     .sp-table-wrapper .sp-template-player-list .sp-data-table { min-width: 400px; }
 }
 
-/* Pagina Singola Partita (Report & Premium Style) */
-div.sp-section-content-excerpt { display: none !important; }
-main.page-content:has(.sp-section-content) .page-header { padding: 40px 0 0 0 !important; }
-h1.sp-match-main-title { text-align: center !important; color: var(--primary-blue) !important; font-size: 2.8rem !important; font-weight: 900 !important; text-transform: uppercase !important; margin: 30px auto 10px !important; width: 100% !important; }
+/* ==========================================================================
+   PAGINA SINGOLA PARTITA (TESTATA E ROSE ORIGINALI + NUOVE CARD INFO)
+   ========================================================================== */
+main.page-content.single-match-custom .page-header { padding: 40px 0 0 0 !important; }
 .back-link-match { display: inline-flex !important; align-items: center !important; color: var(--primary-blue) !important; font-weight: 900 !important; text-transform: uppercase !important; font-size: 0.85rem !important; margin-top: 25px !important; transition: all 0.3s ease !important; text-decoration: none !important; }
 .back-link-match i { margin-right: 10px !important; transition: transform 0.3s ease !important; }
 .back-link-match:hover { color: var(--darker-orange) !important; }
 .back-link-match:hover i { transform: translateX(-5px) !important; }
-main.page-content:has(.sp-section-content) { display: flex !important; flex-direction: column !important; gap: 0 !important; padding-bottom: 80px !important; }
-.sp-section-content-logos { order: 1 !important; margin: 0 !important; width: 100% !important; }
-.sp-section-content-performance { order: 2 !important; margin-bottom: 40px !important; }
-.sp-section-content-results { order: 3 !important; margin-bottom: 20px !important; }
-.sp-section-content-details { order: 4 !important; margin-bottom: 20px !important; }
-.sp-section-content-venue { order: 5 !important; margin-bottom: 20px !important; }
-.sp-section-content { order: 10; }
+
+/* --- 1. TESTATA LOGHI E PUNTEGGIO (IDENTICA ALL'ORIGINALE) --- */
 main.page-content .sp-template { margin-bottom: 0 !important; }
-main.page-content .sp-event-logos-2 { margin: 40px auto 40px !important; }
-.sp-event-logos-2 { display: flex !important; align-items: center !important; justify-content: center !important; gap: 15px !important; margin: 40px auto 60px !important; max-width: 1100px !important; }
+.sp-event-logos-2 { display: flex !important; align-items: center !important; justify-content: center !important; gap: 15px !important; margin: 40px auto !important; max-width: 1100px !important; }
 .sp-team-logo { display: flex !important; align-items: center !important; gap: 20px !important; flex: 1 !important; }
 .sp-event-logos-2 .sp-team-logo:first-of-type { justify-content: flex-end !important; text-align: right !important; }
 .sp-event-logos-2 .sp-team-logo:last-of-type { justify-content: flex-start !important; text-align: left !important; }
@@ -1708,120 +1702,189 @@ main.page-content .sp-event-logos-2 { margin: 40px auto 40px !important; }
 .sp-dynamic-center { white-space: nowrap !important; padding: 10px 40px !important; border-radius: 60px !important; margin: 0 15px !important; letter-spacing: 1px !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; }
 .sp-dynamic-center.is-score { font-size: 2.8rem !important; color: var(--primary-blue) !important; font-weight: 900 !important; background: #fff !important; border: 2px solid var(--primary-blue) !important; box-shadow: 0 8px 20px rgba(0,0,0,0.05) !important; }
 .sp-dynamic-center.is-time { font-size: 2rem !important; color: #777 !important; font-weight: 700 !important; border: 2px dashed #ddd !important; background: #fafafa !important; }
-.sp-template-event-performance h2.sp-table-caption, .sp-template-event-performance h4.sp-table-caption { display: none !important; }
-.sp-section-content-results .sp-table-wrapper, .sp-section-content-details .sp-table-wrapper { overflow-x: auto !important; width: 100% !important; -webkit-overflow-scrolling: touch !important; }
-.sp-section-content-venue .sp-template-event-venue { width: 100% !important; padding-bottom: 15px !important; }
-.sp-section-content-venue .sp-data-table { min-width: 0 !important; table-layout: fixed !important; }
-.sp-section-content-venue .sp-data-table thead th, .sp-section-content-venue .sp-data-table td { white-space: normal !important; word-wrap: break-word !important; }
-.sp-section-content-results .sp-data-table, .sp-section-content-details .sp-data-table { min-width: 500px !important; }
-.sp-section-content-results .sp-data-table, .sp-section-content-details .sp-data-table, .sp-section-content-venue .sp-data-table { background: transparent !important; border-radius: 12px !important; overflow: hidden !important; border: none !important; border-collapse: separate !important; border-spacing: 0 !important; width: 100% !important; margin: 0 !important; box-shadow: none !important; }
-.sp-section-content-results .sp-data-table thead th, .sp-section-content-details .sp-data-table thead th, .sp-section-content-venue .sp-data-table thead th { background-color: #fff !important; color: var(--primary-blue) !important; font-weight: 900 !important; text-transform: none !important; border: none !important; padding: 20px 15px !important; font-size: 1rem !important; text-align: center !important; }
-.sp-section-content-results .sp-data-table td, .sp-section-content-details .sp-data-table td, .sp-section-content-venue .sp-data-table td { border: none !important; padding: 18px 15px !important; color: var(--primary-blue) !important; font-weight: 700 !important; text-align: center !important; transition: background 0.2s ease, box-shadow 0.2s ease !important; }
-.sp-section-content-results .sp-data-table tbody tr, .sp-section-content-details .sp-data-table tbody tr, .sp-section-content-venue .sp-data-table tbody tr { background-color: transparent !important; }
-.sp-section-content-results .sp-data-table tbody tr.odd td, .sp-section-content-details .sp-data-table tbody tr.odd td, .sp-section-content-venue .sp-data-table tbody tr.odd td { background-color: transparent !important; }
-.sp-section-content-results .sp-data-table tbody tr.even td, .sp-section-content-details .sp-data-table tbody tr.even td, .sp-section-content-venue .sp-data-table tbody tr.even td { background-color: #fff !important; }
-.sp-section-content-results .data-name { text-align: left !important; }
-.sp-section-content-results .sp-data-table tbody tr:hover td, .sp-section-content-details .sp-data-table tbody tr:hover td, .sp-section-content-venue .sp-data-table tbody tr:hover td { background-color: #fafafa !important; }
-.sp-event-details tr, .sp-event-results tr, .sp-event-venue tr { display: table-row !important; border-bottom: 1px solid #f0f0f0 !important; }
-.sp-event-details thead, .sp-event-details tbody, .sp-event-results thead, .sp-event-results tbody, .sp-event-venue thead, .sp-event-venue tbody { display: table-row-group !important; width: auto !important; }
-.sp-event-details th, .sp-event-details td, .sp-event-results th, .sp-event-results td, .sp-event-venue th, .sp-event-venue td { display: table-cell !important; text-align: center !important; }
-.sp-event-details tbody td:first-child, .sp-event-results tbody td:first-child, .sp-event-venue tbody td:first-child { text-align: left !important; }
-.sp-template-event-performance-icons tr:first-child td { font-weight: 900 !important; border-top: none !important; }
-.sp-data-table th.data-name, .sp-data-table td.data-name { max-width: none !important; width: auto !important; }
+.mancity.no-hover-effect:hover { background: transparent !important; }
+
+/* --- 2. FORMAZIONI E STAFF TECNICO (IDENTICHE ALL'ORIGINALE) --- */
+.sp-section-content-performance { margin-bottom: 50px !important; }
+.sp-template-event-performance h2.sp-table-caption, 
+.sp-template-event-performance h4.sp-table-caption { display: none !important; }
 .sp-event-performance-tables { display: flex !important; gap: 40px !important; justify-content: center !important; max-width: 1000px !important; margin: 0 auto !important; width: 100% !important; align-items: flex-start !important; }
-.sp-template-event-performance { width: 100% !important; margin: 0 0 40px 0 !important; background: transparent !important; box-shadow: none !important; border: none !important; padding: 0 !important; overflow: visible !important; }
-.sp-template-event-performance .sp-table-wrapper { overflow: visible !important; width: 100% !important; }
-.sp-template-event-performance table { display: table !important; min-width: 0px !important; width: 100% !important; margin: 0 0 25px 0 !important; background: #ffffff !important; border-radius: 12px !important; box-shadow: 0 10px 30px rgba(0,0,0,0.05) !important; border-bottom: 4px solid var(--secondary-orange) !important; border-collapse: separate !important; border-spacing: 0 !important; overflow: hidden !important; table-layout: auto !important; }
+.sp-template-event-performance { width: 100% !important; margin: 0 !important; background: transparent !important; box-shadow: none !important; border: none !important; padding: 0 !important; overflow: visible !important; }
+.sp-template-event-performance .sp-table-wrapper { display: flex !important; flex-direction: column !important; max-width: 480px; margin: auto; overflow: visible !important; width: 100% !important; }
+.sp-template-event-performance .sp-table-wrapper > table { order: 2 !important; display: table !important; min-width: 0px !important; width: 100% !important; margin: 0 !important; background: #ffffff !important; border-radius: 12px !important; box-shadow: 0 10px 30px rgba(0,0,0,0.05) !important; border-bottom: 4px solid var(--secondary-orange) !important; border-collapse: separate !important; border-spacing: 0 !important; overflow: hidden !important; table-layout: auto !important; }
+.sp-template-event-performance .sp-table-wrapper > .sp-template-event-staff { order: 1 !important; margin-top: 0 !important; margin-bottom: 15px !important; border-bottom: 5px solid var(--secondary-orange) !important; background: #ffffff !important; border-radius: 12px !important; padding: 15px 20px !important; display: block !important; box-shadow: 0 6px 20px rgba(0,0,0,0.04) !important; }
+.sp-template-event-staff::before { content: 'Staff Tecnico' !important; display: block !important; font-family: var(--font-main) !important; font-size: 1.3rem !important; color: var(--primary-blue) !important; font-weight: 900 !important; text-transform: uppercase !important; margin-bottom: 10px !important; line-height: 1.2 !important; }
+html[lang="en-GB"] .sp-template-event-staff::before { content: "Technical Staff " !important; }
+.sp-template-event-staff .sp-event-staff { margin: 0 !important; line-height: 2.2 !important; color: #555 !important; font-weight: 700 !important; text-transform: uppercase !important; font-size: 0.85rem !important; letter-spacing: 0.5px !important; }
+.sp-event-staff .sp-no-link-name { color: var(--primary-blue) !important; font-size: 1.1rem !important; font-weight: 900 !important; text-transform: none !important; letter-spacing: normal !important; margin-left: 8px !important; }
+
 .sp-template-event-performance thead { display: none !important; }
 .sp-template-event-performance tbody { display: table-row-group !important; }
 .sp-template-event-performance tbody tr { display: table-row !important; border-bottom: 1px solid #f0f4f8 !important; background: transparent !important; }
 .sp-template-event-performance tbody tr:last-child { border-bottom: none !important; }
 .sp-template-event-performance tbody tr.odd td { background-color: #f7f9fc !important; }
-.sp-template-event-performance tbody tr td { transition: background-color 0.3s ease; }
+.sp-template-event-performance tbody tr td { transition: background-color 0.3s ease; display: table-cell !important; padding: 0.6rem 10px !important; border: none !important; vertical-align: middle !important; color: var(--primary-blue) !important; }
 .sp-template-event-performance tbody tr:hover td { background-color: #edf2f8 !important; }
 .sp-template-event-performance tbody tr:hover td:first-child { box-shadow: inset 4px 0 0 var(--secondary-orange) !important; }
-.sp-template-event-performance td { display: table-cell !important; padding: 0.6rem 10px !important; border: none !important; vertical-align: middle !important; color: var(--primary-blue) !important; }
 .sp-template-event-performance td.data-number { white-space: nowrap !important; font-weight: 700 !important; opacity: 0.75 !important; text-align: left !important; padding-left: 20px !important; width: 45px !important; }
-.sp-template-event-performance td.data-name { white-space: nowrap !important; font-weight: 900 !important; text-align: left !important; }
-.sp-template-event-performance td.sp-performance-icons {font-family: var(--font-icons) !important; text-align: right !important; white-space: nowrap !important; padding-right: 20px !important;}
-.sp-icon-multiplier {font-weight: 550 !important;}
+.sp-template-event-performance td.data-name { white-space: nowrap !important; font-weight: 900 !important; text-align: left !important; width: auto !important; max-width: none !important; }
+.sp-template-event-performance td.sp-performance-icons { text-align: right !important; white-space: nowrap !important; padding-right: 20px !important; }
 .sp-template-event-performance td:not(.data-number):not(.data-name):not(.sp-performance-icons) { display: none !important; }
 .sp-template-event-performance .sp-event-performance .sp-player-position { display: none !important; }
-.sp-icon-multiplier { line-height: 1.5; font-size: 1.2rem; font-family: var(--font-family); color: var(--primary-blue) !important;  width: auto !important; height: auto !important;}
-.sp-icon-soccerball { line-height: 1.5; font-size: 1.2rem; color: var(--primary-blue) !important; width: auto !important; height: auto !important;}
-/* ==========================================================================
-   STILE SEZIONE STAFF TECNICO (PARTITE)
-   ========================================================================== */
-.sp-template-event-staff { background: #ffffff !important; border-radius: 12px !important; padding: 15px 20px !important; display: block !important; }
-.sp-template-event-staff::before { content: 'Staff Tecnico' !important; display: block !important; font-family: var(--font-main) !important; font-size: 1.3rem !important; color: var(--primary-blue) !important; font-weight: 900 !important; text-transform: uppercase !important; margin-bottom: 10px !important; line-height: 1.2 !important; }
-/* Traduzione Staff Tecnico in Inglese */
-html[lang="en-GB"] .sp-template-event-staff::before {
-    content: "Technical Staff " !important;
+.sp-template-event-performance-icons tr:first-child td { font-weight: 900 !important; }
+
+/* FIX FONT PALLONE E NUMERI GOL */
+.sp-icon-multiplier { line-height: 1.5; font-size: 1.1rem; font-weight: 900 !important; font-family: var(--font-main) !important; color: var(--primary-blue) !important; }
+.sp-icon-soccerball { line-height: 1.5; font-size: 1.2rem; color: var(--primary-blue) !important; margin-left: 3px; font-family: 'sportspress' !important; } /* Reverted font for icon */
+.sp-event-performance td.data-name .sp-no-link-name { color: var(--primary-blue) !important; font-weight: 900 !important; }
+
+/* --- 3. NUOVE SEZIONI MODERNE (PARZIALI, DETTAGLI, LUOGO) --- */
+.match-modern-sections { max-width: 1000px; margin: 0 auto 40px auto; display: flex; flex-direction: column; gap: 30px; }
+.match-info-card { background: #fff; border-radius: 12px; padding: 28px 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-bottom: 5px solid var(--secondary-orange); }
+.match-info-card h3 { color: var(--primary-blue); font-size: 1.4rem; font-weight: 900; text-transform: uppercase; margin: 0 0 22px 0; border-left: 5px solid var(--accent-yellow); padding-left: 15px; display: flex; align-items: center; gap: 12px; }
+.match-info-card h3 i { color: var(--secondary-orange); font-size: 1.25rem; }
+
+/* Tabellone Parziali (1° - 4° Tempo) */
+.quarters-scoreboard { display: flex; flex-direction: column; gap: 8px; }
+.quarters-row { display: grid; grid-template-columns: 1.8fr repeat(5, 1fr); align-items: center; padding: 12px 18px; border-radius: 8px; background: #f7f9fc; }
+.quarters-row.quarters-header { background: transparent; padding-bottom: 6px; font-size: 0.85rem; text-transform: uppercase; font-weight: 900; color: #777; }
+.q-team-col { display: flex; align-items: center; gap: 12px; font-weight: 900; color: var(--primary-blue); font-size: 1.05rem; text-align: left; }
+.q-team-col img { width: 32px; height: 32px; object-fit: contain; flex-shrink: 0; }
+.q-period-col { text-align: center; font-weight: 700; color: var(--primary-blue); font-size: 1.15rem; }
+.quarters-header .q-period-col { color: #666; font-size: 0.85rem; }
+.q-total-col { font-weight: 900 !important; color: var(--secondary-orange) !important; background: rgba(235, 90, 45, 0.08); padding: 6px 0; border-radius: 6px; }
+.quarters-header .q-total-col { background: transparent; color: var(--primary-blue) !important; }
+
+/* Griglia 50/50 rigorosa per Dettagli e Luogo */
+.single-match-info-grid { 
+    display: grid; 
+    grid-template-columns: minmax(0, 40fr) minmax(0, 60fr);
+    gap: 30px; 
+    align-items: stretch; 
 }
-.sp-template-event-staff .sp-event-staff { margin: 0 !important; line-height: 2.2 !important; color: #555 !important; font-weight: 700 !important; text-transform: uppercase !important; font-size: 0.85rem !important; letter-spacing: 0.5px !important; }
-.sp-event-staff .sp-no-link-name { color: var(--primary-blue) !important; font-size: 1.1rem !important; font-weight: 900 !important; text-transform: none !important; letter-spacing: normal !important; margin-left: 8px !important; }
-/* Stili Nomi senza Link (Classifiche, Marcatori, Partite) */
-.sp-event-staff .sp-no-link-name, .sp-event-performance td.data-name .sp-no-link-name, .sp-template-player-list td.data-name .sp-no-link-name, .sp-template-player-list td.data-team .sp-no-link-name, .sp-template-league-table td.data-name .sp-no-link-name { color: var(--primary-blue) !important; font-weight: 900 !important; }
-.sp-event-performance td.data-name .sp-no-link-name { color: var(--primary-blue) !important; font-weight: 900 !important; }/* ==========================================================================
-   INVERSIONE ORDINE: STAFF SOPRA, GIOCATORI SOTTO
-   ========================================================================== */
-.sp-template-event-performance .sp-table-wrapper { display: flex !important; flex-direction: column !important; max-width: 480px; margin: auto;}
-.sp-template-event-performance .sp-table-wrapper > table { order: 2 !important; }
-.sp-template-event-performance .sp-table-wrapper > .sp-template-event-staff { order: 1 !important; margin-top: 0 !important; margin-bottom: 15px !important; border-bottom: 5px solid var(--secondary-orange) !important; }
-/* ========================================= */
-/* FIX FORMAZIONI SPORTSPRESS CON IL BORDO   */
-/* ========================================= */
-/* Su PC: Nasconde i titoli delle squadre sopra le formazioni (2 colonne) */
-@media (min-width: 769px) {
-    main.page-content .sp-template-event-performance h2.sp-table-caption { display: none !important; }
+.match-info-card {
+    min-width: 0; /* Impedisce al contenuto interno di allargare la colonna oltre il 50% */
+    overflow: hidden;
+}
+.info-row { display: flex; justify-content: space-between; align-items: center; gap: 15px; padding: 14px 0; border-bottom: 1px solid #f0f4f8; }
+.info-row:last-of-type { border-bottom: none; padding-bottom: 0; }
+.info-label { font-size: 0.9rem; color: #666; text-transform: uppercase; font-weight: 700; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.info-label i { color: var(--secondary-orange); width: 18px; text-align: center; }
+.info-value { font-size: 1.05rem; color: var(--primary-blue); font-weight: 900; text-align: right; }
+
+/* Stile Luogo e Mappa */
+.venue-badge-title { background: rgba(24, 63, 116, 0.05); color: var(--primary-blue); padding: 12px 16px; border-radius: 8px; border-left: 4px solid var(--primary-blue); margin-bottom: 15px; font-size: 1.05rem; }
+p.venue-address-text { font-size: 0.9rem !important; color: #555 !important; margin: 15px 0 0 0 !important; line-height: 1.4 !important; display: flex; align-items: flex-start; gap: 8px; }
+.venue-address-text i { color: var(--secondary-orange); margin-top: 4px; }
+
+/* --- PULIZIA MAPPA SPORTSPRESS E RIMOZIONE SECONDO "LUOGO" --- */
+main.page-content .match-map-wrapper h2.sp-table-caption,
+main.page-content .match-map-wrapper h4.sp-table-caption,
+.match-map-wrapper .sp-template-event-venue thead,
+.match-map-wrapper .sp-template-event-venue .sp-event-venue-address-row { 
+    display: none !important; 
+}
+.match-map-wrapper .sp-template-event-venue,
+.match-map-wrapper .sp-table-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+}
+.match-map-wrapper table.sp-data-table.sp-event-venue,
+.match-map-wrapper .sp-template-event-venue tbody,
+.match-map-wrapper .sp-template-event-venue tr,
+.match-map-wrapper .sp-template-event-venue td { 
+    display: block !important; 
+    width: 100% !important; 
+    min-width: 0 !important; /* ANNULLA IL MIN-WIDTH: 700PX GLOBALE */
+    max-width: 100% !important;
+    padding: 0 !important; 
+    margin: 0 !important;
+    border: none !important; 
+    background: transparent !important; 
+    box-shadow: none !important;
+}
+.match-map-wrapper #sp_openstreetmaps_container { 
+    height: 250px !important; 
+    width: 100% !important; 
+    max-width: 100% !important; 
+    border-radius: 8px !important; 
+    border: 1px solid #eee; 
 }
 
+/* --- 4. RESPONSIVE --- */
+@media (min-width: 769px) {
+    main.page-content .sp-template-event-performance h2.sp-table-caption,
+    main.page-content .sp-template-event-performance h4.sp-table-caption { 
+        display: none !important; 
+    }
+}
 @media (max-width: 1000px) {
     .sp-event-performance-tables { gap: 25px !important; }
-    .sp-event-logos-2 .sp-team-name { font-size: 1.6rem !important;}
+    .sp-event-logos-2 .sp-team-name { font-size: 1.6rem !important; }
     .sp-dynamic-center.is-score { font-size: 2.5rem !important; padding: 8px 30px !important; margin: 10px 0 !important; } 
     .sp-dynamic-center.is-time { font-size: 2rem !important; padding: 8px 25px !important; margin: 10px 0 !important; }
     .sp-event-logos-2 .sp-team-logo img { width: 100px !important; height: 100px !important; }  
 }
 
+@media (max-width: 900px) {
+    .single-match-info-grid { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 768px) {
-    main.page-content .sp-template-event-performance h2.sp-table-caption { display: block !important; width: fit-content !important; margin: 15px auto 15px auto !important; text-align: left !important; }
     .sp-template-event-logos .sp-team-name { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; white-space: nowrap !important; border: 0 !important; }
-    h1.sp-match-main-title { font-size: 2.2rem !important; margin: 20px auto 5px !important; }
-    .sp-template-event-performance h2.sp-table-caption, .sp-template-event-performance h4.sp-table-caption { display: block !important; text-align: center !important; font-size: 1.6rem !important; color: var(--primary-blue) !important; margin: 0 0 15px 0 !important; text-transform: uppercase !important; font-weight: 900 !important; border: none !important; }
-    .sp-section-content-results .sp-data-table thead th, .sp-section-content-details .sp-data-table thead th, .sp-section-content-venue .sp-data-table thead th { padding: 12px 10px !important; font-size: 0.85rem !important; }
-    .sp-section-content-results .sp-data-table td, .sp-section-content-details .sp-data-table td, .sp-section-content-venue .sp-data-table td { padding: 12px 10px !important; font-size: 0.9rem !important; }
-    .sp-event-logos-2 { display: flex !important; flex-direction: row !important; align-items: center !important; justify-content: center !important; gap: 15px !important; margin: 20px auto 30px !important; width: 100% !important; }
-    .sp-event-logos-2 .sp-team-logo, .sp-event-logos-2 .sp-team-logo:first-of-type, .sp-event-logos-2 .sp-team-logo:last-of-type { width: auto !important; flex: 0 1 auto !important; justify-content: center !important; flex-direction: column !important; text-align: center !important; }
-    .sp-event-logos-2 .sp-team-logo img { width: 100px !important; height: 100px !important; margin: 0 !important; }
-    .sp-dynamic-center.is-score { font-size: 2.2rem !important; padding: 8px 35px !important; margin: 10px 0 !important; }
-    .sp-dynamic-center.is-time { font-size: 1.6rem !important; padding: 8px 25px !important; margin: 10px 0 !important; }
-    .sp-template-event-performance .sp-table-wrapper { overflow-x: auto !important; overflow-y: hidden !important; -webkit-overflow-scrolling: touch !important; }
+    
+    /* FIX DEFINITIVO: H2 FORMAZIONI CENTRATO CON RIGA GIALLA A SINISTRA */
+    html body main.page-content .sp-template-event-performance h2.sp-table-caption, 
+    html body main.page-content .sp-template-event-performance h4.sp-table-caption { 
+        display: table !important; 
+        width: fit-content !important; 
+        margin: 15px auto 20px auto !important; 
+        text-align: left !important; 
+        font-size: 1.6rem !important; 
+        color: var(--primary-blue) !important; 
+        text-transform: uppercase !important; 
+        font-weight: 900 !important; 
+        border-left: 5px solid var(--accent-yellow) !important; 
+        padding: 0 0 0 15px !important;
+    }
+    
+    .sp-event-logos-2 { gap: 15px !important; margin: 20px auto 30px !important; }
+    .sp-event-logos-2 .sp-team-logo { flex: 0 1 auto !important; justify-content: center !important; flex-direction: column !important; }
+    .sp-dynamic-center.is-score { font-size: 2.2rem !important; padding: 8px 35px !important; }
+    .sp-dynamic-center.is-time { font-size: 1.6rem !important; padding: 8px 25px !important; }
     .sp-event-performance-tables { flex-direction: column !important; gap: 20px !important; }
-    .sp-template-event-performance td, .sp-template-event-performance td.data-name, .sp-template-event-performance td.data-number, .sp-template-event-performance td.sp-performance-icons, .sp-event-staff .sp-no-link-name  { font-size: 1.1rem !important; }
-    main.page-content .sp-template-event-performance h2.sp-table-caption { display: block !important; width: fit-content !important; margin: 15px auto !important; text-align: left !important; }
-    main.page-content .sp-template-event-performance h2.sp-table-caption::after { left: 0 !important; transform: none !important; }
+    .sp-template-event-performance td, .sp-template-event-performance td.data-name, .sp-template-event-performance td.data-number, .sp-template-event-performance td.sp-performance-icons, .sp-event-staff .sp-no-link-name { font-size: 1.1rem !important; }
+    
+    .quarters-scoreboard { overflow-x: auto; }
+    .quarters-row { min-width: 480px; }
+}
+
+@media (max-width: 600px) {
+    /* Mantiene la griglia attiva ma riordina gli elementi interni */
+    
+    .quarters-row { display: grid; }
+    /* 1° posto: Il nome della squadra */
+    .q-team-col { order: 1; }
+    
+    /* 2° posto: La colonna Totale (che originariamente era l'ultima) */
+    .q-total-col { order: 2;}
+    
+    /* 3° posto: Tutti gli altri tempi (1°, 2°, 3°, 4°) seguiranno in ordine naturale */
+    .q-period-col:not(.q-total-col) {order: 3;}
 }
 
 @media (max-width: 530px) { 
     .sp-event-logos-2 { gap: 10px !important; } 
     .sp-event-logos-2 .sp-team-logo img { width: 85px !important; height: 85px !important; } 
-    .sp-dynamic-center.is-score { font-size: 1.5rem !important; padding: 6px 18px !important; margin: 5px 0 !important; } 
-    .sp-dynamic-center.is-time { font-size: 1.2rem !important; padding: 6px 14px !important; margin: 5px 0 !important; } 
+    .sp-dynamic-center.is-score { font-size: 1.5rem !important; padding: 6px 18px !important; } 
+    .sp-dynamic-center.is-time { font-size: 1.2rem !important; padding: 6px 14px !important; } 
 }
-
-@media (max-width: 370px) { 
-    .sp-event-logos-2 { gap: 10px !important; } 
-    .sp-event-logos-2 .sp-team-logo img { width: 55px !important; height: 55px !important; } 
-}
-
 @media (max-width: 390px) {
-    .sp-event-performance-tables { flex-direction: column !important; gap: 20px !important; }
     .sp-template-event-performance td, .sp-template-event-performance td.data-name, .sp-template-event-performance td.data-number, .sp-template-event-performance td.sp-performance-icons, .sp-event-staff .sp-no-link-name { font-size: 0.9rem !important; }
-    .sp-icon-multiplier, .sp-icon-soccerball { font-size: 0.9rem;}
-}
-@media (max-width: 400px) {
-    #sp_openstreetmaps_container { height: 250px !important; }
+    .sp-icon-multiplier { font-size: 0.9rem; }
 }
 
 /* ==========================================================================

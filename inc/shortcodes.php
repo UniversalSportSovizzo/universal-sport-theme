@@ -153,7 +153,7 @@ function uss_titolo_dinamico_shortcode($atts) {
     
     $output = '<header class="page-header">';
     // 1. IL TITOLO (Puro e pulito per Google)
-    $output .= '<h1 class="page-title h1-sportspress">' . esc_html($page_title) . ' <br><span class="subtitle-comp">' . esc_html($comp_name) . '</span></h1>';
+    $output .= '<h1 class="page-title h1-sportspress">' . esc_html($comp_name) . ' <br><span class="subtitle-comp">' . esc_html($page_title) . '</span></h1>';
     
     // 2. IL BADGE (Fuori dall'H1, con un div contenitore per distanziarlo)
     $output .= '<div class="badge-wrapper">' . $badge_html . '</div>';
