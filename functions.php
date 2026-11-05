@@ -966,3 +966,28 @@ add_filter( 'rank_math/opengraph/facebook/image', function( $attachment_url ) {
     }
     return $attachment_url;
 });
+
+/* ==========================================================================
+   DISATTIVA CSS E JS DI SPORTSPRESS NEL FRONTEND
+   ========================================================================== */
+add_action( 'wp_enqueue_scripts', 'uss_clean_sportspress_assets', 999 );
+function uss_clean_sportspress_assets() {
+    // Eseguiamo la pulizia SOLO sul sito pubblico, non nel pannello wp-admin
+    if ( ! is_admin() ) {
+        
+        // Deregistra i fogli di stile (CSS)
+        wp_dequeue_style( 'sportspress-general' );
+        wp_dequeue_style( 'sportspress-style' );
+        wp_dequeue_style( 'sportspress-style-ltr' );
+        wp_dequeue_style( 'sportspress-icons' );
+        wp_dequeue_style( 'sportspress-roboto' );
+        
+        // Deregistra gli script (JS)
+        wp_dequeue_script( 'sportspress' );
+        wp_dequeue_script( 'jquery-datatables' );
+        
+        // NOTA: Non stiamo disattivando 'leaflet_stylesheet' e 'leaflet_js'.
+        // Questi sono i file della mappa (OpenStreetMaps) che ci servono ancora 
+        // per far comparire correttamente la cartina nella sezione "Luogo".
+    }
+}
