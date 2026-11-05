@@ -263,12 +263,12 @@ function universal_sport_mancity_style($atts) {
         )
     );
 
-    // IL METODO CORRETTO DI SPORTSPRESS: 'publish' = passate, 'future' = prossime
+    // PRENDIAMO TUTTE LE PARTITE (Senza limite, lo applichiamo dopo)
+    $args['posts_per_page'] = -1;
+    $args['post_status'] = array('publish', 'future');
     if($a['status'] == 'past') {
-        $args['post_status'] = 'publish';
         $args['order'] = 'DESC'; // Dal più recente al più vecchio
     } else {
-        $args['post_status'] = 'future';
         $args['order'] = 'ASC'; // Dal prossimo in poi
     }
 
@@ -290,11 +290,44 @@ function universal_sport_mancity_style($atts) {
     
     $output = '<div class="mancity-fixtures">';
     $current_month = '';
+    $match_count = 0;
+    $has_valid_matches = false; // Contatore per capire se abbiamo stampato qualcosa
 
     if($query->have_posts()){
         while($query->have_posts()){
             $query->the_post();
             $event_id = get_the_ID();
+            
+            // --- CONTROLLO DEL RISULTATO ---
+            $results = get_post_meta($event_id, 'sp_results', true);
+            $home_score = '-'; $away_score = '-';
+            
+            $teams = get_post_meta($event_id, 'sp_team', false); 
+            if(count($teams) < 2) continue; 
+            $home_id = $teams[0];
+            $away_id = $teams[1];
+
+            if(is_array($results)) {
+                if(isset($results[$home_id]) && is_array($results[$home_id])) { 
+                    $home_numbers = array_filter($results[$home_id], 'is_numeric');
+                    if(!empty($home_numbers)) $home_score = end($home_numbers); 
+                }
+                if(isset($results[$away_id]) && is_array($results[$away_id])) { 
+                    $away_numbers = array_filter($results[$away_id], 'is_numeric');
+                    if(!empty($away_numbers)) $away_score = end($away_numbers); 
+                }
+            }
+
+            $match_is_played = ($home_score !== '-' && $away_score !== '-');
+
+            if ($a['status'] == 'past' && !$match_is_played) continue;
+            if ($a['status'] == 'future' && $match_is_played) continue;
+            
+            $match_count++;
+            if($a['limit'] > 0 && $match_count > $a['limit']) break;
+            
+            $has_valid_matches = true; // Abbiamo trovato almeno una partita valida!
+            // -------------------------------
             
             // Raggruppamento per mese
             if($a['show_month'] == 'yes') {
@@ -308,36 +341,14 @@ function universal_sport_mancity_style($atts) {
             // Ottieni l'estratto della partita 
             $event_excerpt = get_the_excerpt($event_id);
 
-            // Ottieni le due squadre
-            $teams = get_post_meta($event_id, 'sp_team', false); 
-            if(count($teams) < 2) continue; 
-            $home_id = $teams[0];
-            $away_id = $teams[1];
-
             $home_name = get_the_title($home_id);
             $away_name = get_the_title($away_id);
             
-            // Applica il controllo sul parametro show_team_logo
             $home_logo = ($a['show_team_logo'] == 'yes') ? get_the_post_thumbnail($home_id, 'thumbnail') : '';
             $away_logo = ($a['show_team_logo'] == 'yes') ? get_the_post_thumbnail($away_id, 'thumbnail') : '';
 
-            // Calcolo Risultati
-            $results = get_post_meta($event_id, 'sp_results', true);
-            $home_score = '-'; $away_score = '-';
-            
-            if(is_array($results)) {
-                if(isset($results[$home_id]) && is_array($results[$home_id])) { 
-                    $home_numbers = array_filter($results[$home_id], 'is_numeric');
-                    if(!empty($home_numbers)) $home_score = end($home_numbers); 
-                }
-                if(isset($results[$away_id]) && is_array($results[$away_id])) { 
-                    $away_numbers = array_filter($results[$away_id], 'is_numeric');
-                    if(!empty($away_numbers)) $away_score = end($away_numbers); 
-                }
-            }
-            // Calcola W / D / L
             $wdl = ''; $wdl_class = '';
-            if($a['status'] == 'past' && $home_score !== '-' && $away_score !== '-') {
+            if($a['status'] == 'past' && $match_is_played) {
                 $my_score = ($team_id == $home_id) ? $home_score : $away_score;
                 $opp_score = ($team_id == $home_id) ? $away_score : $home_score;
                 if($my_score > $opp_score) { $wdl = 'W'; $wdl_class = 'win'; }
@@ -345,14 +356,14 @@ function universal_sport_mancity_style($atts) {
                 else { $wdl = 'D'; $wdl_class = 'draw'; }
             }
 
-
             $event_day = get_the_date('D d M', $event_id);
             $event_time = get_the_time('H:i', $event_id);
             $permalink = get_permalink();
             
             $output .= '<div class="mancity">';
-            $output .= '<div class="mc-excerpt">' . esc_html($event_excerpt) . '</div>';
-            // COSTRUZIONE DELLA RIGA
+            if (!empty($event_excerpt)) {
+                $output .= '<div class="mc-excerpt">' . esc_html($event_excerpt) . '</div>';
+            }
             $output .= '<div class="mancity-row">';
             $output .= '<div class="mc-date"><strong>' . $event_day . '</strong><br><small>' . $event_time . '</small></div>';
             
@@ -376,8 +387,10 @@ function universal_sport_mancity_style($atts) {
             $output .= '</div></div>';
         }
         wp_reset_postdata();
-    } else {
-        // MESSAGGI DINAMICI A SECONDA DI DOVE SIAMO
+    } 
+
+    // SE NON CI SONO POST O SE NESSUNA PARTITA RISPETTA IL FILTRO DEI RISULTATI
+    if (!$has_valid_matches) {
         if ( is_page( 'partite-giocate' ) ) {
             $output .= '<p class="text-center no-matches">Non ci sono partite giocate per questa competizione.</p>';
         } elseif ( is_page( 'prossime-partite' ) ) {

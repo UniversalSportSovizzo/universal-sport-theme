@@ -80,10 +80,39 @@
             <div class="page-header">
                 <h1 class="page-title"><?php the_title(); ?></h1>
                 <div class="title-underline"></div>
+                
+                <?php 
+                // 1. Recupera lo slug della competizione di default (usando la funzione del tuo shortcode)
+                $default_comp = function_exists('uss_get_default_comp') ? uss_get_default_comp() : '';
+
+                // 2. Trova la competizione "Padre"
+                $parent_league_slug = '';
+                if ($leagues && !is_wp_error($leagues)) {
+                    $first_league = $leagues[0]; // Prende la prima competizione associata
+                    
+                    if ($first_league->parent != 0) {
+                        // Se è una competizione figlia (es. un girone), risale alla competizione padre
+                        $parent_term = get_term($first_league->parent, 'sp_league');
+                        if ($parent_term && !is_wp_error($parent_term)) {
+                            $parent_league_slug = $parent_term->slug;
+                        }
+                    } else {
+                        // Se è già una competizione padre, prende direttamente il suo slug
+                        $parent_league_slug = $first_league->slug;
+                    }
+                }
+
+                // 3. Costruisce l'estensione dell'URL (?comp=slug) solo se è diversa da quella di default
+                $query_param = '';
+                if (!empty($parent_league_slug) && $parent_league_slug !== $default_comp) {
+                    $query_param = '?comp=' . $parent_league_slug;
+                }
+                ?>
+
                 <?php if ($is_played) : ?>
-                    <a href="/partite-giocate/" class="back-link-match"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Torna alle partite giocate</a>
+                    <a href="/partite-giocate/<?php echo esc_attr($query_param); ?>" class="back-link-match"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Torna alle partite giocate</a>
                 <?php else : ?>
-                    <a href="/prossime-partite/" class="back-link-match"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Torna alle prossime partite</a>
+                    <a href="/prossime-partite/<?php echo esc_attr($query_param); ?>" class="back-link-match"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Torna alle prossime partite</a>
                 <?php endif; ?>
             </div>
 
