@@ -493,7 +493,7 @@ function uss_dynamic_players_shortcode($atts) {
             : get_term_by('slug', $active_comp, 'sp_league');
 
         if (!$term || is_wp_error($term)) {
-            return '<div class="mancity-fixtures"><p class="text-center no-matches">Non ci sono ancora dei marcatori per questa competizione.</p></div>';
+            return '<div class="mancity-fixtures"><p class="text-center no-matches">Non ci sono ancora marcatori per questa competizione.</p></div>';
         }
 
         $caption_title = 'Classifica Marcatori ' . $term->name;
@@ -580,7 +580,7 @@ function uss_dynamic_players_shortcode($atts) {
     });
 
     if (empty($scorers)) {
-        return '<div class="mancity-fixtures"><p class="text-center no-matches">Non è ancora disponibile una classifica marcatori per questa competizione.</p></div>';
+        return '<div class="mancity-fixtures"><p class="text-center no-matches">Non ci sono ancora marcatori per questa competizione.</p></div>';
     }
 
     // 4. Arricchisci con Nome e Ruolo e ordina la classifica
