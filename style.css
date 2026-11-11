@@ -1479,6 +1479,7 @@ html body div.tribe-events-calendar-latest-past__event-description.tribe-common-
 .sport-sub-nav a:hover { color: var(--darker-orange); }
 .sport-sub-nav .active-sport-link { color: var(--darker-orange); border-bottom: 3px solid var(--secondary-orange); cursor: default; }
 .sport-sub-nav ul li { list-style-type: none !important; padding: 0 !important; margin: 0 !important; }
+header.page-header:has(.subtitle-comp) { padding-top: 20px; }
 @media (max-width: 700px) {
     .sport-sub-nav { overflow-x: auto; -webkit-overflow-scrolling: touch; border-bottom: 1px solid #eee; margin-bottom: 25px; text-align: center; }
     .sport-sub-nav ul { display: flex; flex-wrap: nowrap; justify-content: center; margin: 0 auto; width: max-content; gap: 0; min-width: 100%; }
@@ -1864,7 +1865,7 @@ main.page-content .match-map-wrapper h4.sp-table-caption,
 
 @media (max-width: 600px) {
     /* Mantiene la griglia attiva ma riordina gli elementi interni */
-    
+
     .quarters-row { display: grid; }
     /* 1° posto: Il nome della squadra */
     .q-team-col { order: 1; }

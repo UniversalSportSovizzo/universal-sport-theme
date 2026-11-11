@@ -96,11 +96,15 @@ function sport_nav_shortcode() {
 
     $default_comp = uss_get_default_comp();
     $active_comp = isset($_GET['comp']) ? sanitize_text_field($_GET['comp']) : '';
-    
-    // Costruisce il parametro SOLO se non è la competizione di default
-    $comp_param = (!empty($active_comp) && $active_comp !== $default_comp) ? '?comp=' . $active_comp : '';
 
     foreach ($menu_items as $slug => $label) {
+        // Se il link punta a 'classifica' e siamo su 'tutte', non passiamo il parametro (torna al default pulito)
+        if ($slug === 'classifica' && $active_comp === 'tutte') {
+            $comp_param = '';
+        } else {
+            $comp_param = (!empty($active_comp) && $active_comp !== $default_comp) ? '?comp=' . $active_comp : '';
+        }
+
         $url = home_url('/' . $slug . '/') . $comp_param;
         
         if ( is_page($slug) ) {
@@ -128,7 +132,7 @@ function uss_titolo_dinamico_shortcode($atts) {
     if ( $active_comp === 'tutte' ) {
         $output = '<header class="page-header">';
         $output .= '<h1 class="page-title">' . esc_html($page_title) . '</h1>';
-        $output .= '<div class="title-underline" style="margin-top: 15px;"></div>';
+        $output .= '<div class="title-underline"></div>';
         $output .= '</header>';
         return $output;
     }
@@ -153,7 +157,7 @@ function uss_titolo_dinamico_shortcode($atts) {
     
     $output = '<header class="page-header">';
     // 1. IL TITOLO (Puro e pulito per Google)
-    $output .= '<h1 class="page-title h1-sportspress">' . esc_html($comp_name) . ' <br><span class="subtitle-comp">' . esc_html($page_title) . '</span></h1>';
+    $output .= '<h1 class="page-title h1-sportspress"><span class="subtitle-comp">' . esc_html($page_title) . '</span><br>' . esc_html($comp_name) . '</h1>';
     
     // 2. IL BADGE (Fuori dall'H1, con un div contenitore per distanziarlo)
     $output .= '<div class="badge-wrapper">' . $badge_html . '</div>';
@@ -194,10 +198,24 @@ function uss_selettore_competizioni($atts) {
         )
     ));
 
-    // Se c'è un errore, se è vuoto, o se c'è UNA SOLA competizione visibile, nasconde il selettore
+    // Se c'è un errore, se è vuoto, o se c'è UNA SOLA competizione vera, nasconde il selettore
     if (is_wp_error($leagues) || count($leagues) <= 1) return '';
 
     $active_comp = isset($_GET['comp']) ? sanitize_text_field($_GET['comp']) : $a['default'];
+
+    // PROTEZIONE: Se siamo in Classifica, non permettiamo di selezionare "Tutte", forziamo il default
+    if ( is_page( 'classifica' ) && $active_comp === 'tutte' ) {
+        $active_comp = $a['default'];
+    }
+
+    // Aggiungiamo l'oggetto fittizio "Tutte" all'inizio dell'array, MA SOLO se NON siamo in Classifica
+    if ( ! is_page( 'classifica' ) ) {
+        $tutte_obj = (object) array(
+            'slug' => 'tutte',
+            'name' => 'Tutte'
+        );
+        array_unshift($leagues, $tutte_obj);
+    }
 
     $output = '<div class="competition-selector">';
     $output .= '<span class="comp-label"><i class="fa-solid fa-trophy" aria-hidden="true"></i> Competizione:</span>';
@@ -206,19 +224,16 @@ function uss_selettore_competizioni($atts) {
     $base_url = strtok($_SERVER["REQUEST_URI"], '?');
 
     foreach ($leagues as $league) {
-        
         if ($league->slug === $active_comp) {
             // Pillola Attiva: Usa uno span, disattivando il link
             $output .= '<span class="comp-pill active">' . esc_html($league->name) . '</span>';
         } else {
             // Pillola Inattiva: Link normale per cambiare competizione
-            
             if ( $league->slug === $a['default'] ) {
-                $url = esc_url($base_url);
+                $url = esc_url($base_url); // Rimuove i parametri per il campionato di default
             } else {
                 $url = esc_url(add_query_arg('comp', $league->slug, $base_url));
             }
-            
             $output .= '<a href="' . $url . '" class="comp-pill">' . esc_html($league->name) . '</a>';
         }
     }
@@ -412,71 +427,225 @@ add_shortcode('partite_mancity', 'universal_sport_mancity_style');
 // ==========================================================================
 /**
  * Wrapper per [team_standings] che seleziona automaticamente la tabella giusta.
- * Recupera l'ID tabella associato al campionato selezionato tramite parametro 'comp'.
- * Esempio: [classifica_dinamica]
+ * Esempio: [classifica_dinamica columns="p,w,d,l,f,a,gd,pts"]
  */
 function uss_dynamic_standings_shortcode($atts) {
+    $atts = is_array($atts) ? $atts : array();
     $a = shortcode_atts(array('default_comp' => uss_get_default_comp()), $atts);
     $active_comp = isset($_GET['comp']) ? sanitize_text_field($_GET['comp']) : $a['default_comp'];
     
-    if (!empty($active_comp)) {
-        $league_id = is_numeric($active_comp) ? intval($active_comp) : uss_get_league_id_by_slug($active_comp);
-        
-        if ($league_id) {
-            // Cerca la tabella di SportsPress creata per questo campionato
-            $table_id = uss_get_sp_post_by_league('sp_table', $league_id);
-            
-            if ($table_id) {
-                $atts['id'] = $table_id; // Imposta dinamicamente l'ID corretto!
-            } else {
-                return '<div class="mancity-fixtures"><p class="text-center">Non è ancora disponibile una classifica per questa competizione.</p></div>';
-            }
-        }
+    if ($active_comp === 'tutte' || empty($active_comp)) {
+        $active_comp = $a['default_comp'];
     }
 
-    // Pulisce l'attributo personalizzato e costruisce lo shortcode
+    $league_id = is_numeric($active_comp) ? intval($active_comp) : uss_get_league_id_by_slug($active_comp);
+    $table_id  = $league_id ? uss_get_sp_post_by_league('sp_table', $league_id) : false;
+
+    if (!$table_id) {
+        return '<div class="mancity-fixtures"><p class="text-center no-matches">Non è ancora disponibile una classifica per questa competizione.</p></div>';
+    }
+
+    $atts['id'] = $table_id;
     unset($atts['default_comp']);
+    
     $attr_string = '';
     foreach ($atts as $key => $value) {
         if (!empty($value)) $attr_string .= $key . '="' . esc_attr($value) . '" ';
     }
     
-    return do_shortcode('[team_standings ' . $attr_string . ']');
+    $legenda = '<p class="sp-table-legend"><strong>Legenda:</strong> POS = Posizione in classifica | PG = Partite Giocate | V = Vittorie | N = Pareggi | P = Sconfitte | GF = Gol Fatti | GS = Gol Subiti | DR = Differenza Reti | PT = Punti</p>';
+    
+    return do_shortcode('[team_standings ' . $attr_string . ']') . $legenda;
 }
 add_shortcode('classifica_dinamica', 'uss_dynamic_standings_shortcode');
 
 /**
- * Wrapper per [player_list] che seleziona automaticamente la lista giusta.
- * Recupera l'ID lista giocatori associato al campionato selezionato tramite parametro 'comp'.
- * Esempio: [marcatori_dinamici]
+ * Calcola dinamicamente la classifica marcatori leggendo direttamente i risultati
+ * e le prestazioni delle partite giocate, senza bisogno di creare Elenchi Giocatori (sp_list).
+ * Esempio: [marcatori_dinamici] oppure [marcatori_dinamici team="377" limit="100"]
  */
 function uss_dynamic_players_shortcode($atts) {
-    $a = shortcode_atts(array('default_comp' => uss_get_default_comp()), $atts);
+    $a = shortcode_atts(array(
+        'default_comp' => uss_get_default_comp(),
+        'team'         => 377, // ID di default per Universal Sport Sovizzo
+        'limit'        => 100
+    ), $atts);
+
     $active_comp = isset($_GET['comp']) ? sanitize_text_field($_GET['comp']) : $a['default_comp'];
-    
-    if (!empty($active_comp)) {
-        $league_id = is_numeric($active_comp) ? intval($active_comp) : uss_get_league_id_by_slug($active_comp);
-        
-        if ($league_id) {
-            // Cerca l'elenco giocatori di SportsPress creato per questo campionato
-            $list_id = uss_get_sp_post_by_league('sp_list', $league_id);
-            
-            if ($list_id) {
-                $atts['id'] = $list_id; // Imposta dinamicamente l'ID corretto!
-            } else {
-                return '<div class="mancity-fixtures"><p class="text-center">Non è ancora disponibile una classifica marcatori per questa competizione.</p></div>';
+    if (empty($active_comp)) {
+        $active_comp = $a['default_comp'];
+    }
+
+    $team_id = intval($a['team']);
+    $caption_title = 'Classifica Marcatori di sempre';
+
+    // 1. Imposta la query per prendere le partite
+    $args = array(
+        'post_type'      => 'sp_event',
+        'posts_per_page' => -1,
+        'post_status'    => array('publish', 'future'),
+    );
+
+    // Se è selezionata una competizione specifica, filtra per quella lega (inclusi i gironi figli)
+    if ($active_comp !== 'tutte') {
+        $term = is_numeric($active_comp) 
+            ? get_term(intval($active_comp), 'sp_league') 
+            : get_term_by('slug', $active_comp, 'sp_league');
+
+        if (!$term || is_wp_error($term)) {
+            return '<div class="mancity-fixtures"><p class="text-center no-matches">Non ci sono ancora dei marcatori per questa competizione.</p></div>';
+        }
+
+        $caption_title = 'Classifica Marcatori ' . $term->name;
+
+        $args['tax_query'] = array(
+            array(
+                'taxonomy'         => 'sp_league',
+                'field'            => 'term_id',
+                'terms'            => $term->term_id,
+                'include_children' => true,
+            )
+        );
+    }
+
+    $events = get_posts($args);
+    $players_stats = array();
+
+    // 2. Scansiona ogni partita e somma Gol e Presenze
+    foreach ($events as $event) {
+        $event_id = $event->ID;
+
+        // Verifica che la partita sia stata effettivamente giocata (abbia un risultato numerico)
+        $results = get_post_meta($event_id, 'sp_results', true);
+        $teams   = get_post_meta($event_id, 'sp_team', false);
+        if (count($teams) < 2 || !is_array($results)) continue;
+
+        $home_id = $teams[0];
+        $away_id = $teams[1];
+        $home_score = '-';
+        $away_score = '-';
+
+        if (isset($results[$home_id]) && is_array($results[$home_id])) {
+            $h_nums = array_filter($results[$home_id], 'is_numeric');
+            if (!empty($h_nums)) $home_score = end($h_nums);
+        }
+        if (isset($results[$away_id]) && is_array($results[$away_id])) {
+            $a_nums = array_filter($results[$away_id], 'is_numeric');
+            if (!empty($a_nums)) $away_score = end($a_nums);
+        }
+
+        // Salta le partite non ancora giocate
+        if ($home_score === '-' || $away_score === '-') continue;
+
+        // Leggi le statistiche dei giocatori nella partita (sp_players)
+        $performance = get_post_meta($event_id, 'sp_players', true);
+        if (!is_array($performance)) continue;
+
+        foreach ($performance as $t_id => $team_players) {
+            // Se abbiamo impostato l'ID squadra (es. 377), contiamo solo i giocatori di quella squadra
+            if ($team_id > 0 && intval($t_id) !== $team_id) continue;
+            if (!is_array($team_players)) continue;
+
+            foreach ($team_players as $player_id => $data) {
+                $player_id = intval($player_id);
+                if ($player_id <= 0 || !is_array($data)) continue;
+
+                // Controlla se il giocatore era in distinta/sceso in campo nella partita
+                $status = isset($data['status']) ? $data['status'] : 'lineup';
+                $sub    = isset($data['sub']) ? intval($data['sub']) : 0;
+                if ($status === 'sub' && $sub <= 0 && empty($data['goals'])) {
+                    // Se era in panchina senza entrare e senza gol, non conta la presenza
+                    continue;
+                }
+
+                $goals = isset($data['goals']) && is_numeric($data['goals']) ? intval($data['goals']) : 0;
+
+                if (!isset($players_stats[$player_id])) {
+                    $players_stats[$player_id] = array(
+                        'id'          => $player_id,
+                        'goals'       => 0,
+                        'appearances' => 0,
+                    );
+                }
+
+                $players_stats[$player_id]['goals']       += $goals;
+                $players_stats[$player_id]['appearances'] += 1;
             }
         }
     }
-    
-    // Pulisce l'attributo personalizzato e costruisce lo shortcode
-    unset($atts['default_comp']);
-    $attr_string = '';
-    foreach ($atts as $key => $value) {
-        if (!empty($value)) $attr_string .= $key . '="' . esc_attr($value) . '" ';
+
+    // 3. Tieni solo i giocatori che hanno segnato almeno 1 gol
+    $scorers = array_filter($players_stats, function($p) {
+        return $p['goals'] > 0;
+    });
+
+    if (empty($scorers)) {
+        return '<div class="mancity-fixtures"><p class="text-center no-matches">Non è ancora disponibile una classifica marcatori per questa competizione.</p></div>';
     }
-    
-    return do_shortcode('[player_list ' . $attr_string . ']');
+
+    // 4. Arricchisci con Nome e Ruolo e ordina la classifica
+    foreach ($scorers as $p_id => &$p_data) {
+        $p_data['name'] = get_the_title($p_id);
+        $positions = get_the_terms($p_id, 'sp_position');
+        $p_data['role'] = ($positions && !is_wp_error($positions)) ? $positions[0]->name : '';
+    }
+    unset($p_data);
+
+    usort($scorers, function($a, $b) {
+        if ($b['goals'] !== $a['goals']) {
+            return $b['goals'] - $a['goals']; // Più gol prima
+        }
+        if ($a['appearances'] !== $b['appearances']) {
+            return $a['appearances'] - $b['appearances']; // A parità di gol, chi ha giocato meno partite
+        }
+        return strcasecmp($a['name'], $b['name']); // Ordine alfabetico
+    });
+
+    if (intval($a['limit']) > 0) {
+        $scorers = array_slice($scorers, 0, intval($a['limit']));
+    }
+
+    // 5. Costruisci l'HTML identico al markup originale della vecchia pagina (5 colonne)
+    $output  = '<div class="sportspress">';
+    $output .= '<h4 class="sp-table-caption">' . esc_html($caption_title) . '</h4>';
+    $output .= '<div class="sp-template sp-template-player-list">';
+    $output .= '<div class="sp-table-wrapper">';
+    $output .= '<table class="sp-player-list sp-data-table sp-sortable-table sp-scrollable-table" data-sp-rows="10">';
+    $output .= '<thead><tr>';
+    $output .= '<th class="data-rank" aria-label="Posizione in classifica">Pos</th>';
+    $output .= '<th class="data-name" aria-label="Nome del giocatore">Giocatore</th>';
+    $output .= '<th class="data-position" aria-label="Ruolo del giocatore"><span class="sr-only">Ruolo del giocatore</span></th>';
+    $output .= '<th class="data-goals" aria-label="Gol segnati">Gol</th>';
+    $output .= '<th class="data-appearances" aria-label="Numero di partite giocate">PG</th>';
+    $output .= '</tr></thead>';
+    $output .= '<tbody>';
+
+    $prev_goals = null;
+    $display_rank = 1;
+
+    foreach ($scorers as $index => $scorer) {
+        $real_pos = $index + 1;
+        if ($prev_goals === null || $scorer['goals'] < $prev_goals) {
+            $display_rank = $real_pos;
+        }
+        $prev_goals = $scorer['goals'];
+
+        $row_class  = ($index % 2 === 0) ? 'odd' : 'even';
+        $rank_class = ($display_rank <= 3) ? ' rank-' . $display_rank : '';
+
+        $output .= '<tr class="' . $row_class . '">';
+        $output .= '<td class="data-rank' . $rank_class . '" data-label="Pos">' . $display_rank . '</td>';
+        $output .= '<td class="data-name" data-label="Giocatore"><span class="sp-no-link-name">' . esc_html($scorer['name']) . '</span></td>';
+        $output .= '<td class="data-position" data-label="Posizione">' . esc_html($scorer['role']) . '</td>';
+        $output .= '<td class="data-goals" data-label="Goals">' . $scorer['goals'] . '</td>';
+        $output .= '<td class="data-appearances" data-label="Appearances">' . $scorer['appearances'] . '</td>';
+        $output .= '</tr>';
+    }
+
+    $output .= '</tbody></table></div></div></div>';
+    $output .= '<p class="wp-block-paragraph"><strong>Legenda:</strong> POS = Posizione in classifica | PG = Partite Giocate</p>';
+
+    return $output;
 }
 add_shortcode('marcatori_dinamici', 'uss_dynamic_players_shortcode');
 
