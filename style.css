@@ -267,19 +267,62 @@ main.home .section-title.text-center h2 { border-left: none !important; padding-
 }
 
 /* Gestione Dimensioni Sponsor (Classi dedicate per livello + retrocompatibilità) */
-.dynamic-sponsor-logo { display: flex; justify-content: center; align-items: center; }
-.dynamic-sponsor-logo img { height: auto; transition: all 0.3s ease; object-fit: contain; }
+.dynamic-sponsor-logo { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+}
 
+/* TRUCCO: Rendiamo anche l'eventuale tag <a> un contenitore flex centrato */
+.dynamic-sponsor-logo a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.dynamic-sponsor-logo img { 
+    height: auto; 
+    transition: all 0.3s ease; 
+    object-fit: contain; 
+    margin: 0 !important; /* Forza l'assenza di margini spuri */
+}
+
+/* Assegniamo un'altezza fissa al contenitore così le immagini si centrano perfettamente a metà */
+.dynamic-sponsor-logo.size-home-jersey,
+.dynamic-sponsor-logo.size-large { 
+    height: 150px; 
+}
 .dynamic-sponsor-logo.size-home-jersey img,
-.dynamic-sponsor-logo.size-large img { max-width: 260px; max-height: 150px; }
+.dynamic-sponsor-logo.size-large img { 
+    max-width: 260px; 
+    max-height: 150px; 
+}
 
+.dynamic-sponsor-logo.size-official,
+.dynamic-sponsor-logo.size-medium { 
+    height: 110px; 
+}
 .dynamic-sponsor-logo.size-official img,
-.dynamic-sponsor-logo.size-medium img { max-width: 145px; max-height: 110px; }
+.dynamic-sponsor-logo.size-medium img { 
+    max-width: 145px; 
+    max-height: 110px; 
+}
 
+.dynamic-sponsor-logo.size-supporter,
+.dynamic-sponsor-logo.size-small { 
+    height: 65px; 
+}
 .dynamic-sponsor-logo.size-supporter img,
-.dynamic-sponsor-logo.size-small img { max-width: 120px; max-height: 65px; }
+.dynamic-sponsor-logo.size-small img { 
+    max-width: 120px; 
+    max-height: 65px; 
+}
 
-.dynamic-sponsor-logo img:hover { transform: scale(1.1); }
+.dynamic-sponsor-logo img:hover { 
+    transform: scale(1.1); 
+}
 
 .btn-sponsor { display: inline-block; background-color: var(--primary-blue); color: #ffffff !important; padding: 15px 30px; border-radius: 5px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(235, 90, 45, 0.2); border: none; cursor: pointer; }
 .btn-sponsor:hover { background-color: var(--darker-orange) !important; color: #ffffff !important; transform: translateY(-3px); box-shadow: 0 6px 15px rgba(24, 63, 116, 0.3); }
@@ -1465,7 +1508,7 @@ html body div.tribe-events-calendar-latest-past__event-description.tribe-common-
 }
 
 /* ========================================================
-   FIX INFALLIBILE: METADATI THE EVENTS CALENDAR
+   FIX INFALLIBILE: METADATI THE EVENTS CALENDAR (Solo iframe custom)
    ======================================================== */
 
 /* 1. Contenitore Principale Flexbox */
@@ -1480,6 +1523,7 @@ body #tribe-events-content .tribe-events-single-section.tribe-events-event-meta 
     border-bottom: 5px solid var(--secondary-orange, #e25822) !important;
     border-top: none !important;
     width: 100% !important;
+    box-sizing: border-box !important;
 }
 
 body #tribe-events-content .tribe-events-single-section.tribe-events-event-meta::before,
@@ -1487,26 +1531,28 @@ body #tribe-events-content .tribe-events-single-section.tribe-events-event-meta:
     display: none !important;
 }
 
-/* 2. Riordino dei blocchi tramite Flex "order" */
-/* Dettagli in alto a sinistra (ordine: 1) */
+/* 2. CASO STANDARD (CON ORGANIZZATORE) - 2 Righe */
+/* Dettagli in alto a sinistra */
 body #tribe-events-content .tribe-events-meta-group-details {
     order: 1 !important;
     flex: 0 0 50% !important;
     max-width: 50% !important;
     margin: 0 !important;
     padding: 0 20px 0 0 !important;
+    box-sizing: border-box !important;
 }
 
-/* Organizzatore in alto a destra (ordine: 2) */
+/* Organizzatore in alto a destra */
 body #tribe-events-content .tribe-events-meta-group-organizer {
     order: 2 !important;
     flex: 0 0 50% !important;
     max-width: 50% !important;
     margin: 0 !important;
     padding: 0 0 0 20px !important;
+    box-sizing: border-box !important;
 }
 
-/* Luogo in basso a tutta larghezza (ordine: 3) */
+/* Luogo in basso a tutta larghezza */
 body #tribe-events-content .tribe-events-meta-group-venue {
     order: 3 !important;
     flex: 0 0 100% !important;
@@ -1516,9 +1562,26 @@ body #tribe-events-content .tribe-events-meta-group-venue {
     border-top: none !important;
     position: relative !important; /* FONDAMENTALE PER LA MAPPA ASSOLUTA */
     min-height: 200px !important; /* Mantiene spazio sufficiente per la mappa */
+    box-sizing: border-box !important;
 }
 
-/* 3. Il titolo e le vie del Luogo si fermano a metà pagina (50%) */
+/* 3. CASO SPECIALE (SENZA ORGANIZZATORE) - 1 Riga Unica a 3 colonne */
+/* Dettagli prende un terzo (33.3%) */
+body #tribe-events-content .tribe-events-single-section.tribe-events-event-meta:not(:has(.tribe-events-meta-group-organizer)) .tribe-events-meta-group-details {
+    flex: 0 0 33.3333% !important;
+    max-width: 33.3333% !important;
+}
+
+/* Luogo prende i restanti due terzi (66.6%) e va di fianco ai dettagli */
+body #tribe-events-content .tribe-events-single-section.tribe-events-event-meta:not(:has(.tribe-events-meta-group-organizer)) .tribe-events-meta-group-venue {
+    flex: 0 0 66.6666% !important;
+    max-width: 66.6666% !important;
+    margin-top: 0 !important; /* Rimuove lo spazio che lo mandava a capo */
+}
+
+
+/* 4. LAYOUT INTERNO DEL LUOGO E DELLA MAPPA */
+/* Il titolo e le vie si fermano a metà del contenitore Luogo */
 body #tribe-events-content .tribe-events-meta-group-venue h2.tribe-events-single-section-title,
 body #tribe-events-content .tribe-events-meta-group-venue .tribe-events-meta-list li {
     width: 50% !important;
@@ -1532,41 +1595,48 @@ body #tribe-events-content .tribe-events-meta-group-venue h2.tribe-events-single
     margin-bottom: 20px !important;
 }
 
-/* 4. Mappa posizionata in modo ASSOLUTO (Incollatura a destra) */
-/* Questo ignora ogni HTML del plugin e la piazza esatta accanto al titolo */
+/* Mappa posizionata in modo ASSOLUTO (incollata a destra) */
+/* Ignora l'HTML del plugin e si piazza esatta accanto al testo del luogo */
 body #tribe-events-content .uss-custom-venue-map {
     position: absolute !important;
     top: 0 !important; /* Allineata in alto come il titolo */
     right: 0 !important; /* Schiacciata a destra */
-    width: 50% !important;
+    width: 50% !important; /* Metà della larghezza del box Luogo */
     margin: 0 !important;
     padding-left: 15px !important;
     box-sizing: border-box !important;
 }
 
-/* Estetica Mappa allargata a destra */
+/* Estetica Mappa (Prende tutto lo spazio che gli abbiamo appena assegnato) */
 body #tribe-events-content .uss-custom-venue-map iframe {
     width: 100% !important;
-    max-width: 100% !important; /* <--- Modificato da 350px a 100% */
+    max-width: 100% !important;
     height: 200px !important;
     border-radius: 8px !important;
     display: block !important;
     margin: 0 !important;
 }
 
-/* 5. Vista Mobile (Telefoni) - Rimette tutto in un'unica colonna */
+
+/* 5. Vista Mobile (Telefoni) - Rimette tutto in un'unica colonna pulita */
 @media screen and (max-width: 768px) {
     body #tribe-events-content .tribe-events-meta-group-details,
+    body #tribe-events-content .tribe-events-single-section.tribe-events-event-meta:not(:has(.tribe-events-meta-group-organizer)) .tribe-events-meta-group-details,
     body #tribe-events-content .tribe-events-meta-group-organizer,
+    body #tribe-events-content .tribe-events-meta-group-venue,
+    body #tribe-events-content .tribe-events-single-section.tribe-events-event-meta:not(:has(.tribe-events-meta-group-organizer)) .tribe-events-meta-group-venue,
     body #tribe-events-content .tribe-events-meta-group-venue h2.tribe-events-single-section-title,
     body #tribe-events-content .tribe-events-meta-group-venue .tribe-events-meta-list li {
         flex: 0 0 100% !important;
         max-width: 100% !important;
+        width: 100% !important;
         padding-right: 0 !important;
     }
     
-    body #tribe-events-content .tribe-events-meta-group-organizer {
-        margin-top: 30px !important;
+    body #tribe-events-content .tribe-events-meta-group-organizer,
+    body #tribe-events-content .tribe-events-meta-group-venue,
+    body #tribe-events-content .tribe-events-single-section.tribe-events-event-meta:not(:has(.tribe-events-meta-group-organizer)) .tribe-events-meta-group-venue {
+        margin-top: 30px !important; /* Rimette lo spazio verticale tra i blocchi */
     }
     
     body #tribe-events-content .tribe-events-meta-group-venue {
@@ -1585,6 +1655,7 @@ body #tribe-events-content .uss-custom-venue-map iframe {
     
     body #tribe-events-content .uss-custom-venue-map iframe {
         max-width: 100% !important;
+        height: 250px !important; /* Leggermente più alta su mobile */
     }
 }
 
