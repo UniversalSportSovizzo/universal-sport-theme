@@ -991,3 +991,23 @@ function uss_clean_sportspress_assets() {
         // per far comparire correttamente la cartina nella sezione "Luogo".
     }
 }
+
+/**
+ * Stampa il contenuto del Luogo (es. iframe di Maps) 
+ * alla fine del blocco "Luogo" nella pagina del singolo Evento.
+ */
+add_action( 'tribe_events_single_meta_venue_section_end', 'uss_mostra_mappa_luogo_personalizzata' );
+function uss_mostra_mappa_luogo_personalizzata() {
+    $venue_id = tribe_get_venue_id();
+    if ( $venue_id ) {
+        $venue_post = get_post( $venue_id );
+        
+        // Se la descrizione del luogo contiene un iframe, lo stampa
+        if ( ! empty( $venue_post->post_content ) && strpos( $venue_post->post_content, '<iframe' ) !== false ) {
+            // Aggiunta solo la classe, senza width: 100%
+            echo '<div class="uss-custom-venue-map">';
+            echo apply_filters( 'the_content', $venue_post->post_content );
+            echo '</div>';
+        }
+    }
+}
