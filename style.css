@@ -1514,6 +1514,7 @@ html body div.tribe-events-calendar-latest-past__event-description.tribe-common-
 /* 1. Contenitore Principale Flexbox */
 body #tribe-events-content .tribe-events-single-section.tribe-events-event-meta {
     display: flex !important;
+    flex-direction: row !important; /* Assicura layout orizzontale base */
     flex-wrap: wrap !important;
     background: #fff !important;
     padding: 35px !important;
@@ -1560,7 +1561,7 @@ body #tribe-events-content .tribe-events-meta-group-venue {
     margin: 30px 0 0 0 !important;
     padding: 0 !important;
     border-top: none !important;
-    position: relative !important; /* FONDAMENTALE PER LA MAPPA ASSOLUTA */
+    position: relative !important; /* FONDAMENTALE PER LA MAPPA ASSOLUTA SU DESKTOP */
     min-height: 200px !important; /* Mantiene spazio sufficiente per la mappa */
     box-sizing: border-box !important;
 }
@@ -1580,7 +1581,7 @@ body #tribe-events-content .tribe-events-single-section.tribe-events-event-meta:
 }
 
 
-/* 4. LAYOUT INTERNO DEL LUOGO E DELLA MAPPA */
+/* 4. LAYOUT INTERNO DEL LUOGO E DELLA MAPPA SU DESKTOP */
 /* Il titolo e le vie si fermano a metà del contenitore Luogo */
 body #tribe-events-content .tribe-events-meta-group-venue h2.tribe-events-single-section-title,
 body #tribe-events-content .tribe-events-meta-group-venue .tribe-events-meta-list li {
@@ -1596,7 +1597,6 @@ body #tribe-events-content .tribe-events-meta-group-venue h2.tribe-events-single
 }
 
 /* Mappa posizionata in modo ASSOLUTO (incollata a destra) */
-/* Ignora l'HTML del plugin e si piazza esatta accanto al testo del luogo */
 body #tribe-events-content .uss-custom-venue-map {
     position: absolute !important;
     top: 0 !important; /* Allineata in alto come il titolo */
@@ -1607,7 +1607,6 @@ body #tribe-events-content .uss-custom-venue-map {
     box-sizing: border-box !important;
 }
 
-/* Estetica Mappa (Prende tutto lo spazio che gli abbiamo appena assegnato) */
 body #tribe-events-content .uss-custom-venue-map iframe {
     width: 100% !important;
     max-width: 100% !important;
@@ -1618,44 +1617,61 @@ body #tribe-events-content .uss-custom-venue-map iframe {
 }
 
 
-/* 5. Vista Mobile (Telefoni) - Rimette tutto in un'unica colonna pulita */
+/* 5. VISTA MOBILE (Schermi piccoli) - Reset Totale a 1 Colonna */
 @media screen and (max-width: 768px) {
+    /* Il contenitore impila tutto in verticale */
+    body #tribe-events-content .tribe-events-single-section.tribe-events-event-meta {
+        flex-direction: column !important;
+        padding: 25px 20px !important;
+    }
+
+    /* Annulla larghezze, margini e regole per Dettagli, Organizzatore e Luogo */
     body #tribe-events-content .tribe-events-meta-group-details,
     body #tribe-events-content .tribe-events-single-section.tribe-events-event-meta:not(:has(.tribe-events-meta-group-organizer)) .tribe-events-meta-group-details,
     body #tribe-events-content .tribe-events-meta-group-organizer,
     body #tribe-events-content .tribe-events-meta-group-venue,
-    body #tribe-events-content .tribe-events-single-section.tribe-events-event-meta:not(:has(.tribe-events-meta-group-organizer)) .tribe-events-meta-group-venue,
-    body #tribe-events-content .tribe-events-meta-group-venue h2.tribe-events-single-section-title,
-    body #tribe-events-content .tribe-events-meta-group-venue .tribe-events-meta-list li {
-        flex: 0 0 100% !important;
-        max-width: 100% !important;
-        width: 100% !important;
-        padding-right: 0 !important;
-    }
-    
-    body #tribe-events-content .tribe-events-meta-group-organizer,
-    body #tribe-events-content .tribe-events-meta-group-venue,
     body #tribe-events-content .tribe-events-single-section.tribe-events-event-meta:not(:has(.tribe-events-meta-group-organizer)) .tribe-events-meta-group-venue {
-        margin-top: 30px !important; /* Rimette lo spazio verticale tra i blocchi */
-    }
-    
-    body #tribe-events-content .tribe-events-meta-group-venue {
-        display: flex !important;
-        flex-direction: column !important;
-        position: static !important; /* Sblocca la mappa su mobile */
-        min-height: auto !important;
-    }
-    
-    body #tribe-events-content .uss-custom-venue-map {
-        position: static !important; /* Torna a scorrere col testo */
+        flex: 0 0 auto !important;
         width: 100% !important;
-        margin-top: 20px !important;
+        max-width: 100% !important;
+        margin: 0 0 25px 0 !important;
         padding: 0 !important;
     }
-    
+
+    /* Mette una linea separatrice sopra la sezione Luogo */
+    body #tribe-events-content .tribe-events-meta-group-venue,
+    body #tribe-events-content .tribe-events-single-section.tribe-events-event-meta:not(:has(.tribe-events-meta-group-organizer)) .tribe-events-meta-group-venue {
+        margin-bottom: 0 !important;
+        display: block !important;
+        min-height: auto !important; /* Togli il vincolo di altezza desktop */
+    }
+
+    /* Allarga il testo del Luogo a schermo intero */
+    body #tribe-events-content .tribe-events-meta-group-venue h2.tribe-events-single-section-title,
+    body #tribe-events-content .tribe-events-meta-group-venue .tribe-events-meta-list,
+    body #tribe-events-content .tribe-events-meta-group-venue .tribe-events-meta-list li {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-right: 0 !important;
+    }
+
+    /* RIPRISTINO DELLA MAPPA: La riportiamo nel flusso di lettura annullando "absolute" */
+    body #tribe-events-content .uss-custom-venue-map {
+        position: relative !important;
+        top: auto !important;
+        right: auto !important;
+        left: auto !important;
+        bottom: auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 20px 0 0 0 !important;
+        padding: 0 !important;
+        display: block !important;
+    }
+
     body #tribe-events-content .uss-custom-venue-map iframe {
         max-width: 100% !important;
-        height: 250px !important; /* Leggermente più alta su mobile */
+        height: 250px !important; /* Un po' più alta per navigarla con le dita */
     }
 }
 
