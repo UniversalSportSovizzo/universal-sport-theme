@@ -3,9 +3,9 @@
 <main id="contenuto-principale" class="home">
     <section class="champion-hero-image">
         <?php if ( get_locale() === 'en_GB' || get_locale() === 'en_US' ) : ?>
-            <img src="/wp-content/uploads/2026/09/home-scaled.png" alt="The Universal Sport Sovizzo team celebrates, raising the cup with medals around their necks" class="hero-team-photo" onerror="this.classList.add('hide-on-error');">
+            <img src="/wp-content/uploads/2026/11/uss_foto_home-scaled.png" alt="The Universal Sport Sovizzo team celebrates, raising the cup with medals around their necks" class="hero-team-photo" onerror="this.classList.add('hide-on-error');">
         <?php else : ?>
-            <img src="/wp-content/uploads/2026/05/home-scaled.jpg" alt="La squadra Universal Sport Sovizzo esulta alzando la coppa con le medaglie al collo" class="hero-team-photo" onerror="this.classList.add('hide-on-error');">
+            <img src="/wp-content/uploads/2026/11/uss_foto_home-scaled.png" alt="La squadra Universal Sport Sovizzo esulta alzando la coppa con le medaglie al collo" class="hero-team-photo" onerror="this.classList.add('hide-on-error');">
         <?php endif; ?>
     </section>
     
